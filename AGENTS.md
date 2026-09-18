@@ -1043,6 +1043,47 @@ The agent's job is to **implement the brand**, not redesign the brand.
 
 Any decision that materially changes the established identity requires explicit approval.
 
+---
+
+## 25.12 Observed Brand Design Pattern
+
+The supplied Royal Longevity collateral establishes the following implementation direction. These patterns are observations from the source materials and must guide visual work unless a more specific approved brand instruction supersedes them.
+
+### Brand character
+
+The system combines luxury beauty with calm professional trust. It should feel warm, refined, composed, and editorial rather than loud, trend-led, promotional, or decorative.
+
+The botanical/infinity icon is a central recognition device. It conveys renewal, care, and longevity, and must be used only through the supplied assets.
+
+### Colour and contrast
+
+- Metallic gold is the signature accent. The supplied logo artwork contains a multi-tone gold treatment, including values such as `#A57426`, `#BB8A36`, `#CE9D44`, `#D9A84C`, `#DDAC4F`, `#C79534`, `#F5C769`, and `#B38327`.
+- Supporting foundations are near-black/deep espresso, white, and a soft ivory used in supplied material (`#FCEEDC`).
+- Use gold intentionally for identity, fine emphasis, and selected premium details; it must not become a dominant surface colour or an accessibility substitute for readable text.
+- Preserve the gold treatment embedded in supplied logo files. Do not recreate it as a new CSS/UI gradient or introduce decorative gradients without explicit approval.
+
+### Typography and hierarchy
+
+- Use an elegant, high-contrast serif treatment for important editorial headings where the approved brand fonts and web constraints allow it.
+- Use a restrained, highly legible sans-serif treatment for navigation, labels, service information, prices, forms, and supporting copy.
+- Script/italic display treatments, where supplied or approved, are an occasional accent for a service or collection name—not a primary reading style.
+- Establish hierarchy through scale, spacing, case, and restrained weight contrast. Avoid oversized all-caps blocks, novelty typography, or dense competing type styles.
+
+### Composition and surfaces
+
+- Prefer generous whitespace, precise alignment, centred identity moments, fine rules/dividers, and clean visual rhythm.
+- Avoid generic UI chrome: excessive rounded cards, heavy shadows, bright borders, busy backgrounds, and decorative effects are inconsistent with the supplied collateral.
+- The beauty marketing expression may use intimate, close-cropped photography in softly blurred, deep brown/amber environments. Text can sit on a subtle dark translucent panel when needed for reliable legibility.
+- The client-record and medical expression is quieter: ivory paper-like surfaces, dark brown/black linework, delicate service illustrations, and low visual noise. It should communicate precision, comfort, and trust.
+
+### Beauty and Medical contexts
+
+Beauty and Medical are related but distinct approved expressions. Beauty-led pages may be more sensory and photographic; Medical pages should be more disciplined, spacious, and informational. Always use the matching supplied Beauty or Medical logo variant—never infer that their assets are interchangeable.
+
+### Digital translation
+
+For the website, use warm ivory content areas, near-black or deep-brown image-led sections, restrained gold accents, editorial heading moments, and carefully selected high-quality service imagery. Keep motion subtle and purposeful. The experience must remain accessible: preserve sufficient contrast, never place essential copy over uncontrolled imagery, and do not rely on colour alone to communicate meaning.
+
 ## 37. Rule Priority
 
 When rules conflict, use this priority:

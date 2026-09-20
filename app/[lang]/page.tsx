@@ -3,7 +3,8 @@ import { getHeroContent, Language } from "@/data/site";
 import { IconButton } from "@/components/ui/icon-button";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { Badge } from "@/components/ui/badge";
-
+import { LaurelLeft } from "@/components/icons/laurel-left";
+import { LaurelRight } from "@/components/icons/laurel-right";
 export default async function Home({
   params,
 }: {
@@ -11,7 +12,7 @@ export default async function Home({
 }) {
   const { lang } = await params;
   const heroContent = getHeroContent(lang);
-  
+
   const otherLang = lang === "en" ? "ar" : "en";
   const otherLangLabel = lang === "en" ? "AR" : "EN";
 
@@ -49,22 +50,41 @@ export default async function Home({
               <Badge variant="ghost" icon="✦">
                 {heroContent.trustSignal}
               </Badge>
-              <BookingCta 
-                href={heroContent.bookingHref} 
-                label={heroContent.bookingLabel} 
-                target="_blank" 
-                rel="noreferrer" 
+              <BookingCta
+                href={heroContent.bookingHref}
+                label={heroContent.bookingLabel}
+                target="_blank"
+                rel="noreferrer"
               />
             </div>
           </div>
-
-          <section className="grid grid-cols-3 px-2 py-[18px] border border-espresso/16 rounded-[22px] bg-ivory/60 min-[700px]:self-end min-[700px]:px-4 min-[700px]:py-6 min-[700px]:rounded-[24px]" aria-label="Royal Longevity experience">
-            {heroContent.highlights.map((highlight) => (
-              <div className="group grid gap-[5px] px-2 text-center border-s border-espresso/14 first:border-s-0 cursor-default transition-transform duration-300 hover:-translate-y-[2px]" key={highlight.value}>
-                <strong className="font-serif text-[17px] font-normal min-[700px]:text-[21px] transition-colors duration-300 group-hover:text-gold">{highlight.value}</strong>
-                <span className="text-[#71522f] text-[10px] leading-[1.25] transition-colors duration-300 group-hover:text-[#654b37]">{highlight.label}</span>
+          <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] bg-ivory/60 min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:self-end min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px]" aria-label="Royal Longevity experience">
+            <div className="flex items-center justify-center gap-3">
+              <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso" aria-hidden="true" />
+              <div className="text-center font-serif text-espresso leading-[1.1]">
+                <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine1}</div>
+                <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine2}</div>
               </div>
-            ))}
+              <LaurelRight className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso" aria-hidden="true" />
+            </div>
+
+            <div className="flex items-center justify-center">
+              {heroContent.highlights.map((highlight, index) => (
+                <div className="flex items-center" key={highlight.value}>
+                  {index > 0 && (
+                    <div className="w-[1px] h-10 bg-espresso/14 mx-4 min-[700px]:mx-6" aria-hidden="true" />
+                  )}
+                  <div className="text-center grid gap-[2px] min-[700px]:gap-[4px]">
+                    <strong className="font-serif text-[18px] font-normal min-[700px]:text-[22px] text-espresso">
+                      {highlight.value}
+                    </strong>
+                    <span className="text-[#71522f] text-[10px] leading-[1.25] min-[700px]:text-[11px] whitespace-nowrap">
+                      {highlight.label}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
           </section>
         </section>
 

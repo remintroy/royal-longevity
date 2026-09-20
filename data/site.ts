@@ -1,6 +1,25 @@
 export type Language = 'en' | 'ar';
 
-export const heroContent = {
+export type Highlight = {
+  value: string;
+  label: string;
+};
+
+export type HeroContent = {
+  eyebrow: string;
+  title: string;
+  description: string;
+  bookingLabel: string;
+  bookingHref: string;
+  trustSignal: string;
+  location: string;
+  badgeLine1: string;
+  badgeLine2: string;
+  highlights: Highlight[];
+  imageAlt: string;
+};
+
+export const heroContent: Record<Language, HeroContent> = {
   en: {
     eyebrow: "Beauty & Personal Care · Dubai",
     title: "Care that lets your natural radiance linger.",
@@ -9,6 +28,8 @@ export const heroContent = {
     bookingHref: "https://wa.me/?text=Hello%20Royal%20Longevity%2C%20I%20would%20like%20to%20book%20an%20appointment.",
     trustSignal: "A considered beauty experience",
     location: "Beauty & Personal Care · Dubai",
+    badgeLine1: "Guest",
+    badgeLine2: "favorite",
     highlights: [
       { value: "Beauty", label: "personal care" },
       { value: "Wellness", label: "considered rituals" },
@@ -24,6 +45,8 @@ export const heroContent = {
     bookingHref: "https://wa.me/?text=مرحباً%20Royal%20Longevity،%20أود%20حجز%20موعد.",
     trustSignal: "تجربة جمال متقنة",
     location: "العناية الشخصية والجمال · دبي",
+    badgeLine1: "اختيار",
+    badgeLine2: "العملاء",
     highlights: [
       { value: "الجمال", label: "العناية الشخصية" },
       { value: "العافية", label: "طقوس متقنة" },
@@ -31,6 +54,6 @@ export const heroContent = {
     ],
     imageAlt: "جلسة علاج تجميلي دافئة مع بياضات عاجية وتفاصيل نباتية",
   }
-} as const;
+};
 
 export const getHeroContent = (lang: Language) => heroContent[lang];

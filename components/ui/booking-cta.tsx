@@ -20,24 +20,33 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
     const { contextSafe } = useGSAP({ scope: containerRef });
 
     const handleMouseEnter = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!circleRef.current || !textRef.current || !arrowRef.current) return;
+      if (!circleRef.current || !textRef.current || !arrowRef.current || !containerRef.current) return;
       
-      const gap = 14;
-      const extraPadding = 13;
+      const containerRect = containerRef.current.getBoundingClientRect();
+      const circleRect = circleRef.current.getBoundingClientRect();
+      const textRect = textRef.current.getBoundingClientRect();
       
-      // Calculate dynamically on hover to guarantee accurate font widths
-      const circleWidth = circleRef.current.offsetWidth;
-      const textWidth = textRef.current.offsetWidth;
       const isRtl = document.documentElement.dir === "rtl";
       const direction = isRtl ? -1 : 1;
 
-      const circleMoveX = textWidth + gap + extraPadding;
-      const textMoveX = extraPadding - (circleWidth + gap);
+      let circleMoveX, textMoveX;
+
+      if (!isRtl) {
+        // LTR: Circle moves right to touch 7px right padding
+        circleMoveX = (containerRect.right - 7) - circleRect.right;
+        // LTR: Text moves left to sit exactly 20px from left edge (7px padding + 13px extra space)
+        textMoveX = (containerRect.left + 20) - textRect.left;
+      } else {
+        // RTL: Circle moves left to touch 7px left padding
+        circleMoveX = (containerRect.left + 7) - circleRect.left;
+        // RTL: Text moves right to sit exactly 20px from right edge
+        textMoveX = (containerRect.right - 20) - textRect.right;
+      }
 
       const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
 
-      gsap.to(circleRef.current, { x: circleMoveX * direction, ...config });
-      gsap.to(textRef.current, { x: textMoveX * direction, ...config });
+      gsap.to(circleRef.current, { x: circleMoveX, ...config });
+      gsap.to(textRef.current, { x: textMoveX, ...config });
       gsap.to(arrowRef.current, { rotation: 360 * direction, ...config });
       
       props.onMouseEnter?.(e);

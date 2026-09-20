@@ -1084,6 +1084,51 @@ Beauty and Medical are related but distinct approved expressions. Beauty-led pag
 
 For the website, use warm ivory content areas, near-black or deep-brown image-led sections, restrained gold accents, editorial heading moments, and carefully selected high-quality service imagery. Keep motion subtle and purposeful. The experience must remain accessible: preserve sufficient contrast, never place essential copy over uncontrolled imagery, and do not rely on colour alone to communicate meaning.
 
+---
+
+## 25.13 Shared Interface Design System
+
+These rules apply to reusable interface components across the site. Hero-specific layout and animation guidance is maintained in `design/hero.md`.
+
+### Geometry
+
+- Use fully pill-shaped (`999px`) controls for primary actions, compact navigation controls, language controls, and small status chips.
+- Use `20–28px` corner radii for image frames, cards, floating panels, drawers, and modals. Use the smallest radius that preserves the intended hierarchy.
+- Pair soft shapes with precise spacing and fine `1px` borders; do not combine them with excessive shadows, gradients, or bulky card chrome.
+- Circular icon controls must have a minimum interactive size of `44px × 44px`; `48px` is preferred where space permits.
+
+### Buttons and controls
+
+- Primary calls to action should use a pill form with a compact circular icon inset and a clear text label. The icon must support the action rather than replace its label.
+- Buttons must provide visible hover, focus, and pressed feedback without large scaling, bouncing, or layout shifts.
+- Use small icon translations (`2–4px`) and controlled colour/border changes for hover feedback. A pressed state may scale to no smaller than `0.98`.
+- Use the reusable booking action for appointment conversion so that the current WhatsApp behaviour can later be replaced without redesigning every CTA.
+
+### Floating surfaces and menus
+
+- Floating menus, popovers, and modal surfaces should use a quiet elevated surface, a fine border, a `24px`-scale radius, and a diffused low-opacity shadow.
+- Reveal floating surfaces with a short fade, small upward/downward translation (up to `8px`), and a subtle scale from `0.98` to `1`. Do not use bounce effects.
+- Menu items should have a clear primary label, optional supporting label only when useful, and a directional icon that respects LTR/RTL direction.
+
+### Motion system
+
+- Use `180–220ms` for hover/press micro-interactions, `260–340ms` for menus and panels, and `550–700ms` only for intentional editorial reveals.
+- Prefer `cubic-bezier(0.22, 1, 0.36, 1)` or an equivalently gentle ease-out curve.
+- Motion should clarify hierarchy and response, not decorate every element. Avoid constant motion, large parallax, large zooms, and sharp/snappy transitions.
+- Respect `prefers-reduced-motion`: remove nonessential blur, translation, staggered entry, and smooth-scrolling effects.
+
+### Accessibility and localization
+
+- Never communicate meaning by colour or icon alone. Maintain readable contrast over imagery and expose clear focus states for keyboard users.
+- Use CSS logical properties and direction-aware icons. In RTL, mirror directional arrows, menu alignment, and the order of directional icon/text relationships where appropriate.
+- Preserve touch target sizes and do not make motion or hover the only way to access information.
+
+---
+
+## 25.14 Design Documentation
+
+Detailed, page-specific design specifications belong in `design/`. Before implementing the homepage hero or its navigation, consult `design/hero.md` alongside this document and the supplied branding assets.
+
 ## 37. Rule Priority
 
 When rules conflict, use this priority:

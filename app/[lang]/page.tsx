@@ -18,7 +18,7 @@ export default async function Home({
 
   return (
     <main className="min-h-[100svh] p-5 overflow-hidden min-[700px]:p-[14px]">
-      <div className="w-[min(100%,1430px)] mx-auto flex flex-col gap-[18px] min-[700px]:min-h-[calc(100svh-28px)] min-[700px]:grid min-[700px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[700px]:gap-10" id="top">
+      <div className="w-[min(100%,1530px)] mx-auto flex flex-col gap-[18px] min-[700px]:min-h-[calc(100svh-28px)] min-[700px]:grid min-[700px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[700px]:gap-10" id="top">
         <section className="flex flex-col gap-[18px] min-[700px]:min-w-0 min-[700px]:grid min-[700px]:grid-rows-[auto_1fr_auto] min-[700px]:gap-0" aria-labelledby="hero-title">
           <nav className="flex items-center justify-between" aria-label="Primary navigation">
             <a className="inline-flex h-12 items-center border border-espresso/16 rounded-full px-[17px] py-2 bg-ivory/72" href="#top" aria-label="Royal Longevity home">

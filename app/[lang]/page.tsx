@@ -68,14 +68,14 @@ export default async function Home({
           </div>
         </section>
 
-        <section className="relative h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "1050ms" }} aria-label={heroContent.imageAlt}>
+        <section className="relative h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px]" aria-label={heroContent.imageAlt}>
           <video
             src="/hero-video.mp4"
             autoPlay={true}
             loop={true}
             muted={true}
             playsInline={true}
-            className="absolute top-1/2 left-0 w-full h-auto -translate-y-1/2"
+            className="absolute top-1/2 left-0 w-full h-auto -translate-y-1/2 opacity-0 animate-video-zoom-out"
             aria-label={heroContent.imageAlt}
           />
         </section>

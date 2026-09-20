@@ -63,34 +63,9 @@ export default async function Home({
               />
             </div>
           </div>
-          <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:self-end min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "900ms" }} aria-label="Royal Longevity experience">
-            <div className="flex items-center justify-center gap-3">
-              <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
-              <div className="text-center text-espresso leading-[1.1]">
-                <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine1}</div>
-                <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine2}</div>
-              </div>
-              <LaurelRight className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
-            </div>
-
-            <div className="flex items-center justify-center">
-              {heroContent.highlights.map((highlight, index) => (
-                <div className="flex items-center" key={highlight.value}>
-                  {index > 0 && (
-                    <div className="w-[1px] h-10 bg-espresso/14 mx-4 min-[700px]:mx-6" aria-hidden="true" />
-                  )}
-                  <div className="text-center grid gap-[2px] min-[700px]:gap-[4px]">
-                    <strong className="text-[18px] font-normal min-[700px]:text-[22px] text-espresso">
-                      {highlight.value}
-                    </strong>
-                    <span className="text-[#71522f] text-[10px] leading-[1.25] min-[700px]:text-[11px] whitespace-nowrap">
-                      {highlight.label}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
+          <div className="w-full max-w-full overflow-hidden min-[700px]:self-end opacity-0 animate-blur-fade-in" style={{ animationDelay: "900ms" }}>
+            <Marquee items={marqueeItems} />
+          </div>
         </section>
 
         <section className="relative h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "1050ms" }} aria-label={heroContent.imageAlt}>
@@ -106,8 +81,35 @@ export default async function Home({
         </section>
       </div>
 
-      <div className="mt-[20px] min-[700px]:mt-[40px] mb-[20px] min-[700px]:mb-[40px]">
-        <Marquee items={marqueeItems} />
+      <div className="w-[min(100%,1730px)] mx-auto mt-[20px] min-[700px]:mt-[40px] mb-[20px] min-[700px]:mb-[40px] px-0">
+        <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px]" aria-label="Royal Longevity experience">
+          <div className="flex items-center justify-center gap-3">
+            <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
+            <div className="text-center text-espresso leading-[1.1]">
+              <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine1}</div>
+              <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine2}</div>
+            </div>
+            <LaurelRight className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
+          </div>
+
+          <div className="flex items-center justify-center">
+            {heroContent.highlights.map((highlight, index) => (
+              <div className="flex items-center" key={highlight.value}>
+                {index > 0 && (
+                  <div className="w-[1px] h-10 bg-espresso/14 mx-4 min-[700px]:mx-6" aria-hidden="true" />
+                )}
+                <div className="text-center grid gap-[2px] min-[700px]:gap-[4px]">
+                  <strong className="text-[18px] font-normal min-[700px]:text-[22px] text-espresso">
+                    {highlight.value}
+                  </strong>
+                  <span className="text-[#71522f] text-[10px] leading-[1.25] min-[700px]:text-[11px] whitespace-nowrap">
+                    {highlight.label}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </section>
       </div>
     </main>
   );

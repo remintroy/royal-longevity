@@ -60,12 +60,12 @@ export default async function Home({
           </div>
           <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] bg-ivory/60 min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:self-end min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px]" aria-label="Royal Longevity experience">
             <div className="flex items-center justify-center gap-3">
-              <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso" aria-hidden="true" />
+              <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
               <div className="text-center font-serif text-espresso leading-[1.1]">
                 <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine1}</div>
                 <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine2}</div>
               </div>
-              <LaurelRight className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso" aria-hidden="true" />
+              <LaurelRight className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
             </div>
 
             <div className="flex items-center justify-center">

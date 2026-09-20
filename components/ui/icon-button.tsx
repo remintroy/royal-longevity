@@ -2,29 +2,33 @@ import * as React from "react"
 import Link from "next/link"
 import { cn } from "@/lib/utils"
 
-export interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  href?: string;
+export type IconButtonProps = {
   className?: string;
   children: React.ReactNode;
-}
+} & (
+  | (React.AnchorHTMLAttributes<HTMLAnchorElement> & { href: string })
+  | (React.ButtonHTMLAttributes<HTMLButtonElement> & { href?: never })
+);
 
 export const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement, IconButtonProps>(
-  ({ className, href, children, ...props }, ref) => {
+  (props, ref) => {
+    const { className, children } = props;
     const baseClasses = cn(
       "grid place-content-center w-12 h-12 border border-ivory rounded-full text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-ivory hover:border-espresso/30 active:scale-95 transition-all duration-300",
       className
     );
 
-    if (href) {
+    if (props.href !== undefined) {
+      const { href, ...linkProps } = props;
       return (
-        <Link href={href} className={baseClasses} ref={ref as React.Ref<HTMLAnchorElement>} {...(props as any)}>
+        <Link {...linkProps} href={href} className={baseClasses} ref={ref as React.Ref<HTMLAnchorElement>}>
           {children}
         </Link>
       );
     }
 
     return (
-      <button className={baseClasses} ref={ref as React.Ref<HTMLButtonElement>} {...props}>
+      <button {...props} className={baseClasses} ref={ref as React.Ref<HTMLButtonElement>}>
         {children}
       </button>
     );

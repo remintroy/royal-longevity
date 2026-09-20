@@ -1,5 +1,5 @@
-import Image from "next/image";
-import { getHeroContent, getMarqueeContent, Language } from "@/data/site";
+import { notFound } from "next/navigation";
+import { getHeroContent, getMarqueeContent } from "@/data/site";
 import { IconButton } from "@/components/ui/icon-button";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -12,9 +12,10 @@ import { AnimatedTitle } from "@/components/ui/animated-title";
 export default async function Home({
   params,
 }: {
-  params: Promise<{ lang: Language }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  if (lang !== "en" && lang !== "ar") notFound();
   const heroContent = getHeroContent(lang);
   const marqueeItems = getMarqueeContent(lang);
 

@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import "../globals.css";
-import type { Language } from "@/data/site";
+import { notFound } from "next/navigation";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 
-export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
   const { lang } = await params;
+  if (lang !== "en" && lang !== "ar") notFound();
   
   if (lang === "ar") {
     return {
@@ -24,9 +25,10 @@ export default async function RootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: Promise<{ lang: Language }>;
+  params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  if (lang !== "en" && lang !== "ar") notFound();
   return (
     <html
       lang={lang}

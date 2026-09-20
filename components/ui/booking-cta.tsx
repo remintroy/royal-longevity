@@ -71,9 +71,9 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
           className
         )}
         ref={(node) => {
-          (containerRef as any).current = node;
+          containerRef.current = node;
           if (typeof ref === 'function') ref(node);
-          else if (ref) (ref as any).current = node;
+          else if (ref) ref.current = node;
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}

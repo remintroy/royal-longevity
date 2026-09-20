@@ -15,7 +15,7 @@ html {
 
 body {
   margin: 0;
-  background-color: var(--color-ivory);
+  /* background-color: var(--color-ivory); */
   color: var(--color-ink);
   font-family: Arial, Helvetica, sans-serif;
 }

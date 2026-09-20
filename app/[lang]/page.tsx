@@ -1,11 +1,13 @@
 import Image from "next/image";
-import { getHeroContent, Language } from "@/data/site";
+import { getHeroContent, getMarqueeContent, Language } from "@/data/site";
 import { IconButton } from "@/components/ui/icon-button";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { Badge } from "@/components/ui/badge";
 import { LaurelLeft } from "@/components/icons/laurel-left";
 import { LaurelRight } from "@/components/icons/laurel-right";
+import { Marquee } from "@/components/ui/marquee";
+
 export default async function Home({
   params,
 }: {
@@ -13,6 +15,7 @@ export default async function Home({
 }) {
   const { lang } = await params;
   const heroContent = getHeroContent(lang);
+  const marqueeItems = getMarqueeContent(lang);
 
   const otherLang = lang === "en" ? "ar" : "en";
   const otherLangLabel = lang === "en" ? "AR" : "EN";
@@ -100,6 +103,10 @@ export default async function Home({
             aria-label={heroContent.imageAlt}
           />
         </section>
+      </div>
+
+      <div className="mt-[20px] min-[700px]:mt-[40px] mb-[20px] min-[700px]:mb-[40px]">
+        <Marquee items={marqueeItems} />
       </div>
     </main>
   );

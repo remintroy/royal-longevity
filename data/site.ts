@@ -19,6 +19,11 @@ export type HeroContent = {
   imageAlt: string;
 };
 
+export const marqueeContent: Record<Language, string[]> = {
+  en: ["Skin Care", "Spa", "Wellness", "Beauty", "Treatment", "Salon", "Relaxation"],
+  ar: ["العناية بالبشرة", "سبا", "العافية", "الجمال", "العلاجات", "صالون", "الاسترخاء"]
+};
+
 export const heroContent: Record<Language, HeroContent> = {
   en: {
     eyebrow: "Personal Care & Beauty · Ajman",
@@ -57,3 +62,4 @@ export const heroContent: Record<Language, HeroContent> = {
 };
 
 export const getHeroContent = (lang: Language) => heroContent[lang];
+export const getMarqueeContent = (lang: Language) => marqueeContent[lang];

@@ -2,10 +2,21 @@ import type { Metadata } from "next";
 import "../globals.css";
 import type { Language } from "@/data/site";
 
-export const metadata: Metadata = {
-  title: "Royal Longevity | Beauty & Personal Care",
-  description: "A considered beauty experience in Dubai.",
-};
+export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
+  const { lang } = await params;
+  
+  if (lang === "ar") {
+    return {
+      title: "Royal Longevity | العناية الشخصية والجمال",
+      description: "تجربة جمال متقنة في دبي.",
+    };
+  }
+
+  return {
+    title: "Royal Longevity | Beauty & Personal Care",
+    description: "A considered beauty experience in Dubai.",
+  };
+}
 
 export default async function RootLayout({
   children,

@@ -1,7 +1,18 @@
 import Image from "next/image";
-import { heroContent } from "@/data/site";
+import Link from "next/link";
+import { getHeroContent, Language } from "@/data/site";
 
-export default function Home() {
+export default async function Home({
+  params,
+}: {
+  params: Promise<{ lang: Language }>;
+}) {
+  const { lang } = await params;
+  const heroContent = getHeroContent(lang);
+  
+  const otherLang = lang === "en" ? "ar" : "en";
+  const otherLangLabel = lang === "en" ? "AR" : "EN";
+
   return (
     <main className="min-h-[100svh] p-5 overflow-hidden min-[700px]:p-[14px]">
       <div className="w-[min(100%,1430px)] mx-auto flex flex-col gap-[18px] min-[700px]:min-h-[calc(100svh-28px)] min-[700px]:grid min-[700px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[700px]:gap-10" id="top">
@@ -11,7 +22,9 @@ export default function Home() {
               <Image className="w-[126px] h-auto min-[700px]:w-[156px]" src="/branding/royal-longevity-beauty-logo.png" alt="Royal Longevity Beauty" width={156} height={51} priority />
             </a>
             <div className="flex gap-2">
-              <button className="grid w-12 h-12 place-content-center border border-espresso/16 rounded-full bg-ivory/72 text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3" type="button" aria-label="Change language">EN</button>
+              <Link href={`/${otherLang}`} className="grid w-12 h-12 place-content-center border border-espresso/16 rounded-full bg-ivory/72 text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-[#fceedc] transition-colors" aria-label={`Change language to ${otherLang}`}>
+                {otherLangLabel}
+              </Link>
               <button className="grid gap-1 w-12 h-12 place-content-center border border-espresso/16 rounded-full bg-ivory/72 text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3" type="button" aria-label="Open menu">
                 <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
                 <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
@@ -30,8 +43,8 @@ export default function Home() {
               <p className="inline-flex items-center gap-[9px] m-0 text-[#654b37] text-[13px]">
                 <span className="text-gold text-base" aria-hidden="true">✦</span>{heroContent.trustSignal}
               </p>
-              <a className="group inline-flex items-center gap-[14px] min-h-[54px] pl-[7px] pr-[20px] py-[6px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-all duration-200 ease-in-out hover:bg-[#422b1b] active:scale-[.98] focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3" href={heroContent.bookingHref} target="_blank" rel="noreferrer">
-                <span className="grid w-10 h-10 place-content-center rounded-full bg-ivory text-espresso text-[20px] transition-transform duration-200 ease-[cubic-bezier(.22,1,.36,1)] group-hover:translate-x-[3px] group-hover:-translate-y-[3px]" aria-hidden="true">↗</span>
+              <a className="group inline-flex items-center gap-[14px] min-h-[54px] ps-[7px] pe-[20px] py-[6px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-all duration-200 ease-in-out hover:bg-[#422b1b] active:scale-[.98] focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3" href={heroContent.bookingHref} target="_blank" rel="noreferrer">
+                <span className="grid w-10 h-10 place-content-center rounded-full bg-ivory text-espresso text-[20px] transition-transform duration-200 ease-[cubic-bezier(.22,1,.36,1)] rtl:-scale-x-100 group-hover:translate-x-[3px] group-hover:-translate-y-[3px] rtl:group-hover:-translate-x-[3px]" aria-hidden="true">↗</span>
                 <span>{heroContent.bookingLabel}</span>
               </a>
             </div>
@@ -48,7 +61,7 @@ export default function Home() {
         </section>
 
         <section className="h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px]" aria-label={heroContent.imageAlt}>
-          <div className="grid w-full h-full place-content-center relative isolate text-ivory/70 text-xs tracking-[.11em] uppercase before:absolute before:-z-10 before:content-[''] before:rounded-full before:blur-[5px] before:w-[55%] before:aspect-square before:-top-[18%] before:left-[6%] before:bg-[#6a4122] after:absolute after:-z-10 after:content-[''] after:rounded-full after:blur-[5px] after:w-[45%] after:aspect-square after:right-[8%] after:-bottom-[30%] after:bg-[#b38327] after:opacity-55" role="img" aria-label={heroContent.imageAlt}>
+          <div className="grid w-full h-full place-content-center relative isolate text-ivory/70 text-xs tracking-[.11em] uppercase before:absolute before:-z-10 before:content-[''] before:rounded-full before:blur-[5px] before:w-[55%] before:aspect-square before:-top-[18%] before:start-[6%] before:bg-[#6a4122] after:absolute after:-z-10 after:content-[''] after:rounded-full after:blur-[5px] after:w-[45%] after:aspect-square after:end-[8%] after:-bottom-[30%] after:bg-[#b38327] after:opacity-55" role="img" aria-label={heroContent.imageAlt}>
             <span>Hero image placeholder</span>
           </div>
         </section>

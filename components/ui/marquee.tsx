@@ -13,68 +13,97 @@ interface MarqueeProps {
   className?: string;
 }
 
+const Pill = ({ text }: { text: string }) => (
+  <div className="flex items-center gap-3 min-[700px]:gap-4 border border-espresso/16 rounded-full p-2 min-[700px]:p-2.5 bg-ivory/60 hover:bg-ivory/90 transition-colors">
+    <div className="w-[48px] h-[48px] min-[700px]:w-[60px] min-[700px]:h-[60px] rounded-full bg-espresso/5 flex items-center justify-center text-espresso/40 shrink-0">
+      <span className="text-lg min-[700px]:text-2xl">✦</span>
+    </div>
+    <span className="text-[18px] min-[700px]:text-[24px] text-[#654b37] whitespace-nowrap pr-4 min-[700px]:pr-6 rtl:pr-0 rtl:pl-4 rtl:min-[700px]:pl-6 font-medium">
+      {text}
+    </span>
+  </div>
+);
+
 export function Marquee({ items, className = "" }: MarqueeProps) {
   const container = useRef<HTMLDivElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const tween = useRef<gsap.core.Tween | null>(null);
+  const track1 = useRef<HTMLDivElement>(null);
+  const track2 = useRef<HTMLDivElement>(null);
+  const tween1 = useRef<gsap.core.Tween | null>(null);
+  const tween2 = useRef<gsap.core.Tween | null>(null);
 
   useGSAP(() => {
-    if (!track.current) return;
-    
-    // We animate the track to -50% of its width, which corresponds to exactly one set of items.
-    tween.current = gsap.to(track.current, {
-      xPercent: -50,
-      ease: "none",
-      duration: items.length * 4, // Adjust duration based on number of items for a smooth speed
-      repeat: -1,
-    });
+    // Calculate a consistent duration based on items count
+    const duration = items.length * 6; // Slower, smoother speed
+
+    if (track1.current) {
+      tween1.current = gsap.to(track1.current, {
+        xPercent: -50,
+        ease: "none",
+        duration: duration,
+        repeat: -1,
+      });
+    }
+
+    if (track2.current) {
+      tween2.current = gsap.fromTo(track2.current, 
+        { xPercent: -50 },
+        {
+          xPercent: 0,
+          ease: "none",
+          duration: duration,
+          repeat: -1,
+        }
+      );
+    }
   }, { scope: container });
 
   const handleMouseEnter = () => {
-    if (tween.current) {
-      gsap.to(tween.current, { timeScale: 0.2, duration: 0.5 });
-    }
+    if (tween1.current) gsap.to(tween1.current, { timeScale: 0.15, duration: 0.8, ease: "power2.out" });
+    if (tween2.current) gsap.to(tween2.current, { timeScale: 0.15, duration: 0.8, ease: "power2.out" });
   };
 
   const handleMouseLeave = () => {
-    if (tween.current) {
-      gsap.to(tween.current, { timeScale: 1, duration: 0.5 });
-    }
+    if (tween1.current) gsap.to(tween1.current, { timeScale: 1, duration: 0.8, ease: "power2.out" });
+    if (tween2.current) gsap.to(tween2.current, { timeScale: 1, duration: 0.8, ease: "power2.out" });
   };
+
+  // Create a reversed array for the second row to offset the text visually
+  const reversedItems = [...items].reverse();
 
   return (
     <div 
       ref={container} 
-      className={`overflow-hidden relative w-full ${className}`}
+      className={`overflow-hidden relative w-full flex flex-col gap-4 min-[700px]:gap-6 py-4 min-[700px]:py-6 ${className}`}
       style={{
-        maskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
-        WebkitMaskImage: "linear-gradient(to right, transparent, black 15%, black 85%, transparent)",
+        maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+        WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
       }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >
+      {/* Top Row - Scrolls Left */}
       <div 
-        ref={track} 
-        className="flex w-max items-center py-6 min-[700px]:py-8"
+        ref={track1} 
+        className="flex w-max items-center gap-4 min-[700px]:gap-6 pl-4"
       >
-        {/* First set */}
         {items.map((item, idx) => (
-          <div key={`set1-${idx}`} className="flex items-center">
-            <span className="font-serif text-[clamp(2rem,4vw,3.5rem)] text-espresso whitespace-nowrap px-8 min-[700px]:px-12">
-              {item}
-            </span>
-            <span className="text-espresso/40 px-2">✦</span>
-          </div>
+          <Pill key={`t1-s1-${idx}`} text={item} />
         ))}
-        {/* Second set for seamless loop */}
         {items.map((item, idx) => (
-          <div key={`set2-${idx}`} className="flex items-center">
-            <span className="font-serif text-[clamp(2rem,4vw,3.5rem)] text-espresso whitespace-nowrap px-8 min-[700px]:px-12">
-              {item}
-            </span>
-            {/* Omit the last star if desired, but we need identical sets for seamless looping */}
-            <span className="text-espresso/40 px-2">✦</span>
-          </div>
+          <Pill key={`t1-s2-${idx}`} text={item} />
+        ))}
+      </div>
+
+      {/* Bottom Row - Scrolls Right */}
+      <div 
+        ref={track2} 
+        className="flex w-max items-center gap-4 min-[700px]:gap-6 pr-4"
+      >
+        {reversedItems.map((item, idx) => (
+          <Pill key={`t2-s1-${idx}`} text={item} />
+        ))}
+        {reversedItems.map((item, idx) => (
+          <Pill key={`t2-s2-${idx}`} text={item} />
         ))}
       </div>
     </div>

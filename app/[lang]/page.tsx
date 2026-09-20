@@ -1,6 +1,8 @@
 import Image from "next/image";
-import Link from "next/link";
 import { getHeroContent, Language } from "@/data/site";
+import { IconButton } from "@/components/ui/icon-button";
+import { BookingCta } from "@/components/ui/booking-cta";
+import { Badge } from "@/components/ui/badge";
 
 export default async function Home({
   params,
@@ -22,39 +24,45 @@ export default async function Home({
               <Image className="w-[126px] h-auto min-[700px]:w-[156px]" src="/branding/royal-longevity-beauty-logo.png" alt="Royal Longevity Beauty" width={156} height={51} priority />
             </a>
             <div className="flex gap-2">
-              <Link href={`/${otherLang}`} className="grid w-12 h-12 place-content-center border border-espresso/16 rounded-full bg-ivory/72 text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-[#fceedc] transition-colors" aria-label={`Change language to ${otherLang}`}>
+              <IconButton href={`/${otherLang}`} aria-label={`Change language to ${otherLang}`}>
                 {otherLangLabel}
-              </Link>
-              <button className="grid gap-1 w-12 h-12 place-content-center border border-espresso/16 rounded-full bg-ivory/72 text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3" type="button" aria-label="Open menu">
+              </IconButton>
+              <IconButton type="button" className="gap-1" aria-label="Open menu">
                 <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
                 <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
                 <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
-              </button>
+              </IconButton>
             </div>
           </nav>
 
           <div className="pt-[44px] px-3 pb-4 text-center min-[700px]:self-center min-[700px]:px-9 min-[700px]:py-0">
-            <p className="inline-flex items-center gap-[7px] mb-[22px] px-[13px] py-[9px] border border-espresso/16 rounded-full text-[#654b37] text-xs">
-              <span className="text-gold text-base" aria-hidden="true">⌖</span>{heroContent.location}
+            <Badge variant="outline" icon="⌖" className="mb-[22px]">
+              {heroContent.location}
+            </Badge>
+            <h1 className="max-w-[700px] mx-auto font-serif text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] text-balance" id="hero-title">
+              {heroContent.title}
+            </h1>
+            <p className="max-w-[500px] mt-[19px] mx-auto text-[#654b37] text-[15px] leading-[1.6]">
+              {heroContent.description}
             </p>
-            <h1 className="max-w-[700px] mx-auto font-serif text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] text-balance" id="hero-title">{heroContent.title}</h1>
-            <p className="max-w-[500px] mt-[19px] mx-auto text-[#654b37] text-[15px] leading-[1.6]">{heroContent.description}</p>
             <div className="flex flex-col items-center gap-4 mt-[22px]">
-              <p className="inline-flex items-center gap-[9px] m-0 text-[#654b37] text-[13px]">
-                <span className="text-gold text-base" aria-hidden="true">✦</span>{heroContent.trustSignal}
-              </p>
-              <a className="group inline-flex items-center gap-[14px] min-h-[54px] ps-[7px] pe-[20px] py-[6px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-all duration-200 ease-in-out hover:bg-[#422b1b] active:scale-[.98] focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3" href={heroContent.bookingHref} target="_blank" rel="noreferrer">
-                <span className="grid w-10 h-10 place-content-center rounded-full bg-ivory text-espresso text-[20px] transition-transform duration-200 ease-[cubic-bezier(.22,1,.36,1)] rtl:-scale-x-100 group-hover:translate-x-[3px] group-hover:-translate-y-[3px] rtl:group-hover:-translate-x-[3px]" aria-hidden="true">↗</span>
-                <span>{heroContent.bookingLabel}</span>
-              </a>
+              <Badge variant="ghost" icon="✦">
+                {heroContent.trustSignal}
+              </Badge>
+              <BookingCta 
+                href={heroContent.bookingHref} 
+                label={heroContent.bookingLabel} 
+                target="_blank" 
+                rel="noreferrer" 
+              />
             </div>
           </div>
 
           <section className="grid grid-cols-3 px-2 py-[18px] border border-espresso/16 rounded-[22px] bg-ivory/60 min-[700px]:self-end min-[700px]:px-4 min-[700px]:py-6 min-[700px]:rounded-[24px]" aria-label="Royal Longevity experience">
             {heroContent.highlights.map((highlight) => (
-              <div className="grid gap-[5px] px-2 text-center border-s border-espresso/14 first:border-s-0" key={highlight.value}>
-                <strong className="font-serif text-[17px] font-normal min-[700px]:text-[21px]">{highlight.value}</strong>
-                <span className="text-[#71522f] text-[10px] leading-[1.25]">{highlight.label}</span>
+              <div className="group grid gap-[5px] px-2 text-center border-s border-espresso/14 first:border-s-0 cursor-default transition-transform duration-300 hover:-translate-y-[2px]" key={highlight.value}>
+                <strong className="font-serif text-[17px] font-normal min-[700px]:text-[21px] transition-colors duration-300 group-hover:text-gold">{highlight.value}</strong>
+                <span className="text-[#71522f] text-[10px] leading-[1.25] transition-colors duration-300 group-hover:text-[#654b37]">{highlight.label}</span>
               </div>
             ))}
           </section>

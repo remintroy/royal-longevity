@@ -18,6 +18,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next|branding|api|favicon.ico).*)',
+    '/((?!_next|branding|api|favicon.ico|hero-video.mp4).*)',
   ],
 }

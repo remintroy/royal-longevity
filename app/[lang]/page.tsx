@@ -88,10 +88,16 @@ export default async function Home({
           </section>
         </section>
 
-        <section className="h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px]" aria-label={heroContent.imageAlt}>
-          <div className="grid w-full h-full place-content-center relative isolate text-ivory/70 text-xs tracking-[.11em] uppercase before:absolute before:-z-10 before:content-[''] before:rounded-full before:blur-[5px] before:w-[55%] before:aspect-square before:-top-[18%] before:start-[6%] before:bg-[#6a4122] after:absolute after:-z-10 after:content-[''] after:rounded-full after:blur-[5px] after:w-[45%] after:aspect-square after:end-[8%] after:-bottom-[30%] after:bg-[#b38327] after:opacity-55" role="img" aria-label={heroContent.imageAlt}>
-            <span>Hero image placeholder</span>
-          </div>
+        <section className="relative h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px]" aria-label={heroContent.imageAlt}>
+          <video
+            src="/hero-video.mp4"
+            autoPlay={true}
+            loop={true}
+            muted={true}
+            playsInline={true}
+            className="absolute top-1/2 left-0 w-full h-auto -translate-y-1/2"
+            aria-label={heroContent.imageAlt}
+          />
         </section>
       </div>
     </main>

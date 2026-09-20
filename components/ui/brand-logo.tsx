@@ -1,23 +1,9 @@
-import { Language } from "@/data/site";
+import Image from "next/image";
+import type { Language } from "@/data/site";
 
-interface BrandLogoProps {
-  lang: Language;
-  className?: string;
-}
-
-export function BrandLogo({ lang, className = "" }: BrandLogoProps) {
-  return (
-    <div className={`flex items-center gap-2 min-[700px]:gap-[10px] ${className}`}>
-      <img
-        src="/branding/icon-gold.png"
-        alt="Royal Longevity Icon"
-        className="h-[28px] w-auto min-[700px]:h-[32px]"
-      />
-      <img
-        src={lang === "ar" ? "/branding/text-arabic-black.png" : "/branding/text-english-black.png"}
-        alt="Royal Longevity"
-        className="h-[120px] w-auto min-[700px]:h-[200px]"
-      />
-    </div>
-  );
+export function BrandLogo({ lang, className = "" }: { lang: Language; className?: string }) {
+  return <span className={`brand-logo ${className}`}>
+    <Image src="/branding/icon-gold.png" width={32} height={32} alt="" />
+    <span className="brand-wordmark"><Image src={lang === "ar" ? "/branding/text-arabic-black.png" : "/branding/text-english-black.png"} width={180} height={180} alt={lang === "ar" ? "رويال لونجيفيتي" : "Royal Longevity"} /></span>
+  </span>;
 }

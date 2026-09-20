@@ -1,61 +1,32 @@
-import { Language } from "@/data/site";
+import { Fragment } from "react";
+import type { Language } from "@/data/site";
 
+/** Keep Arabic words intact so their joined letterforms survive the reveal. */
 export function AnimatedTitle({ text, lang }: { text: string; lang: Language }) {
-  if (lang === "ar") {
-    // For Arabic, splitting by word is much safer to preserve ligatures and cursive joining
-    const words = text.split(" ");
-    return (
-      <>
-        <span className="sr-only">{text}</span>
-        <span aria-hidden="true">
-          {words.map((word, i) => (
-            <span key={i} className="inline-block whitespace-nowrap">
-              <span 
-                className="inline-block opacity-0 animate-slide-up-fade" 
-                style={{ animationDelay: `${i * 0.15}s` }}
-              >
-                {word}
-              </span>
-              {i !== words.length - 1 && " "}
-            </span>
-          ))}
-        </span>
-      </>
-    );
-  }
-
-  // For English, we split by words then characters to prevent mid-word line breaks
-  const words = text.split(" ");
-  let charIndex = 0;
+  const lines = text.split("\n").map((line) => line.trim().split(/\s+/));
 
   return (
     <>
       <span className="sr-only">{text}</span>
-      <span aria-hidden="true">
-        {words.map((word, wordIdx) => {
-          const wordNode = (
-            <span key={`word-${wordIdx}`} className="inline-block whitespace-nowrap">
-              {word.split("").map((char, charIdx) => {
-                const delay = charIndex * 0.03;
-                charIndex++;
-                return (
-                  <span 
-                    key={charIdx} 
-                    className="inline-block opacity-0 animate-slide-up-fade" 
-                    style={{ animationDelay: `${delay}s` }}
+      <span aria-hidden="true" lang={lang}>
+        {lines.map((words, lineIndex) => {
+          const precedingWords = lines.slice(0, lineIndex).reduce((count, line) => count + line.length, 0);
+
+          return (
+            <span className="hero-line" key={lineIndex}>
+              {words.map((word, wordIndex) => (
+                <Fragment key={wordIndex}>
+                  {wordIndex > 0 && " "}
+                  <span
+                    className="hero-word"
+                    style={{ animationDelay: `${120 + (precedingWords + wordIndex) * 65}ms` }}
                   >
-                    {char}
+                    {word}
                   </span>
-                );
-              })}
+                </Fragment>
+              ))}
             </span>
           );
-          charIndex++; // Increment for the space character delay
-          
-          return [
-            wordNode,
-            wordIdx !== words.length - 1 ? " " : null
-          ];
         })}
       </span>
     </>

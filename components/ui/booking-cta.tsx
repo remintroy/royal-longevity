@@ -1,99 +1,69 @@
 "use client";
 
-import * as React from "react"
-import { useRef } from "react"
-import { cn } from "@/lib/utils"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
+import { useRef, type AnchorHTMLAttributes } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { cn } from "@/lib/utils";
 
-export interface BookingCtaProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+gsap.registerPlugin(useGSAP);
+
+export interface BookingCtaProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   label: string;
 }
 
-export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
-  ({ className, label, ...props }, ref) => {
-    const containerRef = useRef<HTMLAnchorElement>(null);
-    const circleRef = useRef<HTMLSpanElement>(null);
-    const textRef = useRef<HTMLSpanElement>(null);
-    const arrowRef = useRef<HTMLSpanElement>(null);
+export function BookingCta({ label, className, ...props }: BookingCtaProps) {
+  const container = useRef<HTMLAnchorElement>(null);
+  const circle = useRef<HTMLSpanElement>(null);
+  const text = useRef<HTMLSpanElement>(null);
+  const arrow = useRef<HTMLSpanElement>(null);
 
-    const { contextSafe } = useGSAP({ scope: containerRef });
+  useGSAP(() => {
+    const button = container.current;
+    const icon = circle.current;
+    const caption = text.current;
+    const glyph = arrow.current;
+    if (!button || !icon || !caption || !glyph) return;
 
-    const handleMouseEnter = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!circleRef.current || !textRef.current || !arrowRef.current || !containerRef.current) return;
-      
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const circleRect = circleRef.current.getBoundingClientRect();
-      const textRect = textRef.current.getBoundingClientRect();
-      
-      const isRtl = document.documentElement.dir === "rtl";
-      const direction = isRtl ? -1 : 1;
+    const media = gsap.matchMedia();
+    media.add("(prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine)", (context) => {
+      const config = { duration: 0.65, ease: "power3.inOut", overwrite: true };
 
-      let circleMoveX, textMoveX;
+      context.add("enter", () => {
+        const rtl = getComputedStyle(button).direction === "rtl";
+        // Layout offsets stay stable even when a previous hover tween is still running.
+        const iconDestination = rtl ? 6 : button.clientWidth - 6 - icon.offsetWidth;
+        const labelDestination = rtl ? button.clientWidth - 22 - caption.offsetWidth : 22;
+        gsap.to(icon, { x: iconDestination - icon.offsetLeft, ...config });
+        gsap.to(caption, { x: labelDestination - caption.offsetLeft, ...config });
+        gsap.to(glyph, { rotation: rtl ? -360 : 360, ...config });
+      });
+      context.add("leave", () => {
+        gsap.to([icon, caption], { x: 0, ...config });
+        gsap.to(glyph, { rotation: 0, ...config });
+      });
+      // Named context callbacks keep event-created tweens covered by GSAP cleanup.
+      const enter = () => context.enter();
+      const leave = () => context.leave();
+      button.addEventListener("mouseenter", enter);
+      button.addEventListener("mouseleave", leave);
+      const resize = new ResizeObserver(leave);
+      resize.observe(button);
 
-      if (!isRtl) {
-        // LTR: Circle moves right to touch 7px right padding
-        circleMoveX = (containerRect.right - 7) - circleRect.right;
-        // LTR: Text moves left to sit exactly 20px from left edge (7px padding + 13px extra space)
-        textMoveX = (containerRect.left + 20) - textRect.left;
-      } else {
-        // RTL: Circle moves left to touch 7px left padding
-        circleMoveX = (containerRect.left + 7) - circleRect.left;
-        // RTL: Text moves right to sit exactly 20px from right edge
-        textMoveX = (containerRect.right - 20) - textRect.right;
-      }
-
-      const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
-
-      gsap.to(circleRef.current, { x: circleMoveX, ...config });
-      gsap.to(textRef.current, { x: textMoveX, ...config });
-      gsap.to(arrowRef.current, { rotation: 360 * direction, ...config });
-      
-      props.onMouseEnter?.(e);
+      return () => {
+        button.removeEventListener("mouseenter", enter);
+        button.removeEventListener("mouseleave", leave);
+        resize.disconnect();
+      };
     });
+    return () => media.revert();
+  }, { scope: container });
 
-    const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (!circleRef.current || !textRef.current || !arrowRef.current) return;
-      
-      const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
-
-      gsap.to(circleRef.current, { x: 0, ...config });
-      gsap.to(textRef.current, { x: 0, ...config });
-      gsap.to(arrowRef.current, { rotation: 0, ...config });
-      
-      props.onMouseLeave?.(e);
-    });
-
-    return (
-      <a 
-        className={cn(
-          "group relative inline-flex items-center px-[7px] py-[6px] min-h-[54px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-[#422b1b]",
-          className
-        )}
-        ref={(node) => {
-          (containerRef as any).current = node;
-          if (typeof ref === 'function') ref(node);
-          else if (ref) (ref as any).current = node;
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        {...props}
-      >
-        <span 
-          ref={circleRef}
-          className="relative z-10 grid w-10 h-10 flex-shrink-0 place-content-center rounded-full bg-ivory text-espresso text-[20px] me-[14px]" 
-          aria-hidden="true"
-        >
-          <span className="rtl:-scale-x-100 flex place-content-center">
-            <span ref={arrowRef} className="block">↗</span>
-          </span>
-        </span>
-        <span ref={textRef} className="relative z-0 whitespace-nowrap">
-          {label}
-        </span>
-        <span className="w-[13px] flex-shrink-0" aria-hidden="true" />
-      </a>
-    )
-  }
-)
-BookingCta.displayName = "BookingCta"
+  return (
+    <a ref={container} className={cn("booking-cta", className)} {...props}>
+      <span ref={circle} className="cta-circle" aria-hidden="true">
+        <span className="direction-arrow"><span ref={arrow} className="cta-arrow">↗</span></span>
+      </span>
+      <span ref={text} className="cta-label">{label}</span>
+    </a>
+  );
+}

@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { LaurelLeft } from "@/components/icons/laurel-left";
 import { LaurelRight } from "@/components/icons/laurel-right";
 import { Marquee } from "@/components/ui/marquee";
+import { AnimatedTitle } from "@/components/ui/animated-title";
 
 export default async function Home({
   params,
@@ -41,16 +42,16 @@ export default async function Home({
           </nav>
 
           <div className="pt-[44px] px-3 pb-4 text-center min-[700px]:self-center min-[700px]:px-9 min-[700px]:py-0">
-            <Badge variant="outline" icon="⌖" className="mb-[22px]">
+            <Badge variant="outline" icon="⌖" className="mb-[22px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "150ms" }}>
               {heroContent.location}
             </Badge>
             <h1 className="max-w-[700px] mx-auto font-serif text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] text-balance" id="hero-title">
-              {heroContent.title}
+              <AnimatedTitle text={heroContent.title} lang={lang} />
             </h1>
-            <p className="max-w-[500px] mt-[19px] mx-auto text-[#654b37] text-[15px] leading-[1.6]">
+            <p className="max-w-[500px] mt-[19px] mx-auto text-[#654b37] text-[15px] leading-[1.6] opacity-0 animate-blur-fade-in" style={{ animationDelay: "600ms" }}>
               {heroContent.description}
             </p>
-            <div className="flex flex-col items-center gap-4 mt-[22px]">
+            <div className="flex flex-col items-center gap-4 mt-[22px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "750ms" }}>
               <Badge variant="ghost" icon="✦">
                 {heroContent.trustSignal}
               </Badge>
@@ -62,7 +63,7 @@ export default async function Home({
               />
             </div>
           </div>
-          <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:self-end min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px]" aria-label="Royal Longevity experience">
+          <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:self-end min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "900ms" }} aria-label="Royal Longevity experience">
             <div className="flex items-center justify-center gap-3">
               <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
               <div className="text-center text-espresso leading-[1.1]">
@@ -92,7 +93,7 @@ export default async function Home({
           </section>
         </section>
 
-        <section className="relative h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px]" aria-label={heroContent.imageAlt}>
+        <section className="relative h-[clamp(340px,90vw,560px)] rounded-[26px] overflow-hidden bg-espresso min-[700px]:h-full min-[700px]:min-h-[600px] min-[700px]:rounded-[28px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "1050ms" }} aria-label={heroContent.imageAlt}>
           <video
             src="/hero-video.mp4"
             autoPlay={true}

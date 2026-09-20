@@ -22,15 +22,15 @@
     }
   }
 
-  --animate-video-zoom-out: video-zoom-out 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+  --animate-video-zoom-out: video-zoom-out 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   @keyframes video-zoom-out {
     from {
       opacity: 0;
-      transform:  scale(1.1);
+      scale: 1.1;
     }
     to {
       opacity: 1;
-      transform:  scale(1);
+      scale: 1;
     }
   }
 

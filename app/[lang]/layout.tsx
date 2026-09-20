@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "../globals.css";
 import type { Language } from "@/data/site";
+import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 
 export async function generateMetadata({ params }: { params: Promise<{ lang: Language }> }): Promise<Metadata> {
   const { lang } = await params;
@@ -32,7 +33,11 @@ export default async function RootLayout({
       dir={lang === "ar" ? "rtl" : "ltr"}
       className="h-full antialiased"
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SmoothScrollProvider>
+          {children}
+        </SmoothScrollProvider>
+      </body>
     </html>
   );
 }

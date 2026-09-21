@@ -18,6 +18,7 @@ export function proxy(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next|branding|api|favicon.ico|hero-video.mp4|hero-video-2.mp4).*)',
+    // Public asset directories and file requests must never receive a locale prefix.
+    '/((?!_next|assets(?:/|$)|branding(?:/|$)|api(?:/|$)|.*\\.[^/]+$).*)',
   ],
 }

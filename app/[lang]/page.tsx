@@ -8,6 +8,8 @@ import { LaurelLeft } from "@/components/icons/laurel-left";
 import { LaurelRight } from "@/components/icons/laurel-right";
 import { Marquee } from "@/components/ui/marquee";
 import { AnimatedTitle } from "@/components/ui/animated-title";
+import { Introduction } from "@/components/introduction";
+import { getIntroductionContent } from "@/data/introduction";
 
 export default async function Home({
   params,
@@ -23,7 +25,8 @@ export default async function Home({
   const otherLangLabel = lang === "en" ? "AR" : "EN";
 
   return (
-    <main className="min-h-[100svh] p-5 overflow-hidden min-[700px]:p-[14px]">
+    <main className="min-h-[100svh] overflow-hidden">
+      <div className="p-5 min-[700px]:p-[14px]">
       <div className="w-[min(100%,1730px)] mx-auto flex flex-col gap-[18px] min-[700px]:min-h-[calc(100svh-28px)] min-[700px]:grid min-[700px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[700px]:gap-10" id="top">
         <section className="flex flex-col gap-[18px] min-[700px]:min-w-0 min-[700px]:grid min-[700px]:grid-rows-[auto_1fr_auto] min-[700px]:gap-0" aria-labelledby="hero-title">
           <nav className="flex items-center justify-between" aria-label="Primary navigation">
@@ -112,6 +115,8 @@ export default async function Home({
           </div>
         </section>
       </div>
+      </div>
+      <Introduction content={getIntroductionContent(lang)} />
     </main>
   );
 }

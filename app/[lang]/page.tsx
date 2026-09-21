@@ -16,6 +16,8 @@ import { Introduction } from "@/components/introduction";
 import { getIntroductionContent } from "@/data/introduction";
 import { Highlights } from "@/components/highlights";
 import { getHighlightsContent } from "@/data/highlights";
+import { BookingBanner } from "@/components/booking-banner";
+import { getBookingBannerContent } from "@/data/booking-banner";
 
 export default async function Home({
   params,
@@ -124,6 +126,7 @@ export default async function Home({
       <Experience content={getExperienceContent(lang)} bookingHref={heroContent.bookingHref} />
       <Gallery content={getGalleryContent(lang)} bookingHref={heroContent.bookingHref} />
       <Highlights content={getHighlightsContent(lang)} />
+      <BookingBanner content={getBookingBannerContent(lang)} bookingHref={heroContent.bookingHref} />
     </main>
   );
 }

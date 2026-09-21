@@ -21,7 +21,7 @@ function HighlightSymbol({ name }: { name: HighlightIcon }) {
 
 export function Highlights({ content }: { content: HighlightsContent }) {
   return (
-    <section id="highlights" aria-labelledby="highlights-title" className="border-t border-border bg-ivory px-5 py-20 text-espresso min-[700px]:px-8 min-[700px]:py-28 min-[1000px]:px-[clamp(32px,4.8vw,84px)]">
+    <section id="highlights" aria-labelledby="highlights-title" className="border-t border-border bg-white px-5 py-20 text-espresso min-[700px]:px-8 min-[700px]:py-28 min-[1000px]:px-[clamp(32px,4.8vw,84px)]">
       <div className="mx-auto max-w-[1560px]">
         <header className="text-center">
           <p className="mb-5 flex items-center justify-center gap-2.5 text-sm">

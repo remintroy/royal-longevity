@@ -88,7 +88,7 @@ export function Introduction({ content }: { content: IntroductionContent }) {
 
         <dl
           data-intro-panel
-          className="m-0 rounded-3xl border border-border bg-ivory px-5 py-2
+          className="m-0 rounded-3xl border border-border bg-white px-5 py-2
             text-espresso min-[700px]:w-[min(65%,780px)] min-[700px]:self-end
             min-[700px]:px-[30px] min-[700px]:py-0 min-[1200px]:w-[49%]"
         >

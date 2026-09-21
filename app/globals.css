@@ -65,7 +65,7 @@ html {
 
 body {
   margin: 0;
-  /* background-color: var(--color-ivory); */
+  background-color: #fff;
   color: var(--color-ink);
 }
 

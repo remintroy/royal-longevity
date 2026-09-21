@@ -8,7 +8,7 @@ export function Experience({ content, bookingHref }: {
   bookingHref: string;
 }) {
   return (
-    <section aria-labelledby="experience-title" className="bg-ivory py-20 text-espresso min-[700px]:py-[128px]">
+    <section aria-labelledby="experience-title" className="bg-white py-20 text-espresso min-[700px]:py-[128px]">
       <div className="mx-auto flex max-w-[760px] flex-col items-center px-6 text-center">
         <h2 id="experience-title" className="sr-only">{content.title}</h2>
         <a href={bookingHref} target="_blank" rel="noreferrer" aria-label={content.contactLabel}

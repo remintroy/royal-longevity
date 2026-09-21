@@ -31,9 +31,9 @@ export default async function Home({
 
   return (
     <main className="min-h-[100svh] overflow-hidden">
-      <div className="p-5 min-[700px]:p-[14px]">
-      <div className="w-[min(100%,1730px)] mx-auto flex flex-col gap-[18px] min-[700px]:min-h-[calc(100svh-28px)] min-[700px]:grid min-[700px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[700px]:gap-10" id="top">
-        <section className="flex flex-col gap-[18px] min-[700px]:min-w-0 min-[700px]:grid min-[700px]:grid-rows-[auto_1fr_auto] min-[700px]:gap-0" aria-labelledby="hero-title">
+      <div className="p-5 min-[1100px]:p-[14px]">
+      <div className="w-[min(100%,1730px)] mx-auto flex flex-col gap-[18px] min-[1100px]:min-h-[calc(100svh-28px)] min-[1100px]:grid min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[1100px]:gap-10" id="top">
+        <section className="flex flex-col gap-[18px] min-[1100px]:min-w-0 min-[1100px]:grid min-[1100px]:grid-rows-[auto_1fr_auto] min-[1100px]:gap-0" aria-labelledby="hero-title">
           <nav className="flex items-center justify-between" aria-label="Primary navigation">
             <a className="inline-flex h-12 items-center border border-border rounded-full px-[17px] py-2" href="#top" aria-label="Royal Longevity home">
               <BrandLogo lang={lang} />

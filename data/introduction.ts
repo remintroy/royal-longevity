@@ -14,7 +14,7 @@ export type IntroductionContent = {
 
 // Demo copy and figures, pending business approval. The photograph is the
 // supplied Stayscape reference, not a photograph of Royal Longevity's premises.
-export const introductionImage = "/assets/images/introduction-lounge.webp";
+export const introductionImage = "/assets/images/introduction-lounge.png";
 
 const content: Record<Language, IntroductionContent> = {
   en: {

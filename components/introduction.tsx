@@ -65,7 +65,7 @@ export function Introduction({ content }: { content: IntroductionContent }) {
             alt={content.imageAlt}
             fill
             sizes="100vw"
-            className="object-cover object-[48%_center]"
+            className="object-cover xl:object-contain"
           />
         </div>
         <div className="absolute inset-0 -z-10 bg-ink/45" aria-hidden="true" />

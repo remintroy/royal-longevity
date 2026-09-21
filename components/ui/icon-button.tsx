@@ -14,7 +14,7 @@ export const IconButton = React.forwardRef<HTMLButtonElement | HTMLAnchorElement
   (props, ref) => {
     const { className, children } = props;
     const baseClasses = cn(
-      "grid place-content-center w-12 h-12 border border-ivory rounded-full text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-ivory hover:border-espresso/30 active:scale-95 transition-all duration-300",
+      "grid place-content-center w-12 h-12 border border-border rounded-full text-ink text-xs font-bold tracking-[.08em] cursor-pointer focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-ivory hover:border-espresso/30 active:scale-95 transition-all duration-300",
       className
     );
 

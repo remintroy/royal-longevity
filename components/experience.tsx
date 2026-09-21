@@ -12,12 +12,12 @@ export function Experience({ content, bookingHref }: {
       <div className="mx-auto flex max-w-[760px] flex-col items-center px-6 text-center">
         <h2 id="experience-title" className="sr-only">{content.title}</h2>
         <a href={bookingHref} target="_blank" rel="noreferrer" aria-label={content.contactLabel}
-          className="group flex max-w-full items-center gap-4 rounded-3xl border border-espresso/16 p-4 text-start transition-colors duration-200 hover:bg-white/50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-espresso">
-          <span className="grid size-12 shrink-0 place-items-center rounded-full border border-espresso/10">
+          className="group flex max-w-full items-center gap-4 rounded-3xl border border-border p-4 text-start transition-colors duration-200 hover:bg-white/50 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-espresso">
+          <span className="grid size-12 shrink-0 place-items-center rounded-full border border-border">
             <Image src="/branding/icon-gold.png" width={32} height={32} alt="" className="h-8 w-auto" />
           </span>
           <span className="text-sm leading-relaxed min-[700px]:text-base">{content.team}<span className="block text-espresso/65">{content.title}</span></span>
-          <span className="grid size-11 shrink-0 place-items-center rounded-full border border-espresso/16 transition-colors duration-200 group-hover:bg-espresso group-hover:text-ivory">
+          <span className="grid size-11 shrink-0 place-items-center rounded-full border border-border transition-colors duration-200 group-hover:bg-espresso group-hover:text-ivory">
             <MessageCircle size={18} strokeWidth={1.5} aria-hidden="true" />
           </span>
         </a>

@@ -9,13 +9,13 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLParagraphElement> {
 export const Badge = React.forwardRef<HTMLParagraphElement, BadgeProps>(
   ({ className, variant = "outline", icon, children, ...props }, ref) => {
     const isOutline = variant === "outline";
-    
+
     return (
-      <p 
+      <p
         className={cn(
           "inline-flex items-center text-[#654b37]",
-          isOutline 
-            ? "gap-[7px] px-[13px] py-[9px] border border-espresso/16 rounded-full text-xs" 
+          isOutline
+            ? "gap-[7px] px-[13px] py-[9px] border border-border rounded-full text-xs"
             : "gap-[9px] m-0 text-[13px]",
           className
         )}

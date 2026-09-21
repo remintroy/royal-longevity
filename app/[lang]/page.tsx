@@ -33,7 +33,7 @@ export default async function Home({
       <div className="w-[min(100%,1730px)] mx-auto flex flex-col gap-[18px] min-[700px]:min-h-[calc(100svh-28px)] min-[700px]:grid min-[700px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[700px]:gap-10" id="top">
         <section className="flex flex-col gap-[18px] min-[700px]:min-w-0 min-[700px]:grid min-[700px]:grid-rows-[auto_1fr_auto] min-[700px]:gap-0" aria-labelledby="hero-title">
           <nav className="flex items-center justify-between" aria-label="Primary navigation">
-            <a className="inline-flex h-12 items-center border border-espresso/16 rounded-full px-[17px] py-2" href="#top" aria-label="Royal Longevity home">
+            <a className="inline-flex h-12 items-center border border-border rounded-full px-[17px] py-2" href="#top" aria-label="Royal Longevity home">
               <BrandLogo lang={lang} />
             </a>
             <div className="flex gap-2">
@@ -71,7 +71,7 @@ export default async function Home({
             </div>
           </div>
           <div className="@container w-full max-w-full mb-6 min-[700px]:mb-8 min-[700px]:self-end opacity-0 animate-blur-fade-in" style={{ animationDelay: "900ms" }}>
-            <section className="flex flex-col items-center justify-between gap-6 rounded-[24px] border border-espresso/16 px-5 py-6 @[520px]:flex-row @[520px]:gap-4 @[520px]:px-7" aria-label="Royal Longevity experience">
+            <section className="flex flex-col items-center justify-between gap-6 rounded-[24px] border border-border px-5 py-6 @[520px]:flex-row @[520px]:gap-4 @[520px]:px-7" aria-label="Royal Longevity experience">
               <div className="flex shrink-0 items-center justify-center gap-2">
                 <LaurelLeft className="h-[38px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
                 <div className="text-center text-[16px] leading-[1.35] text-espresso">
@@ -83,7 +83,7 @@ export default async function Home({
 
               <div className="grid w-full grid-cols-3 items-center @[520px]:w-auto @[520px]:min-w-[300px]">
                 {heroContent.highlights.map((highlight, index) => (
-                  <div className={`grid gap-1 px-2 text-center @[520px]:px-4 ${index > 0 ? "border-s border-espresso/14" : ""}`} key={highlight.label}>
+                  <div className={`grid gap-1 px-2 text-center @[520px]:px-4 ${index > 0 ? "border-s border-border" : ""}`} key={highlight.label}>
                     <strong className="text-[23px] font-normal leading-tight text-espresso" dir="ltr">
                       {highlight.value}
                     </strong>

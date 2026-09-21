@@ -17,7 +17,7 @@ function StatisticRow({ statistic }: { statistic: IntroductionStatistic }) {
   return (
     <div
       className="grid grid-cols-[minmax(82px,.8fr)_minmax(0,1.4fr)_22px]
-        items-center gap-3 border-espresso/16 py-[22px] not-first:border-t
+        items-center gap-3 border-border py-[22px] not-first:border-t
         min-[700px]:grid-cols-[minmax(110px,1fr)_minmax(0,1.4fr)_26px]
         min-[700px]:gap-6 min-[700px]:py-[30px]"
     >
@@ -88,7 +88,7 @@ export function Introduction({ content }: { content: IntroductionContent }) {
 
         <dl
           data-intro-panel
-          className="m-0 rounded-3xl border border-espresso/16 bg-ivory px-5 py-2
+          className="m-0 rounded-3xl border border-border bg-ivory px-5 py-2
             text-espresso min-[700px]:w-[min(65%,780px)] min-[700px]:self-end
             min-[700px]:px-[30px] min-[700px]:py-0 min-[1200px]:w-[49%]"
         >

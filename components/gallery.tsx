@@ -11,7 +11,7 @@ export function Gallery({ content, bookingHref }: {
 
   return (
     <GalleryMotion>
-      <section id="gallery" aria-labelledby="gallery-title" className="border-t border-espresso/16 bg-ivory px-5 pb-20 pt-12 text-espresso min-[700px]:px-8 min-[700px]:pb-32 min-[1000px]:px-[clamp(32px,4.8vw,84px)]">
+      <section id="gallery" aria-labelledby="gallery-title" className="border-t border-border bg-ivory px-5 pb-20 pt-12 text-espresso min-[700px]:px-8 min-[700px]:pb-32 min-[1000px]:px-[clamp(32px,4.8vw,84px)]">
         <header data-gallery-reveal className="mx-auto flex max-w-[720px] flex-col items-center text-center">
           <p className="mb-5 flex items-center gap-2.5 text-sm">
             <span className="size-[5px] rounded-full bg-gold" aria-hidden="true" />

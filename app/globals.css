@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme inline {
+  --color-border: color-mix(in srgb, var(--color-ivory) 88%, var(--color-espresso) 12%);
   --font-sans: var(--font-figtree), Arial, Helvetica, sans-serif;
 }
 
@@ -47,6 +48,12 @@
       opacity: 1;
       transform: translateY(0);
     }
+  }
+}
+
+@layer base {
+  *, ::before, ::after {
+    border-color: var(--color-border);
   }
 }
 

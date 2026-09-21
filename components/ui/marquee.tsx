@@ -55,8 +55,8 @@ export function Marquee({ items, className = "", size = "default", controls }: M
                   {row.map((item) => {
                     const Icon = marqueeIcons[items.indexOf(item) % marqueeIcons.length];
                     return (
-                      <div key={item} dir="auto" className={`flex items-center gap-3 rounded-full border border-espresso/16 bg-white/50 p-2 min-[700px]:gap-4 min-[700px]:p-2.5 ${large ? "min-[700px]:gap-5" : ""}`}>
-                        <span className={`flex size-12 shrink-0 items-center justify-center rounded-full bg-espresso/5 ${large ? "border border-espresso/10 min-[700px]:size-[72px]" : "min-[700px]:size-[60px]"}`}>
+                      <div key={item} dir="auto" className={`flex items-center gap-3 rounded-full border border-border bg-white/50 p-2 min-[700px]:gap-4 min-[700px]:p-2.5 ${large ? "min-[700px]:gap-5" : ""}`}>
+                        <span className={`flex size-12 shrink-0 items-center justify-center rounded-full bg-espresso/5 ${large ? "border border-border min-[700px]:size-[72px]" : "min-[700px]:size-[60px]"}`}>
                           <Icon className="size-5 text-gold min-[700px]:size-6" strokeWidth={1.5} />
                         </span>
                         <span className={`whitespace-nowrap pe-4 text-[#654b37] min-[700px]:pe-6 ${large ? "text-[24px] font-normal tracking-[-.035em] min-[700px]:text-[clamp(32px,3vw,48px)] rtl:tracking-normal" : "text-[18px] font-medium min-[700px]:text-[24px]"}`}>{item}</span>

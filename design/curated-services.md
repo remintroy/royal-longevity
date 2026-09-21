@@ -1,0 +1,7 @@
+# Curated services
+
+Follows FAQ. The supplied reference establishes a full-width dark section with centred editorial copy, a light booking pill, generous vertical spacing and a bottom strip of rounded photographs with varied heights and cropped outer edges.
+
+Per the user’s direction, this is a curated-services invitation, not a price display. “Your beauty. Your ritual.” introduces skin, salon and relaxation services; “Find your ritual” uses the shared WhatsApp BookingCta, with a supporting line inviting enquiries about prices and details. English and Arabic copy live in data/curated-services.ts. No amounts or unverified fee promises are displayed.
+
+Uses existing ink, ivory and espresso tokens and site typography. Photography reuses localized gallery data and existing demo assets. The decorative strip scrolls continuously left in both languages using a GSAP ImageMarquee client wrapper. Two identical image groups, including their trailing gap, loop seamlessly with a linear 55-second cycle. Each group spans at least the viewport to prevent gaps on wide screens. A localized pause/play control supports keyboard and touch; reduced-motion users see stationary images. Repeated photos are hidden from assistive technology. Mobile uses smaller images, and the surrounding content and controls retain RTL direction. Rounded images alternate short, medium and tall heights. No new assets or dependencies are introduced; the section content remains server-rendered.

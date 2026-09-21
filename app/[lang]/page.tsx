@@ -20,6 +20,8 @@ import { BookingBanner } from "@/components/booking-banner";
 import { getBookingBannerContent } from "@/data/booking-banner";
 import { Reviews } from "@/components/reviews";
 import { getReviewsContent } from "@/data/reviews";
+import { Faq } from "@/components/faq";
+import { getFaqContent } from "@/data/faq";
 
 export default async function Home({
   params,
@@ -130,6 +132,7 @@ export default async function Home({
       <Highlights content={getHighlightsContent(lang)} />
       <BookingBanner content={getBookingBannerContent(lang)} bookingHref={heroContent.bookingHref} />
       <Reviews content={getReviewsContent(lang)} />
+      <Faq content={getFaqContent(lang)} bookingHref={heroContent.bookingHref} />
     </main>
   );
 }

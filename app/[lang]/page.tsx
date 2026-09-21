@@ -74,7 +74,7 @@ export default async function Home({
             <section className="flex flex-col items-center justify-between gap-6 rounded-[24px] border border-border px-5 py-6 @[520px]:flex-row @[520px]:gap-4 @[520px]:px-7" aria-label="Royal Longevity experience">
               <div className="flex shrink-0 items-center justify-center gap-2">
                 <LaurelLeft className="h-[38px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
-                <div className="text-center text-[16px] leading-[1.35] text-espresso">
+                <div className="text-center text-[18px] leading-[1.35] text-espresso">
                   <div>{heroContent.badgeLine1}</div>
                   <div>{heroContent.badgeLine2}</div>
                 </div>
@@ -84,7 +84,7 @@ export default async function Home({
               <div className="grid w-full grid-cols-3 items-center @[520px]:w-auto @[520px]:min-w-[300px]">
                 {heroContent.highlights.map((highlight, index) => (
                   <div className={`grid gap-1 px-2 text-center @[520px]:px-4 ${index > 0 ? "border-s border-border" : ""}`} key={highlight.label}>
-                    <strong className="text-[23px] font-normal leading-tight text-espresso" dir="ltr">
+                    <strong className="text-[25px] font-normal leading-tight text-espresso" dir="ltr">
                       {highlight.value}
                     </strong>
                     {highlight.stars ? (
@@ -94,7 +94,7 @@ export default async function Home({
                         ))}
                       </span>
                     ) : (
-                      <span className="text-[12px] leading-[18px] text-[#71522f]">
+                      <span className="text-[14px] leading-[20px] text-[#71522f]">
                         {highlight.label}
                       </span>
                     )}

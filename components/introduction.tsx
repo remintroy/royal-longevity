@@ -78,7 +78,7 @@ export function Introduction({ content }: { content: IntroductionContent }) {
           <h2
             data-intro-reveal
             id="introduction-title"
-            className="max-w-[760px] whitespace-pre-line text-balance font-serif
+            className="max-w-[760px] whitespace-pre-line text-balance font-sans
               text-[clamp(2rem,3.8vw,4rem)] font-normal leading-[1.12]
               tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal"
           >

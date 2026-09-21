@@ -49,7 +49,7 @@ export default async function Home({
             <Badge variant="outline" icon="⌖" className="mb-[22px] opacity-0 animate-blur-fade-in" style={{ animationDelay: "150ms" }}>
               {heroContent.location}
             </Badge>
-            <h1 className="max-w-[700px] mx-auto font-serif text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] text-balance" id="hero-title">
+            <h1 className="max-w-[700px] mx-auto font-sans text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] text-balance" id="hero-title">
               <AnimatedTitle text={heroContent.title} lang={lang} />
             </h1>
             <p className="max-w-[500px] mt-[19px] mx-auto text-[#654b37] text-[15px] leading-[1.6] opacity-0 animate-blur-fade-in" style={{ animationDelay: "600ms" }}>

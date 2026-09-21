@@ -14,6 +14,8 @@ import { LaurelRight } from "@/components/icons/laurel-right";
 import { AnimatedTitle } from "@/components/ui/animated-title";
 import { Introduction } from "@/components/introduction";
 import { getIntroductionContent } from "@/data/introduction";
+import { Highlights } from "@/components/highlights";
+import { getHighlightsContent } from "@/data/highlights";
 
 export default async function Home({
   params,
@@ -121,6 +123,7 @@ export default async function Home({
       <Introduction content={getIntroductionContent(lang)} />
       <Experience content={getExperienceContent(lang)} bookingHref={heroContent.bookingHref} />
       <Gallery content={getGalleryContent(lang)} bookingHref={heroContent.bookingHref} />
+      <Highlights content={getHighlightsContent(lang)} />
     </main>
   );
 }

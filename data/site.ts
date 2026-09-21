@@ -3,6 +3,7 @@ export type Language = 'en' | 'ar';
 export type Highlight = {
   value: string;
   label: string;
+  stars?: boolean;
 };
 
 export type HeroContent = {
@@ -35,10 +36,11 @@ export const heroContent: Record<Language, HeroContent> = {
     location: "Personal Care & Beauty · Ajman",
     badgeLine1: "Guest",
     badgeLine2: "favorite",
+    // Demo metrics from the supplied design reference; confirm before publishing.
     highlights: [
-      { value: "Beauty", label: "personal care" },
-      { value: "Wellness", label: "considered rituals" },
-      { value: "Care", label: "made personal" },
+      { value: "100%", label: "Reply Rate" },
+      { value: "4.98", label: "Rated 4.98 out of 5", stars: true },
+      { value: "137", label: "Reviews" },
     ],
     imageAlt: "Warm, editorial beauty treatment setting with ivory linens and botanical details",
   },
@@ -52,10 +54,11 @@ export const heroContent: Record<Language, HeroContent> = {
     location: "العناية الشخصية والجمال · عجمان",
     badgeLine1: "اختيار",
     badgeLine2: "العملاء",
+    // Demo metrics from the supplied design reference; confirm before publishing.
     highlights: [
-      { value: "الجمال", label: "العناية الشخصية" },
-      { value: "العافية", label: "طقوس متقنة" },
-      { value: "العناية", label: "مصممة لك" },
+      { value: "100%", label: "معدل الرد" },
+      { value: "4.98", label: "التقييم 4.98 من 5", stars: true },
+      { value: "137", label: "التقييمات" },
     ],
     imageAlt: "جلسة علاج تجميلي دافئة مع بياضات عاجية وتفاصيل نباتية",
   }

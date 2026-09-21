@@ -1,16 +1,16 @@
+import { Star } from "lucide-react";
 import { Gallery } from "@/components/gallery";
 import { getGalleryContent } from "@/data/gallery";
 import { Experience } from "@/components/experience";
 import { getExperienceContent } from "@/data/experience";
 import { notFound } from "next/navigation";
-import { getHeroContent, getMarqueeContent } from "@/data/site";
+import { getHeroContent } from "@/data/site";
 import { IconButton } from "@/components/ui/icon-button";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { Badge } from "@/components/ui/badge";
 import { LaurelLeft } from "@/components/icons/laurel-left";
 import { LaurelRight } from "@/components/icons/laurel-right";
-import { Marquee } from "@/components/ui/marquee";
 import { AnimatedTitle } from "@/components/ui/animated-title";
 import { Introduction } from "@/components/introduction";
 import { getIntroductionContent } from "@/data/introduction";
@@ -23,7 +23,6 @@ export default async function Home({
   const { lang } = await params;
   if (lang !== "en" && lang !== "ar") notFound();
   const heroContent = getHeroContent(lang);
-  const marqueeItems = getMarqueeContent(lang);
 
   const otherLang = lang === "en" ? "ar" : "en";
   const otherLangLabel = lang === "en" ? "AR" : "EN";
@@ -71,8 +70,38 @@ export default async function Home({
               />
             </div>
           </div>
-          <div className="w-full max-w-full overflow-hidden min-[700px]:self-end opacity-0 animate-blur-fade-in" style={{ animationDelay: "900ms" }}>
-            <Marquee items={marqueeItems} />
+          <div className="@container w-full max-w-full mb-6 min-[700px]:mb-8 min-[700px]:self-end opacity-0 animate-blur-fade-in" style={{ animationDelay: "900ms" }}>
+            <section className="flex flex-col items-center justify-between gap-6 rounded-[24px] border border-espresso/16 px-5 py-6 @[520px]:flex-row @[520px]:gap-4 @[520px]:px-7" aria-label="Royal Longevity experience">
+              <div className="flex shrink-0 items-center justify-center gap-2">
+                <LaurelLeft className="h-[38px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
+                <div className="text-center text-[16px] leading-[1.35] text-espresso">
+                  <div>{heroContent.badgeLine1}</div>
+                  <div>{heroContent.badgeLine2}</div>
+                </div>
+                <LaurelRight className="h-[38px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
+              </div>
+
+              <div className="grid w-full grid-cols-3 items-center @[520px]:w-auto @[520px]:min-w-[300px]">
+                {heroContent.highlights.map((highlight, index) => (
+                  <div className={`grid gap-1 px-2 text-center @[520px]:px-4 ${index > 0 ? "border-s border-espresso/14" : ""}`} key={highlight.label}>
+                    <strong className="text-[23px] font-normal leading-tight text-espresso" dir="ltr">
+                      {highlight.value}
+                    </strong>
+                    {highlight.stars ? (
+                      <span className="flex min-h-[18px] items-center justify-center gap-[2px] text-espresso" role="img" aria-label={highlight.label}>
+                        {Array.from({ length: 5 }, (_, star) => (
+                          <Star key={star} className="size-3" fill="currentColor" strokeWidth={0} aria-hidden="true" />
+                        ))}
+                      </span>
+                    ) : (
+                      <span className="text-[12px] leading-[18px] text-[#71522f]">
+                        {highlight.label}
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </section>
           </div>
         </section>
 
@@ -86,37 +115,6 @@ export default async function Home({
             className="absolute top-1/2 left-0 w-full h-auto -translate-y-1/2 opacity-0 animate-video-zoom-out"
             aria-label={heroContent.imageAlt}
           />
-        </section>
-      </div>
-
-      <div className="w-[min(100%,1730px)] mx-auto mt-[20px] min-[700px]:mt-[40px] mb-[20px] min-[700px]:mb-[40px] px-0">
-        <section className="flex flex-col gap-6 px-4 py-6 border border-espresso/16 rounded-[22px] min-[700px]:flex-row min-[700px]:items-center min-[700px]:justify-between min-[700px]:px-8 min-[700px]:py-4 min-[700px]:rounded-[100px]" aria-label="Royal Longevity experience">
-          <div className="flex items-center justify-center gap-3">
-            <LaurelLeft className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
-            <div className="text-center text-espresso leading-[1.1]">
-              <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine1}</div>
-              <div className="text-[17px] min-[700px]:text-[19px]">{heroContent.badgeLine2}</div>
-            </div>
-            <LaurelRight className="h-[38px] min-[700px]:h-[42px] w-auto text-espresso rtl:-scale-x-100" aria-hidden="true" />
-          </div>
-
-          <div className="flex items-center justify-center">
-            {heroContent.highlights.map((highlight, index) => (
-              <div className="flex items-center" key={highlight.value}>
-                {index > 0 && (
-                  <div className="w-[1px] h-10 bg-espresso/14 mx-4 min-[700px]:mx-6" aria-hidden="true" />
-                )}
-                <div className="text-center grid gap-[2px] min-[700px]:gap-[4px]">
-                  <strong className="text-[18px] font-normal min-[700px]:text-[22px] text-espresso">
-                    {highlight.value}
-                  </strong>
-                  <span className="text-[#71522f] text-[10px] leading-[1.25] min-[700px]:text-[11px] whitespace-nowrap">
-                    {highlight.label}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
         </section>
       </div>
       </div>

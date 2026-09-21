@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { useRef } from "react"
+import { ArrowUpRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import gsap from "gsap"
 import { useGSAP } from "@gsap/react"
@@ -90,7 +91,9 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
           aria-hidden="true"
         >
           <span className="rtl:-scale-x-100 flex place-content-center">
-            <span ref={arrowRef} className="block">↗</span>
+            <span ref={arrowRef} className="block">
+              <ArrowUpRight className="size-5" aria-hidden="true" />
+            </span>
           </span>
         </span>
         <span ref={textRef} className="relative z-0 whitespace-nowrap">

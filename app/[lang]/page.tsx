@@ -1,3 +1,5 @@
+import { Experience } from "@/components/experience";
+import { getExperienceContent } from "@/data/experience";
 import { notFound } from "next/navigation";
 import { getHeroContent, getMarqueeContent } from "@/data/site";
 import { IconButton } from "@/components/ui/icon-button";
@@ -117,6 +119,7 @@ export default async function Home({
       </div>
       </div>
       <Introduction content={getIntroductionContent(lang)} />
+      <Experience content={getExperienceContent(lang)} bookingHref={heroContent.bookingHref} />
     </main>
   );
 }

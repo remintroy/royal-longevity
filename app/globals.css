@@ -70,3 +70,11 @@ button, a { font: inherit; }
     transition-duration: .01ms !important;
   }
 }
+
+/* Keep every label reachable without movement when reduced motion is requested. */
+@media (prefers-reduced-motion: reduce) {
+  .marquee-row { overflow: visible; }
+  .marquee [data-marquee-track] { width: 100%; transform: none !important; }
+  .marquee-copy { width: 100%; flex-wrap: wrap; justify-content: center; padding-inline: 12px; }
+  .marquee-copy + .marquee-copy { display: none; }
+}

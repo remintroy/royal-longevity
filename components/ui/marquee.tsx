@@ -1,140 +1,83 @@
 "use client";
 
-import { useRef } from 'react';
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-import { Droplets, Flower2, Leaf, Sparkles, Activity, Scissors, Waves } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { Droplets, Flower2, Leaf, Sparkles, Activity, Scissors, Waves, Pause, Play } from "lucide-react";
 
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(useGSAP);
-}
+gsap.registerPlugin(useGSAP);
 
 interface MarqueeProps {
   items: string[];
   className?: string;
+  size?: "default" | "large";
+  controls?: { pause: string; play: string };
 }
 
-const marqueeIcons = [
-  Droplets, // Skin Care
-  Flower2,  // Spa
-  Leaf,     // Wellness
-  Sparkles, // Beauty
-  Activity, // Treatment
-  Scissors, // Salon
-  Waves     // Relaxation
-];
+const marqueeIcons = [Droplets, Flower2, Leaf, Sparkles, Activity, Scissors, Waves];
 
-const Pill = ({ text, icon: Icon }: { text: string; icon: React.ElementType }) => (
-  <div className="flex items-center gap-3 min-[700px]:gap-4 border border-espresso/16 rounded-full p-2 min-[700px]:p-2.5 bg-white/50 hover:bg-white/90 transition-colors">
-    <div className="w-[48px] h-[48px] min-[700px]:w-[60px] min-[700px]:h-[60px] rounded-full bg-espresso/5 flex items-center justify-center shrink-0">
-      <Icon className="w-5 h-5 min-[700px]:w-6 min-[700px]:h-6" stroke="url(#goldGradient)" />
-    </div>
-    <span className="text-[18px] min-[700px]:text-[24px] text-[#654b37] whitespace-nowrap pr-4 min-[700px]:pr-6 rtl:pr-0 rtl:pl-4 rtl:min-[700px]:pl-6 font-medium">
-      {text}
-    </span>
-  </div>
-);
-
-export function Marquee({ items, className = "" }: MarqueeProps) {
+export function Marquee({ items, className = "", size = "default", controls }: MarqueeProps) {
   const container = useRef<HTMLDivElement>(null);
-  const track1 = useRef<HTMLDivElement>(null);
-  const track2 = useRef<HTMLDivElement>(null);
-  const tween1 = useRef<gsap.core.Tween | null>(null);
-  const tween2 = useRef<gsap.core.Tween | null>(null);
+  const tweens = useRef<gsap.core.Tween[]>([]);
+  const [paused, setPaused] = useState(false);
+  const large = size === "large";
 
   useGSAP(() => {
-    // Calculate a consistent duration based on items count
-    const duration = items.length * 6; // Slower, smoother speed
-
-    if (track1.current) {
-      tween1.current = gsap.to(track1.current, {
-        xPercent: -50,
-        ease: "none",
-        duration: duration,
-        repeat: -1,
-      });
-    }
-
-    if (track2.current) {
-      tween2.current = gsap.fromTo(track2.current, 
-        { xPercent: -50 },
-        {
-          xPercent: 0,
+    const media = gsap.matchMedia();
+    tweens.current = [];
+    media.add("(prefers-reduced-motion: no-preference)", () => {
+      const tracks = container.current?.querySelectorAll<HTMLElement>("[data-marquee-track]");
+      tracks?.forEach((track, index) => {
+        tweens.current.push(gsap.fromTo(track, { xPercent: index === 0 ? 0 : -50 }, {
+          xPercent: index === 0 ? -50 : 0,
           ease: "none",
-          duration: duration,
+          duration: items.length * (large ? 9 : 6),
           repeat: -1,
-        }
-      );
-    }
-  }, { scope: container });
+        }));
+      });
+    });
+    return () => media.revert();
+  }, { scope: container, dependencies: [items, large], revertOnUpdate: true });
 
-  const handleMouseEnter = () => {
-    if (tween1.current) gsap.to(tween1.current, { timeScale: 0.15, duration: 0.8, ease: "power2.out" });
-    if (tween2.current) gsap.to(tween2.current, { timeScale: 0.15, duration: 0.8, ease: "power2.out" });
-  };
-
-  const handleMouseLeave = () => {
-    if (tween1.current) gsap.to(tween1.current, { timeScale: 1, duration: 0.8, ease: "power2.out" });
-    if (tween2.current) gsap.to(tween2.current, { timeScale: 1, duration: 0.8, ease: "power2.out" });
-  };
-
-  // Create a reversed array for the second row to offset the text visually
-  const reversedItems = [...items].reverse();
+  useEffect(() => {
+    tweens.current.forEach((tween) => tween.paused(paused));
+  }, [paused]);
 
   return (
-    <div 
-      ref={container} 
-      className={`overflow-hidden relative w-full flex flex-col gap-2 min-[700px]:gap-4 py-4 min-[700px]:py-6 ${className}`}
-      style={{
-        maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-        WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-      }}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
-      <svg width="0" height="0" className="absolute">
-        <defs>
-          <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#A57426" />
-            <stop offset="5.93%" stopColor="#BB8A36" />
-            <stop offset="13.01%" stopColor="#CE9D44" />
-            <stop offset="20.31%" stopColor="#D9A84C" />
-            <stop offset="28.09%" stopColor="#DDAC4F" />
-            <stop offset="66.85%" stopColor="#C79534" />
-            <stop offset="88.76%" stopColor="#F5C769" />
-            <stop offset="100%" stopColor="#B38327" />
-          </linearGradient>
-        </defs>
-      </svg>
-
-      {/* Top Row - Scrolls Left */}
-      <div 
-        ref={track1} 
-        className="flex w-max items-center gap-2 min-[700px]:gap-3 pl-4"
-      >
-        {items.map((item, idx) => (
-          <Pill key={`t1-s1-${idx}`} text={item} icon={marqueeIcons[idx % marqueeIcons.length]} />
-        ))}
-        {items.map((item, idx) => (
-          <Pill key={`t1-s2-${idx}`} text={item} icon={marqueeIcons[idx % marqueeIcons.length]} />
+    <div ref={container} className={`marquee relative w-full ${className}`}>
+      <ul className="sr-only">{items.map((item) => <li key={item}>{item}</li>)}</ul>
+      <div className="flex flex-col gap-2 overflow-hidden py-4 min-[700px]:gap-4 min-[700px]:py-6" dir="ltr" aria-hidden="true">
+        {[items, [...items].reverse()].map((row, rowIndex) => (
+          <div key={rowIndex} className="marquee-row overflow-hidden">
+            <div data-marquee-track className="flex w-max">
+              {[0, 1].map((copy) => (
+                <div key={copy} className="marquee-copy flex shrink-0 items-center gap-2 pe-2 min-[700px]:gap-3 min-[700px]:pe-3">
+                  {row.map((item) => {
+                    const Icon = marqueeIcons[items.indexOf(item) % marqueeIcons.length];
+                    return (
+                      <div key={item} dir="auto" className={`flex items-center gap-3 rounded-full border border-espresso/16 bg-white/50 p-2 min-[700px]:gap-4 min-[700px]:p-2.5 ${large ? "min-[700px]:gap-5" : ""}`}>
+                        <span className={`flex size-12 shrink-0 items-center justify-center rounded-full bg-espresso/5 ${large ? "border border-espresso/10 min-[700px]:size-[72px]" : "min-[700px]:size-[60px]"}`}>
+                          <Icon className="size-5 text-gold min-[700px]:size-6" strokeWidth={1.5} />
+                        </span>
+                        <span className={`whitespace-nowrap pe-4 text-[#654b37] min-[700px]:pe-6 ${large ? "text-[24px] font-normal tracking-[-.035em] min-[700px]:text-[clamp(32px,3vw,48px)] rtl:tracking-normal" : "text-[18px] font-medium min-[700px]:text-[24px]"}`}>{item}</span>
+                      </div>
+                    );
+                  })}
+                </div>
+              ))}
+            </div>
+          </div>
         ))}
       </div>
-
-      {/* Bottom Row - Scrolls Right */}
-      <div 
-        ref={track2} 
-        className="flex w-max items-center gap-2 min-[700px]:gap-3 pr-4"
-      >
-        {reversedItems.map((item, idx) => {
-          // Find original index to assign the correct icon
-          const originalIdx = items.length - 1 - idx;
-          return <Pill key={`t2-s1-${idx}`} text={item} icon={marqueeIcons[originalIdx % marqueeIcons.length]} />;
-        })}
-        {reversedItems.map((item, idx) => {
-          const originalIdx = items.length - 1 - idx;
-          return <Pill key={`t2-s2-${idx}`} text={item} icon={marqueeIcons[originalIdx % marqueeIcons.length]} />;
-        })}
-      </div>
+      {controls && (
+        <div className="mt-3 flex justify-center motion-reduce:hidden">
+          <button type="button" onClick={() => setPaused(!paused)} aria-label={paused ? controls.play : controls.pause}
+            className="flex min-h-11 items-center gap-2 rounded-full px-4 text-xs text-espresso/70 transition-colors hover:bg-espresso/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espresso">
+            {paused ? <Play size={12} aria-hidden="true" /> : <Pause size={12} aria-hidden="true" />}
+            {paused ? controls.play : controls.pause}
+          </button>
+        </div>
+      )}
     </div>
   );
 }

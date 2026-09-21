@@ -26,6 +26,8 @@ import { CuratedServices } from "@/components/curated-services";
 import { getCuratedServicesContent } from "@/data/curated-services";
 import { Location } from "@/components/location";
 import { getLocationContent } from "@/data/location";
+import { Footer } from "@/components/footer";
+import { getFooterContent } from "@/data/footer";
 
 export default async function Home({
   params,
@@ -40,6 +42,7 @@ export default async function Home({
   const otherLangLabel = lang === "en" ? "AR" : "EN";
 
   return (
+    <>
     <main className="min-h-[100svh] overflow-hidden">
       <div className="p-5 min-[1100px]:p-[14px]">
       <div className="w-[min(100%,1730px)] mx-auto flex flex-col gap-[18px] min-[1100px]:min-h-[calc(100svh-28px)] min-[1100px]:grid min-[1100px]:grid-cols-[minmax(0,1fr)_minmax(600px,1fr)] min-[1100px]:gap-10" id="top">
@@ -140,5 +143,7 @@ export default async function Home({
       <CuratedServices content={getCuratedServicesContent(lang)} bookingHref={heroContent.bookingHref} />
       <Location content={getLocationContent(lang)} bookingHref={heroContent.bookingHref} />
     </main>
+    <Footer content={getFooterContent(lang)} bookingHref={heroContent.bookingHref} />
+    </>
   );
 }

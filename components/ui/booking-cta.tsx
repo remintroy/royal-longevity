@@ -20,6 +20,7 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
     const { contextSafe } = useGSAP({ scope: containerRef });
 
     const handleMouseEnter = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
       if (!circleRef.current || !textRef.current || !arrowRef.current || !containerRef.current) return;
       
       const containerRect = containerRef.current.getBoundingClientRect();
@@ -53,6 +54,10 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
     });
 
     const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        gsap.set([circleRef.current, textRef.current, arrowRef.current], { clearProps: "transform" });
+        return;
+      }
       if (!circleRef.current || !textRef.current || !arrowRef.current) return;
       
       const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };

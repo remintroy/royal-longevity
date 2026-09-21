@@ -1,3 +1,5 @@
+import { Gallery } from "@/components/gallery";
+import { getGalleryContent } from "@/data/gallery";
 import { Experience } from "@/components/experience";
 import { getExperienceContent } from "@/data/experience";
 import { notFound } from "next/navigation";
@@ -120,6 +122,7 @@ export default async function Home({
       </div>
       <Introduction content={getIntroductionContent(lang)} />
       <Experience content={getExperienceContent(lang)} bookingHref={heroContent.bookingHref} />
+      <Gallery content={getGalleryContent(lang)} bookingHref={heroContent.bookingHref} />
     </main>
   );
 }

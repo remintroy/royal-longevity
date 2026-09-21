@@ -42,10 +42,12 @@
   @keyframes slide-up-fade {
     from {
       opacity: 0;
+      filter: blur(var(--title-reveal-blur, 8px));
       transform: translateY(15px);
     }
     to {
       opacity: 1;
+      filter: blur(0);
       transform: translateY(0);
     }
   }
@@ -71,7 +73,21 @@ body {
 
 button, a { font: inherit; }
 
+@media (max-width: 699px) {
+  .animate-slide-up-fade {
+    --title-reveal-blur: 4px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .animate-slide-up-fade,
+  .animate-blur-fade-in {
+    animation: none;
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
   *, *::before, *::after {
     scroll-behavior: auto !important;
     transition-duration: .01ms !important;

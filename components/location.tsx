@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import { ArrowUpRight } from "lucide-react";
 import type { LocationContent } from "@/data/location";
 
@@ -10,9 +11,9 @@ export function Location({ content, bookingHref }: { content: LocationContent; b
             <span className="size-[5px] rounded-full bg-current" aria-hidden="true" />
             {content.eyebrow}
           </p>
-          <h2 id="location-title" className="text-balance text-[clamp(2rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
+          <RevealHeading id="location-title" className="text-balance text-[clamp(2rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
             {content.title}
-          </h2>
+          </RevealHeading>
         </header>
 
         <dl className="mx-auto my-10 grid max-w-[1360px] min-[700px]:my-16 min-[700px]:grid-cols-3 min-[1200px]:my-20">

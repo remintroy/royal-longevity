@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import { Star } from "lucide-react";
 import { LaurelLeft } from "@/components/icons/laurel-left";
 import { LaurelRight } from "@/components/icons/laurel-right";
@@ -55,9 +56,9 @@ export function Reviews({ content }: { content: ReviewsContent }) {
             </p>
             <LaurelRight className="h-12 w-auto min-[700px]:h-[54px]" aria-hidden="true" />
           </div>
-          <h2 id="reviews-title" className="mx-auto mt-7 max-w-[480px] whitespace-pre-line text-balance text-2xl font-normal leading-[1.3] text-espresso/75 min-[700px]:text-[28px] rtl:leading-[1.6]">
+          <RevealHeading id="reviews-title" className="mx-auto mt-7 max-w-[480px] whitespace-pre-line text-balance text-2xl font-normal leading-[1.3] text-espresso/75 min-[700px]:text-[28px] rtl:leading-[1.6]">
             {content.title}
-          </h2>
+          </RevealHeading>
           <dl className="mx-auto mt-10 grid max-w-[680px] grid-cols-2 gap-y-6 min-[700px]:mt-12 min-[700px]:grid-cols-4">
             {content.categories.map((category) => (
               <div key={category.label} className="flex flex-col-reverse gap-1 px-3 even:border-s even:border-border min-[700px]:not-first:border-s">

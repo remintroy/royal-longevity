@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import Image from "next/image";
 import { BookingCta } from "@/components/ui/booking-cta";
 import type { BookingBannerContent } from "@/data/booking-banner";
@@ -28,12 +29,12 @@ export function BookingBanner({
             <span className="size-[5px] shrink-0 rounded-full bg-current" aria-hidden="true" />
             {content.eyebrow}
           </p>
-          <h2
+          <RevealHeading
             id="booking-banner-title"
             className="whitespace-pre-line text-balance text-[clamp(2rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal"
           >
             {content.title}
-          </h2>
+          </RevealHeading>
           <BookingCta
             href={bookingHref}
             label={content.bookingLabel}

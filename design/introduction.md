@@ -21,7 +21,7 @@ Content is server-rendered; the client wrapper controls animation only.
 - `components/introduction.tsx` owns the server-rendered layout and Tailwind
   styling, including the shared statistic row and responsive/RTL variants.
 - `components/ui/introduction-motion.tsx` owns GSAP through a scoped `useGSAP`
-  hook. Separate functions handle parallax, heading entry, and a single panel
+  hook. Separate functions handle parallax, eyebrow entry, and a single panel
   timeline shared by the statistics. `gsap.matchMedia` handles reduced motion
   and cleanup, including restoration of the counter text.
 - Parallax travels from -24% to +24% of the image layer's height. The layer
@@ -40,3 +40,9 @@ Replace it with approved Royal Longevity photography before publication.
 
 The locale proxy excludes `/assets/` and static file requests so images are
 served directly rather than redirected into `/en` or `/ar` routes.
+
+The main heading uses the shared `RevealHeading` word-by-word blur-and-rise
+animation on viewport entry, with a 100ms stagger, reduced blur on mobile, and
+no motion when reduced motion is requested. Words stay intact for Arabic shaping,
+authored whitespace and line breaks are preserved, and screen readers receive
+the complete heading once.

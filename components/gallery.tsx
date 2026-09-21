@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import Image from "next/image";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { GalleryMotion } from "@/components/ui/gallery-motion";
@@ -12,15 +13,15 @@ export function Gallery({ content, bookingHref }: {
   return (
     <GalleryMotion>
       <section id="gallery" aria-labelledby="gallery-title" className="border-t border-border bg-white px-5 pb-20 pt-12 text-espresso min-[700px]:px-8 min-[700px]:pb-32 min-[1000px]:px-[clamp(32px,4.8vw,84px)]">
-        <header data-gallery-reveal className="mx-auto flex max-w-[720px] flex-col items-center text-center">
-          <p className="mb-5 flex items-center gap-2.5 text-sm">
+        <header className="mx-auto flex max-w-[720px] flex-col items-center text-center">
+          <p data-gallery-reveal className="mb-5 flex items-center gap-2.5 text-sm">
             <span className="size-[5px] rounded-full bg-gold" aria-hidden="true" />
             {content.eyebrow}
           </p>
-          <h2 id="gallery-title" className="whitespace-pre-line text-balance text-[clamp(2.1rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
+          <RevealHeading id="gallery-title" className="whitespace-pre-line text-balance text-[clamp(2.1rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
             {content.title}
-          </h2>
-          <BookingCta className="mt-8" href={bookingHref} label={content.bookingLabel} target="_blank" rel="noreferrer" />
+          </RevealHeading>
+          <BookingCta data-gallery-reveal className="mt-8" href={bookingHref} label={content.bookingLabel} target="_blank" rel="noreferrer" />
         </header>
 
         <div className="mx-auto mt-12 grid max-w-[1560px] gap-4 min-[700px]:mt-20 min-[1000px]:grid-cols-[1fr_1.35fr_1fr]">

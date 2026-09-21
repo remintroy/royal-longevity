@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import Image from "next/image";
 import { HeartHandshake, Smile, UsersRound } from "lucide-react";
 import { IntroductionMotion } from "@/components/ui/introduction-motion";
@@ -75,15 +76,14 @@ export function Introduction({ content }: { content: IntroductionContent }) {
             <span className="size-[5px] rounded-full bg-current" aria-hidden="true" />
             {content.eyebrow}
           </p>
-          <h2
-            data-intro-reveal
+          <RevealHeading
             id="introduction-title"
             className="max-w-[760px] whitespace-pre-line text-balance font-sans
               text-[clamp(2rem,3.8vw,4rem)] font-normal leading-[1.12]
               tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal"
           >
             {content.title}
-          </h2>
+          </RevealHeading>
         </header>
 
         <dl

@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import Image from "next/image";
 import { BookingCta } from "@/components/ui/booking-cta";
 import type { CuratedServicesContent } from "@/data/curated-services";
@@ -23,9 +24,9 @@ export function CuratedServices({ content, bookingHref }: { content: CuratedServ
           <span className="size-[5px] rounded-full bg-current" aria-hidden="true" />
           {content.eyebrow}
         </p>
-        <h2 id="curated-services-title" className="text-balance text-[clamp(2.5rem,4.2vw,4.5rem)] font-normal leading-[1.12] tracking-[-.045em] rtl:leading-[1.4] rtl:tracking-normal">
+        <RevealHeading id="curated-services-title" className="text-balance text-[clamp(2.5rem,4.2vw,4.5rem)] font-normal leading-[1.12] tracking-[-.045em] rtl:leading-[1.4] rtl:tracking-normal">
           {content.title}
-        </h2>
+        </RevealHeading>
         <p className="mt-6 whitespace-pre-line text-pretty text-lg leading-[1.4] text-ivory/70 min-[700px]:text-2xl rtl:leading-[1.7]">
           {content.description}
         </p>

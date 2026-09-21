@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import Image from "next/image";
 import { ArrowDown } from "lucide-react";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -17,12 +18,12 @@ export function Faq({ content, bookingHref }: { content: FaqContent; bookingHref
             <span className="size-[5px] shrink-0 rounded-full bg-gold" aria-hidden="true" />
             {content.eyebrow}
           </p>
-          <h2
+          <RevealHeading
             id="faq-title"
             className="whitespace-pre-line text-balance text-[clamp(2rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal"
           >
             {content.title}
-          </h2>
+          </RevealHeading>
           <BookingCta href={bookingHref} label={content.bookingLabel} target="_blank" rel="noreferrer" className="mt-7 min-[700px]:mt-9" />
         </header>
         <FaqAccordion>

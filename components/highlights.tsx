@@ -1,3 +1,4 @@
+import { RevealHeading } from "@/components/ui/reveal-heading";
 import Image from "next/image";
 import { Clock3, Droplets, Flower2, Gem, HeartHandshake, Leaf, Scissors, Sparkles, Waves } from "lucide-react";
 import type { HighlightIcon, HighlightsContent } from "@/data/highlights";
@@ -28,9 +29,9 @@ export function Highlights({ content }: { content: HighlightsContent }) {
             <span className="size-[5px] rounded-full bg-gold" aria-hidden="true" />
             {content.eyebrow}
           </p>
-          <h2 id="highlights-title" className="text-balance text-[clamp(2.1rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
+          <RevealHeading id="highlights-title" className="text-balance text-[clamp(2.1rem,3.8vw,4rem)] font-normal leading-[1.12] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
             {content.title}
-          </h2>
+          </RevealHeading>
         </header>
 
         <ul className="mt-10 grid gap-4 min-[700px]:mt-16 min-[1000px]:grid-cols-3">

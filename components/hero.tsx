@@ -33,7 +33,7 @@ export function Hero({ content, lang }: HeroProps) {
             aria-label="Primary navigation"
           >
             <a
-              className="inline-flex h-12 items-center border border-border rounded-full px-[17px] py-2"
+              className="inline-flex h-12 items-center rounded-full px-[17px] py-2"
               href="#top"
               aria-label="Royal Longevity home"
             >

@@ -16,7 +16,7 @@ export function BrandLogo({ lang, className = "" }: BrandLogoProps) {
       <img
         src={lang === "ar" ? "/branding/text-arabic-black.png" : "/branding/text-english-black.png"}
         alt="Royal Longevity"
-        className="h-[108px] w-auto min-[700px]:h-[180px]"
+        className="h-[138px] w-auto min-[700px]:h-[180px]"
       />
     </div>
   );

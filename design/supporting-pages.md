@@ -14,7 +14,15 @@ The landing page and its shared components are unchanged. Access the new pages d
 
 ## Content and assets
 
-`data/inner-pages.ts` contains the typed bilingual demo catalogue, packages, navigation and page copy. FAQs, location and photo descriptions consume existing shared data. Existing supplied logo assets are used in the appropriate language. Gallery photography remains illustrative, rather than verified premises photography. No new font or dependency is introduced.
+Content is separated by responsibility:
+
+- `data/inner-pages.ts`: page introductions and editorial copy.
+- `data/inner/services.ts`: treatment catalogue and discovery categories.
+- `data/inner/packages.ts`: packages and their referenced services.
+- `data/inner/ui.ts`: interface labels, navigation and care values.
+- `data/inner/localization.ts`: `LocalizedText` and the shared `localized(en, ar)` helper.
+
+Use Prettier to format content and components. Long translation calls wrap naturally without changing the bilingual data model. FAQs, location and photo descriptions consume existing shared data. Existing supplied logo assets are used in the appropriate language. Gallery photography remains illustrative, rather than verified premises photography. No new font or dependency is introduced.
 
 Replace demo treatment descriptions, package contents, imagery and the demo Ajman address with confirmed business information before publication. Prices and durations are intentionally not asserted.
 
@@ -26,4 +34,4 @@ Set the existing `NEXT_PUBLIC_WHATSAPP_NUMBER` environment variable to the verif
 
 ## Implementation
 
-Pages render statically through App Router `generateStaticParams`. The routes validate locales and content identifiers and provide localized page metadata. CSS Modules scope all new styles to supporting pages. Arabic follows logical layout properties and mirrored directional arrows. Native disclosure controls provide menus and FAQs without extra client JavaScript. Images use Next Image, responsive sizes and lazy loading below the hero.
+Pages render statically through App Router `generateStaticParams`. The routes validate locales and content identifiers and provide localized page metadata. Supporting components use Tailwind utilities directly. Shared section headings live in `components/inner/section-heading.tsx`; editorial, service, package, gallery, FAQ and contact components have their own files. There is no page-specific stylesheet. Arabic follows logical layout properties and mirrored directional arrows. Native disclosure controls provide menus and FAQs without extra client JavaScript. Images use Next Image, responsive sizes and lazy loading below the hero.

@@ -1153,3 +1153,31 @@ Build a website that is:
 The goal of the current phase is not to build the entire future platform.
 
 The goal is to establish a **high-quality frontend foundation that can evolve into that platform cleanly.**
+
+---
+
+## 39. Tailwind and Readable Code Standards
+
+These standards apply to all future code and to files touched during implementation or refactoring. Preserve approved visuals and behaviour; do not restyle unrelated pages just to adopt these conventions.
+
+### Tailwind first
+
+- Use Tailwind utility classes in JSX/TSX for layout, spacing, typography, colours, borders, responsive rules, RTL behaviour and interaction states.
+- Reuse the approved theme tokens (`ivory`, `espresso`, `ink`, `gold`, `border`). Prefer existing spacing and sizing utilities. Use arbitrary values only where an approved design needs an exact value.
+- Put utilities on the element they style. Avoid deep descendant selectors, large class-name lookup objects, and moving ordinary utility combinations into CSS with `@apply`.
+- Use the existing `cn()` helper for conditional classes and class overrides. Keep class names complete and statically discoverable by Tailwind; do not construct names such as `bg-${color}`.
+- Prefer mobile-first responsive variants, logical spacing (`ms`, `me`, `ps`, `pe`, `start`, `end`), and `rtl:` variants. Preserve focus states, touch targets, and `motion-reduce:` behaviour.
+- Extract a reusable component when a meaningful pattern repeats, such as a section heading or service card. Do not introduce tiny components or a styling abstraction solely to hide a long class list.
+- Keep custom CSS limited to shared theme definitions, necessary global foundations, keyframes, third-party overrides, or behaviour that Tailwind cannot express clearly. Explain a new CSS exception next to the rule. Do not introduce a CSS Module for routine page or component styling.
+
+### Developer readability
+
+- Use Prettier for formatting TypeScript, TSX, JavaScript, JSON, CSS, and Markdown. Format the files changed by the task; do not reformat unrelated files. Do not use custom formatting scripts in place of Prettier.
+- Use descriptive names for variables, helpers and component props. Prefer named prop/domain types when a structure has several fields or is reused.
+- Keep JSX, content records and nested arrays expanded into readable blocks. Do not compress whole components or catalogue entries onto single lines.
+- Calculate filtered collections and nontrivial derived values before the JSX return. Prefer named conditions or straightforward branching over nested ternaries and nested lookups inside markup.
+- Keep business copy and localization in typed data files. Group data and components by responsibility when a file becomes difficult to navigate; avoid both giant mixed-purpose files and unnecessary fragmentation.
+- Preserve the `localized(en, ar)` helper in `data/inner/localization.ts` for bilingual content. Let Prettier wrap long calls. Do not duplicate the helper or replace all calls with handwritten objects solely for formatting.
+- Use stable entity identifiers, explicit types, and guarded lookups. Avoid `any`, unexplained non-null assertions, and hidden dependencies on array order.
+- Keep imports grouped coherently and remove unused imports, obsolete stylesheets and dead code after a refactor.
+- Validate changed code with ESLint and TypeScript, and run an appropriate production build for routing or styling changes. Verify English/Arabic behaviour and preserve unrelated page output.

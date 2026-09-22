@@ -7,3 +7,5 @@ The section follows the gallery. A centered heading introduces three equal overv
 On mobile and tablet, overview cards stack and the central care panel introduces the feature lists. At 1000px, the layout becomes three columns. Logical grid placement and flex direction mirror the composition in Arabic. Decorative icons are hidden from assistive technology. These are informational cards, with no hover or button behavior.
 
 The section is a Server Component with no added client JavaScript or motion. English and Arabic demo copy live in `data/highlights.ts` and require business approval before publication. Category cards express service themes rather than unverified numerical claims.
+
+The Thoughtfully Yours category cards link to the localized Beauty, Skincare service detail and Wellness pages. Each card includes a visible localized action label and direction-aware arrow, with a whole-card keyboard focus target.

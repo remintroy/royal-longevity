@@ -32,12 +32,12 @@ Image-led transition into the next section
 
 The reference uses a large centred heading with compact editorial line height. Royal Longevity should keep that proportion with the approved display typography.
 
-| Property | Desktop target | Mobile target |
-| --- | --- | --- |
-| Font size | 52–60px | 34–40px |
-| Line height | 108–115% | 110–118% |
+| Property       | Desktop target                             | Mobile target                              |
+| -------------- | ------------------------------------------ | ------------------------------------------ |
+| Font size      | 52–60px                                    | 34–40px                                    |
+| Line height    | 108–115%                                   | 110–118%                                   |
 | Letter spacing | -0.01em, if supported by the approved font | -0.01em, if supported by the approved font |
-| Alignment | Centre | Centre |
+| Alignment      | Centre                                     | Centre                                     |
 
 The hero must use Royal Longevity's approved serif/editorial heading treatment, not the reference site's Figtree sans-serif.
 
@@ -81,14 +81,14 @@ The primary hero CTA follows a pill-with-icon-circle pattern:
 [ circular WhatsApp / arrow icon ]  Book an appointment
 ```
 
-| Property | Specification |
-| --- | --- |
-| Form | Fully pill-shaped (`999px` radius) |
-| Minimum height | `48px`; prefer `52–56px` in the hero |
-| Internal layout | Icon circle + label, `14–16px` gap |
-| Icon circle | High-contrast circular inset with `12–14px` internal padding |
-| Text | Always visible; icon is supportive, not the sole label |
-| Surface | Royal Longevity approved dark/espresso surface with approved light text |
+| Property        | Specification                                                           |
+| --------------- | ----------------------------------------------------------------------- |
+| Form            | Fully pill-shaped (`999px` radius)                                      |
+| Minimum height  | `48px`; prefer `52–56px` in the hero                                    |
+| Internal layout | Icon circle + label, `14–16px` gap                                      |
+| Icon circle     | High-contrast circular inset with `12–14px` internal padding            |
+| Text            | Always visible; icon is supportive, not the sole label                  |
+| Surface         | Royal Longevity approved dark/espresso surface with approved light text |
 
 Interactions:
 
@@ -160,3 +160,9 @@ The reference includes Lenis smooth-scroll styles. Smooth scrolling may be consi
 - Isolate only the navigation toggle and intentional entrance animation in small Client Components when needed.
 - Do not introduce a global animation or smooth-scroll dependency by default.
 - Verify the completed experience in English/LTR and Arabic/RTL, including icon direction, utility-control ordering, menu alignment, and focus handling.
+
+## Implemented page destinations
+
+The hero disclosure menu links to About, Services, Our space, Beauty, Wellness and Packages in a two-column mobile / three-column desktop grid. Contact and FAQ links sit above a photographic booking panel. Copy is localized in `data/hero-menu.ts`. Escape returns focus to the toggle; outside clicks, navigation and focus leaving the disclosure close it. Closed content is inert, and the panel scrolls within shorter viewports.
+
+The menu surface is white with fine internal grid dividers and no filled hover background. GSAP fades the panel in over 300ms and out over 200ms. Directional chevrons remain hidden until hover or keyboard focus, then fade in with a 3px outward movement over 200ms. Reduced motion makes these state changes immediate.

@@ -1,3 +1,5 @@
+import { Footer } from "@/components/footer";
+import { getFooterContent } from "@/data/footer";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight, Menu } from "lucide-react";
@@ -49,7 +51,10 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
       >
         {ui.skip[lang]}
       </a>
-      <header className="mx-auto flex max-w-[1460px] items-center justify-between gap-5 px-6 py-5 max-[380px]:gap-2.5 max-[380px]:px-[18px] min-[1150px]:px-8 min-[1150px]:py-[22px]">
+      <header
+        id="top"
+        className="mx-auto flex max-w-[1460px] items-center justify-between gap-5 px-6 py-5 max-[380px]:gap-2.5 max-[380px]:px-[18px] min-[1150px]:px-8 min-[1150px]:py-[22px]"
+      >
         <Logo lang={lang} />
         <nav
           className="hidden min-[1150px]:flex min-[1150px]:gap-[25px] min-[1150px]:text-xs"
@@ -148,49 +153,11 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
           />
         </section>
       </main>
-      <footer className="mx-auto flex max-w-[1460px] flex-wrap items-center justify-between gap-[25px] border-t border-border px-6 pt-10 pb-[25px]">
-        <div>
-          <Logo lang={lang} />
-          <p className="leading-[1.65] mt-3 text-xs opacity-65">
-            {ui.footer[lang]}
-          </p>
-        </div>
-        <nav
-          className="flex max-w-[650px] flex-wrap gap-x-[23px] gap-y-2.5 text-xs"
-          aria-label={ui.menu[lang]}
-        >
-          <Link
-            className="py-2.5 hover:underline hover:underline-offset-[7px]"
-            href={`/${lang}`}
-          >
-            {ui.home[lang]}
-          </Link>
-          {navigation.map((item) => (
-            <Link
-              className="py-2.5 hover:underline hover:underline-offset-[7px]"
-              key={item.slug}
-              href={`/${lang}/${item.slug}`}
-            >
-              {item.label[lang]}
-            </Link>
-          ))}
-          <Link
-            className="py-2.5 hover:underline hover:underline-offset-[7px]"
-            href={`/${lang}/services`}
-          >
-            {ui.all[lang]}
-          </Link>
-          <Link
-            className="py-2.5 hover:underline hover:underline-offset-[7px]"
-            href={`/${lang}/faq`}
-          >
-            {ui.allFaq[lang]}
-          </Link>
-        </nav>
-        <p className="mt-5 basis-full text-[11px] opacity-55 leading-[1.65]">
-          © Royal Longevity
-        </p>
-      </footer>
+      <Footer
+        lang={lang}
+        content={getFooterContent(lang)}
+        bookingHref={getBookingHref(lang)}
+      />
     </div>
   );
 }

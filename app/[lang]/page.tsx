@@ -17,8 +17,6 @@ import { Faq } from "@/components/faq";
 import { getFaqContent } from "@/data/faq";
 import { CuratedServices } from "@/components/curated-services";
 import { getCuratedServicesContent } from "@/data/curated-services";
-import { Location } from "@/components/location";
-import { getLocationContent } from "@/data/location";
 import { Footer } from "@/components/footer";
 import { getFooterContent } from "@/data/footer";
 
@@ -58,12 +56,9 @@ export default async function Home({
           content={getCuratedServicesContent(lang)}
           bookingHref={heroContent.bookingHref}
         />
-        <Location
-          content={getLocationContent(lang)}
-          bookingHref={heroContent.bookingHref}
-        />
       </main>
       <Footer
+        lang={lang}
         content={getFooterContent(lang)}
         bookingHref={heroContent.bookingHref}
       />

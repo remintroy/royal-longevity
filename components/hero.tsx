@@ -1,3 +1,5 @@
+import { HeroMenu } from "@/components/hero-menu";
+import { getHeroMenuContent } from "@/data/hero-menu";
 import { Star } from "lucide-react";
 import { IconButton } from "@/components/ui/icon-button";
 import { BrandLogo } from "@/components/ui/brand-logo";
@@ -29,8 +31,8 @@ export function Hero({ content, lang }: HeroProps) {
           aria-labelledby="hero-title"
         >
           <nav
-            className="flex items-center justify-between"
-            aria-label="Primary navigation"
+            className="relative z-30 flex items-center justify-between"
+            aria-label={getHeroMenuContent(lang).label}
           >
             <a
               className="inline-flex h-12 items-center rounded-full px-[17px] py-2"
@@ -46,15 +48,11 @@ export function Hero({ content, lang }: HeroProps) {
               >
                 {otherLangLabel}
               </IconButton>
-              <IconButton
-                type="button"
-                className="gap-1"
-                aria-label="Open menu"
-              >
-                <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
-                <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
-                <span className="block w-[19px] h-[1px] rounded-[1px] bg-current" />
-              </IconButton>
+              <HeroMenu
+                content={getHeroMenuContent(lang)}
+                bookingHref={content.bookingHref}
+                bookingLabel={content.bookingLabel}
+              />
             </div>
           </nav>
 

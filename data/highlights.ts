@@ -1,11 +1,27 @@
 import type { Language } from "./site";
 
-export type HighlightIcon = "beauty" | "skin" | "wellness" | "care" | "detail" | "calm" | "ritual" | "style" | "time";
+export type HighlightIcon =
+  | "beauty"
+  | "skin"
+  | "wellness"
+  | "care"
+  | "detail"
+  | "calm"
+  | "ritual"
+  | "style"
+  | "time";
 
 export type HighlightsContent = {
   eyebrow: string;
   title: string;
-  categories: { id: string; title: string; description: string; icon: HighlightIcon }[];
+  categories: {
+    id: string;
+    title: string;
+    description: string;
+    icon: HighlightIcon;
+    href: string;
+    actionLabel: string;
+  }[];
   detailsLabel: string;
   centerpiece: string;
   details: { id: string; label: string; icon: HighlightIcon }[];
@@ -17,9 +33,30 @@ const content: Record<Language, HighlightsContent> = {
     eyebrow: "The essentials",
     title: "Thoughtfully yours",
     categories: [
-      { id: "beauty", title: "Beauty", description: "Your style, beautifully expressed", icon: "beauty" },
-      { id: "skin", title: "Skincare", description: "Thoughtful care for your skin", icon: "skin" },
-      { id: "wellness", title: "Wellness", description: "A little room to restore", icon: "wellness" },
+      {
+        id: "beauty",
+        title: "Beauty",
+        description: "Your style, beautifully expressed",
+        icon: "beauty",
+        href: "/en/beauty",
+        actionLabel: "Explore beauty",
+      },
+      {
+        id: "skin",
+        title: "Skincare",
+        description: "Thoughtful care for your skin",
+        icon: "skin",
+        href: "/en/services/skincare",
+        actionLabel: "Explore skincare",
+      },
+      {
+        id: "wellness",
+        title: "Wellness",
+        description: "A little room to restore",
+        icon: "wellness",
+        href: "/en/wellness",
+        actionLabel: "Explore wellness",
+      },
     ],
     detailsLabel: "Every detail, considered",
     centerpiece: "Care centred\non you",
@@ -36,9 +73,30 @@ const content: Record<Language, HighlightsContent> = {
     eyebrow: "جوهر تجربتنا",
     title: "كل التفاصيل من أجلك",
     categories: [
-      { id: "beauty", title: "الجمال", description: "أسلوبك بأجمل تعبير", icon: "beauty" },
-      { id: "skin", title: "العناية بالبشرة", description: "عناية مدروسة لبشرتك", icon: "skin" },
-      { id: "wellness", title: "العافية", description: "مساحة تستعيدين فيها نشاطك", icon: "wellness" },
+      {
+        id: "beauty",
+        title: "الجمال",
+        description: "أسلوبك بأجمل تعبير",
+        icon: "beauty",
+        href: "/ar/beauty",
+        actionLabel: "اكتشفي خدمات الجمال",
+      },
+      {
+        id: "skin",
+        title: "العناية بالبشرة",
+        description: "عناية مدروسة لبشرتك",
+        icon: "skin",
+        href: "/ar/services/skincare",
+        actionLabel: "اكتشفي العناية بالبشرة",
+      },
+      {
+        id: "wellness",
+        title: "العافية",
+        description: "مساحة تستعيدين فيها نشاطك",
+        icon: "wellness",
+        href: "/ar/wellness",
+        actionLabel: "اكتشفي العافية",
+      },
     ],
     detailsLabel: "كل تفصيلة بعناية",
     centerpiece: "عناية تتمحور\nحولك",

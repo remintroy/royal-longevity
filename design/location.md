@@ -1,8 +1,8 @@
 # Location
 
-Uses the supplied Stayscape location screenshot as the layout reference: a continuous dark section after curated services, centred eyebrow and heading, three detail columns with fine dividers, and a large rounded map. Existing ink and ivory tokens, typography and spacing preserve the theme.
+Uses the supplied Stayscape location screenshot as the layout reference: a continuous dark section at the top of the shared footer, centred eyebrow and heading, three detail columns with fine dividers, and a large rounded map. Existing ink and ivory tokens, typography and spacing preserve the theme.
 
-The map is a lazy-loaded Google Maps iframe with a muted dark CSS treatment. An external Open in Maps link remains available below the frame so map controls and attribution are unobstructed and visitors can open directions even if the embed is unavailable. No API client, key, dependency or client component is added.
+The map is a lazy-loaded Google Maps iframe with a subdued, slightly darker CSS treatment (20% sepia, 40% saturation, 85% brightness) and a fine gold border against an ivory frame. An external Open in Maps link remains available below the frame so map controls and attribution are unobstructed and visitors can open directions even if the embed is unavailable. No API client, key, dependency or client component is added.
 
 Details stack on mobile with horizontal dividers and become three columns with logical vertical borders on larger screens. Arabic copy, map language and directional icons are localized. The iframe has a localized accessible title, and links have visible focus indicators.
 

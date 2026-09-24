@@ -1,39 +1,18 @@
+import { HeroMenu } from "@/components/hero-menu";
+import { BrandLogo } from "@/components/ui/brand-logo";
+import { IconButton } from "@/components/ui/icon-button";
+import {
+  getInnerMenuContent,
+  mainNavigation,
+  supportingNavigation,
+} from "@/data/catalogue/navigation";
 import { Footer } from "@/components/footer";
 import { getFooterContent } from "@/data/footer";
-import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Menu } from "lucide-react";
 import type { Language } from "@/data/site";
-import { navigation, ui } from "@/data/inner/ui";
+import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
-
-function Logo({ lang }: { lang: Language }) {
-  return (
-    <Link
-      href={`/${lang}`}
-      className="flex shrink-0 items-center gap-[9px]"
-      aria-label={`Royal Longevity · ${ui.home[lang]}`}
-    >
-      <Image
-        src="/branding/icon-gold.png"
-        alt=""
-        width={40}
-        height={40}
-        className="size-9 object-contain max-[380px]:w-7"
-      />
-      <span className="relative h-[37px] w-[155px] overflow-hidden max-[380px]:w-32">
-        <Image
-          className="object-cover"
-          src={`/branding/text-${lang === "ar" ? "arabic" : "english"}-black.png`}
-          alt="Royal Longevity"
-          fill
-          sizes="165px"
-        />
-      </span>
-    </Link>
-  );
-}
 
 type SiteFrameProps = {
   lang: Language;
@@ -43,6 +22,18 @@ type SiteFrameProps = {
 
 export function SiteFrame({ lang, path, children }: SiteFrameProps) {
   const otherLanguage = lang === "en" ? "ar" : "en";
+  const innerMenuContent = getInnerMenuContent(lang);
+  const footerContent = {
+    ...getFooterContent(lang),
+    menu: mainNavigation.map((item) => ({
+      label: item.label[lang],
+      href: `/${lang}${item.slug ? `/${item.slug}` : ""}`,
+    })),
+    explore: supportingNavigation.map((item) => ({
+      label: item.label[lang],
+      href: `/${lang}/${item.slug}`,
+    })),
+  };
   return (
     <div className="min-h-screen bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] text-espresso [&_:is(a,button,summary,input,select):focus-visible]:outline-2 [&_:is(a,button,summary,input,select):focus-visible]:outline-gold [&_:is(a,button,summary,input,select):focus-visible]:outline-offset-5">
       <a
@@ -53,82 +44,31 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
       </a>
       <header
         id="top"
-        className="mx-auto flex max-w-[1460px] items-center justify-between gap-5 px-6 py-5 max-[380px]:gap-2.5 max-[380px]:px-[18px] min-[1150px]:px-8 min-[1150px]:py-[22px]"
+        className="mx-auto w-[min(calc(100%-40px),1370px)] py-5 min-[600px]:w-[min(calc(100%-64px),1370px)]"
       >
-        <Logo lang={lang} />
-        <nav
-          className="hidden min-[1150px]:flex min-[1150px]:gap-[25px] min-[1150px]:text-xs"
-          aria-label={ui.menu[lang]}
-        >
-          {navigation.map((item) => (
-            <Link
-              className="py-2.5 hover:underline hover:underline-offset-[7px] aria-[current=page]:underline aria-[current=page]:decoration-gold aria-[current=page]:underline-offset-[9px]"
-              key={item.slug}
-              href={`/${lang}/${item.slug}`}
-              aria-current={path === item.slug ? "page" : undefined}
-            >
-              {item.label[lang]}
-            </Link>
-          ))}
-        </nav>
-        <div className="flex items-center gap-2">
+        <div className="relative z-30 flex items-center justify-between gap-2">
           <Link
-            className="grid size-11 cursor-pointer place-items-center rounded-full border border-border text-xs"
-            href={`/${otherLanguage}/${path}`}
-            hrefLang={otherLanguage}
-            lang={otherLanguage}
-            aria-label={otherLanguage === "ar" ? "العربية" : "English"}
+            href={`/${lang}`}
+            className="inline-flex h-12 shrink-0 items-center rounded-full px-[17px] py-2 max-[380px]:px-0"
+            aria-label={`Royal Longevity · ${ui.home[lang]}`}
           >
-            {otherLanguage.toUpperCase()}
+            <BrandLogo lang={lang} />
           </Link>
-          <details className="group/menu relative">
-            <summary
-              className="grid size-11 cursor-pointer list-none place-items-center rounded-full border border-border text-xs group-open/menu:bg-ivory [&::-webkit-details-marker]:hidden"
-              aria-label={ui.menu[lang]}
+          <div className="flex shrink-0 gap-2">
+            <IconButton
+              href={`/${otherLanguage}/${path}`}
+              hrefLang={otherLanguage}
+              lang={otherLanguage}
+              aria-label={otherLanguage === "ar" ? "العربية" : "English"}
             >
-              <Menu size={20} />
-            </summary>
-            <nav
-              className="absolute end-0 top-[55px] z-30 w-[min(300px,85vw)] rounded-3xl border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] p-4 shadow-[0_12px_30px_rgb(45_29_18/0.08)]"
-              aria-label={ui.menu[lang]}
-            >
-              <Link
-                className="flex items-center justify-between rounded-[10px] p-3 hover:bg-ivory"
-                href={`/${lang}`}
-              >
-                {ui.home[lang]}
-              </Link>
-              {[
-                ...navigation,
-                { slug: "services", label: ui.all },
-                { slug: "salon", label: ui.salon },
-              ].map((item) => (
-                <Link
-                  className="flex items-center justify-between rounded-[10px] p-3 hover:bg-ivory"
-                  key={item.slug}
-                  href={`/${lang}/${item.slug}`}
-                >
-                  {item.label[lang]}
-                  <ArrowRight
-                    className="rtl:-scale-x-100"
-                    size={16}
-                    aria-hidden="true"
-                  />
-                </Link>
-              ))}
-            </nav>
-          </details>
-          <a
-            className="hidden items-center gap-[18px] rounded-full bg-espresso px-5 py-[13px] text-xs text-ivory min-[600px]:flex"
-            href="#appointment"
-          >
-            {ui.book[lang]}
-            <ArrowRight
-              className="rtl:-scale-x-100"
-              size={17}
-              aria-hidden="true"
+              {otherLanguage.toUpperCase()}
+            </IconButton>
+            <HeroMenu
+              content={innerMenuContent}
+              bookingHref={getBookingHref(lang)}
+              bookingLabel={ui.book[lang]}
             />
-          </a>
+          </div>
         </div>
       </header>
       <main
@@ -138,7 +78,7 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
         {children}
         <section className="my-[65px] flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-border bg-[color-mix(in_srgb,var(--color-ivory)_35%,white)] p-[30px] min-[900px]:p-10">
           <div>
-            <h2 className="max-w-[760px] text-[clamp(1.6rem,3vw,2.2rem)] leading-[1.13] font-normal tracking-[-.04em] text-balance rtl:leading-[1.4] rtl:tracking-normal">
+            <h2 className="max-w-[760px] text-[clamp(1.6rem,3vw,2.2rem)] leading-[1.13] font-normal tracking-[-.035em] text-balance rtl:leading-[1.4] rtl:tracking-normal">
               {ui.ready[lang]}
             </h2>
             <p className="leading-[1.65] mt-3 text-sm opacity-75">
@@ -155,7 +95,7 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
       </main>
       <Footer
         lang={lang}
-        content={getFooterContent(lang)}
+        content={footerContent}
         bookingHref={getBookingHref(lang)}
       />
     </div>

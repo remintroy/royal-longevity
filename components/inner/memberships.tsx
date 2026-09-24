@@ -1,0 +1,94 @@
+import Link from "next/link";
+import type { Language } from "@/data/site";
+import { categories } from "@/data/catalogue";
+import { catalogueUi, membershipPlans } from "@/data/catalogue/experience";
+import { getBookingHref } from "@/lib/booking";
+import { BookingCta } from "@/components/ui/booking-cta";
+import { SectionHeading } from "./section-heading";
+
+export function Memberships({ lang }: { lang: Language }) {
+  return (
+    <section className="my-12" id="plans">
+      <SectionHeading
+        eyebrow={catalogueUi.membership[lang]}
+        title={catalogueUi.membershipTitle[lang]}
+      />
+      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-espresso/75">
+        {catalogueUi.planNote[lang]}
+      </p>
+      <div className="mt-8 grid gap-5 min-[700px]:grid-cols-2">
+        {membershipPlans.map((plan) => (
+          <article
+            key={plan.id}
+            className="flex min-w-0 flex-col rounded-3xl border border-border bg-white p-6"
+          >
+            <h3 className="text-2xl leading-snug">{plan.title[lang]}</h3>
+            <p className="mt-4 text-sm leading-relaxed text-espresso/75">
+              {plan.description[lang]}
+            </p>
+            <h4 className="mt-7 text-sm font-medium">
+              {catalogueUi.included[lang]}
+            </h4>
+            <ul className="mt-3 mb-5 divide-y divide-border">
+              {plan.categories.map((id) => {
+                const category = categories.find((item) => item.id === id);
+                return (
+                  category && (
+                    <li key={id}>
+                      <Link
+                        href={`/${lang}/services/categories/${id}`}
+                        className="inline-flex min-h-11 items-center text-sm hover:underline"
+                      >
+                        {category.title[lang]}
+                      </Link>
+                    </li>
+                  )
+                );
+              })}
+            </ul>
+            <p className="mb-6 text-xs leading-relaxed">
+              {plan.poolAccess === "included"
+                ? catalogueUi.poolIncluded[lang]
+                : catalogueUi.poolSeparate[lang]}
+            </p>
+            <BookingCta
+              className="mt-auto max-w-full"
+              href={getBookingHref(
+                lang,
+                `${catalogueUi.membership[lang]} · ${plan.title[lang]}`,
+              )}
+              label={catalogueUi.membershipEnquiry[lang]}
+              target="_blank"
+              rel="noreferrer"
+            />
+          </article>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+export function Journey({
+  lang,
+  membership = false,
+}: {
+  lang: Language;
+  membership?: boolean;
+}) {
+  const steps = membership
+    ? catalogueUi.membershipSteps
+    : catalogueUi.appointmentSteps;
+  return (
+    <section className="my-12 rounded-3xl border border-border p-6 min-[900px]:p-10">
+      <h2 className="text-2xl font-normal">{catalogueUi.next[lang]}</h2>
+      <ol className="mt-6 grid gap-6 min-[700px]:grid-cols-4">
+        {steps.map((step, index) => (
+          <li key={step.en} className="border-s border-border ps-4">
+            <span className="mb-3 block text-xs text-gold">0{index + 1}</span>
+            <p className="text-sm leading-relaxed">{step[lang]}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+  );
+}

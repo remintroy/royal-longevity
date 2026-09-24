@@ -1,3 +1,5 @@
+import { catalogueUi } from "./catalogue/experience";
+import { supportingPages } from "./catalogue/supporting";
 import { localized, type LocalizedText } from "./inner/localization";
 import { ui } from "./inner/ui";
 
@@ -12,12 +14,9 @@ export type InnerPage = {
 
 export const pages: Record<string, InnerPage> = {
   services: {
-    title: ui.services,
+    title: catalogueUi.discover,
     eyebrow: localized("The care collection", "مجموعة العناية"),
-    description: localized(
-      "From your signature style to a moment of stillness. Explore thoughtful care for hair, skin, body and you.",
-      "من إطلالتك المميزة إلى لحظة من السكون. اكتشفي عناية بالشعر والبشرة والجسم وبكِ.",
-    ),
+    description: catalogueUi.introduction,
     image: "skincare",
     storyTitle: ui.care,
     story: ui.visitBody,
@@ -156,3 +155,44 @@ export const pages: Record<string, InnerPage> = {
     story: ui.visitBody,
   },
 };
+
+// Additional destinations from the supplied website flow tree.
+pages.memberships = {
+  title: catalogueUi.membershipTitle,
+  eyebrow: catalogueUi.membership,
+  description: catalogueUi.membershipIntro,
+  image: "details",
+  storyTitle: ui.care,
+  story: catalogueUi.membershipIntro,
+};
+pages.appointments = {
+  title: catalogueUi.appointments,
+  eyebrow: catalogueUi.appointment,
+  description: catalogueUi.appointmentIntro,
+  image: "details",
+  storyTitle: ui.visitTitle,
+  story: catalogueUi.appointmentIntro,
+};
+pages.gallery = {
+  title: catalogueUi.gallery,
+  eyebrow: catalogueUi.spaces,
+  description: catalogueUi.galleryBody,
+  image: "salon",
+  storyTitle: ui.care,
+  story: catalogueUi.galleryBody,
+};
+pages["our-space"] = {
+  ...pages["our-space"],
+  title: catalogueUi.spaces,
+  description: catalogueUi.spacesBody,
+};
+for (const [slug, page] of Object.entries(supportingPages)) {
+  pages[slug] = {
+    title: page.title,
+    eyebrow: catalogueUi.supporting,
+    description: page.description,
+    image: "details",
+    storyTitle: page.title,
+    story: page.description,
+  };
+}

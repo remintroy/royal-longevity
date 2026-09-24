@@ -9,7 +9,7 @@ import { TextLink } from "./text-link";
 export function PackageCards({ lang }: { lang: Language }) {
   return (
     <section className="my-[65px] scroll-mt-[25px] min-[900px]:my-[85px]">
-      <p className="mb-[17px] flex items-center gap-2.5 text-[11px] tracking-[.12em] uppercase before:text-[9px] before:text-gold before:content-['◆'] leading-[1.65]">
+      <p className="mb-[17px] flex items-center gap-2.5 text-[11px] tracking-[.12em] uppercase rtl:tracking-normal before:text-[9px] before:text-gold before:content-['◆'] leading-[1.65]">
         {ui.collection[lang]}
       </p>
       <div className="mt-6 grid gap-5 min-[600px]:grid-cols-2 min-[1150px]:grid-cols-3">
@@ -37,7 +37,7 @@ export function PackageCards({ lang }: { lang: Language }) {
                 <p className="leading-[1.65] mt-2.5 text-sm opacity-75">
                   {item.description[lang]}
                 </p>
-                <h4 className="mt-6 text-[11px] tracking-[.08em] uppercase">
+                <h4 className="mt-6 text-[11px] tracking-[.08em] uppercase rtl:tracking-normal">
                   {ui.included[lang]}
                 </h4>
                 <ul className="mt-3 mb-5 list-disc ps-5 text-sm">

@@ -35,3 +35,15 @@ Set the existing `NEXT_PUBLIC_WHATSAPP_NUMBER` environment variable to the verif
 ## Implementation
 
 Pages render statically through App Router `generateStaticParams`. The routes validate locales and content identifiers and provide localized page metadata. Supporting components use Tailwind utilities directly. Shared section headings live in `components/inner/section-heading.tsx`; editorial, service, package, gallery, FAQ and contact components have their own files. There is no page-specific stylesheet. Arabic follows logical layout properties and mirrored directional arrows. Native disclosure controls provide menus and FAQs without extra client JavaScript. Images use Next Image, responsive sizes and lazy loading below the hero.
+
+## Flow-tree catalogue update
+
+The supplied website flow tree now defines the inner-site structure. The original landing page, shared landing components, and landing data remain unchanged.
+
+`data/catalogue/README.md` is the editing guide. Nine categories contain 37 separately addressable services. Category and service pages render from the typed catalogue; `page-layouts.ts` controls the section sequence on supporting pages. The old `data/inner/services.ts` catalogue has been replaced by category-specific files under `data/catalogue/services/`.
+
+Inner navigation follows Home, About, Services, Memberships, Appointments, Our Spaces, Gallery and Contact. Packages & Offers, FAQ, Terms, Privacy, Careers and Blog remain reachable through inner navigation/footer links. Existing beauty, wellness, salon and five original service URLs remain valid.
+
+Memberships compare illustrative plans and send contextual WhatsApp enquiries. Appointment options are grouped by category and exclude membership-only services. The pool supports both paths. The diagram's sign-up/payment/confirmation stages remain operational discussions with the team; no backend or payment system is introduced. Terms, Privacy, Careers and Blog await supplied content and are marked noindex.
+
+Each service has `published` and `homepageOrder`. The homepage selection helper is ready for future use, but is deliberately not connected to the existing landing page. Images remain illustrative; categories without relevant supplied imagery use category icons.

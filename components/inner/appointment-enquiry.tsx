@@ -6,7 +6,10 @@ import { useState } from "react";
 import Image from "next/image";
 import { CalendarDays, MessageCircle } from "lucide-react";
 import type { Language } from "@/data/site";
-import { services } from "@/data/inner/services";
+import { categories, services } from "@/data/catalogue";
+import { catalogueUi } from "@/data/catalogue/experience";
+import { useSearchParams } from "next/navigation";
+import { TextLink } from "./text-link";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -27,7 +30,11 @@ export function AppointmentEnquiry({
   const selectedService = services.find(
     (item) => item.slug === selectedServiceSlug,
   );
+  const selectedCategory = categories.find(
+    (item) => item.id === selectedService?.category,
+  );
   const bookingContext = [
+    selectedCategory?.title[lang],
     selectedService?.title[lang] ?? ui.any[lang],
     preferredDate && `${ui.date[lang]}: ${preferredDate}`,
     preferredTime && `${ui.time[lang]}: ${preferredTime}`,
@@ -46,7 +53,7 @@ export function AppointmentEnquiry({
         id="appointment-title"
       />
       <p className="mt-[22px] max-w-[550px] text-base opacity-[.78] leading-[1.65]">
-        {ui.visitBody[lang]}
+        {catalogueUi.appointmentIntro[lang]}
       </p>
       <div className="mt-7 grid gap-[18px] min-[900px]:grid-cols-[1.6fr_1fr]">
         <div className="min-w-0 rounded-3xl border border-border bg-white p-6 max-[380px]:p-[18px] min-[900px]:p-[35px]">
@@ -60,11 +67,23 @@ export function AppointmentEnquiry({
               onChange={(event) => setSelectedServiceSlug(event.target.value)}
             >
               <option value="">{ui.any[lang]}</option>
-              {services.map((item) => (
-                <option key={item.slug} value={item.slug}>
-                  {item.title[lang]}
-                </option>
-              ))}
+              {categories
+                .filter((category) => category.access !== "membership")
+                .map((category) => (
+                  <optgroup key={category.id} label={category.title[lang]}>
+                    {services
+                      .filter(
+                        (service) =>
+                          service.category === category.id &&
+                          service.access !== "membership",
+                      )
+                      .map((item) => (
+                        <option key={item.slug} value={item.slug}>
+                          {item.title[lang]}
+                        </option>
+                      ))}
+                  </optgroup>
+                ))}
             </select>
           </label>
           <div className="mt-7 grid gap-6 min-[600px]:grid-cols-2">
@@ -131,5 +150,35 @@ export function AppointmentEnquiry({
         </aside>
       </div>
     </section>
+  );
+}
+
+export function AppointmentFromQuery({ lang }: { lang: Language }) {
+  const searchParams = useSearchParams();
+  const service = services.find(
+    (item) => item.slug === searchParams.get("service"),
+  );
+  if (service?.access === "membership") {
+    return (
+      <section
+        id="appointment"
+        className="my-12 rounded-3xl border border-border p-8"
+      >
+        <h2 className="text-2xl">{service.title[lang]}</h2>
+        <p className="my-5 max-w-2xl leading-relaxed">
+          {catalogueUi.membershipOnly[lang]}
+        </p>
+        <TextLink href={`/${lang}/memberships`}>
+          {catalogueUi.memberships[lang]}
+        </TextLink>
+      </section>
+    );
+  }
+  return (
+    <AppointmentEnquiry
+      key={service?.slug ?? "all"}
+      lang={lang}
+      initialService={service?.slug}
+    />
   );
 }

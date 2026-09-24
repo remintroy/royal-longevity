@@ -2,7 +2,7 @@ import { SectionHeading } from "./section-heading";
 import type { Language } from "@/data/site";
 import { ui } from "@/data/inner/ui";
 import { Plus } from "lucide-react";
-import { getFaqContent } from "@/data/faq";
+import { catalogueQuestions } from "@/data/catalogue/questions";
 import { TextLink } from "./text-link";
 
 export function Questions({
@@ -12,13 +12,14 @@ export function Questions({
   lang: Language;
   full?: boolean;
 }) {
-  const content = getFaqContent(lang);
-  const visibleQuestions = full ? content.items : content.items.slice(0, 3);
+  const visibleQuestions = full
+    ? catalogueQuestions
+    : catalogueQuestions.slice(0, 3);
   return (
     <section className="my-[65px] scroll-mt-[25px] min-[900px]:my-[85px]">
       <div className="mb-6 flex flex-wrap items-end justify-between gap-5">
         <div>
-          <SectionHeading eyebrow={content.eyebrow} title={ui.faq[lang]} />
+          <SectionHeading eyebrow={ui.allFaq[lang]} title={ui.faq[lang]} />
         </div>
         {!full && <TextLink href={`/${lang}/faq`}>{ui.allFaq[lang]}</TextLink>}
       </div>
@@ -29,7 +30,7 @@ export function Questions({
             key={item.id}
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-5 py-[19px] text-[15px] [&::-webkit-details-marker]:hidden">
-              {item.question}
+              {item.question[lang]}
               <Plus
                 className="shrink-0 group-open/question:rotate-45"
                 size={21}
@@ -37,7 +38,7 @@ export function Questions({
               />
             </summary>
             <p className="leading-[1.65] max-w-[850px] pb-6 text-sm opacity-75">
-              {item.answer}
+              {item.answer[lang]}
             </p>
           </details>
         ))}

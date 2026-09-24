@@ -49,15 +49,7 @@ export function Photo({
   );
 }
 
-export function Hero({
-  page,
-  lang,
-  detail = false,
-}: {
-  page: InnerPage;
-  lang: Language;
-  detail?: boolean;
-}) {
+export function Hero({ page, lang }: { page: InnerPage; lang: Language }) {
   return (
     <>
       <section className="grid gap-[30px] pt-[18px] pb-[30px] min-[900px]:grid-cols-[1fr_1.08fr] min-[900px]:items-center min-[900px]:gap-10 min-[900px]:pt-2.5">
@@ -70,22 +62,20 @@ export function Hero({
             <span aria-hidden="true">/</span>
             <Link href={`/${lang}/services`}>{ui.all[lang]}</Link>
           </nav>
-          <p className="mb-[17px] flex items-center gap-2.5 text-[11px] tracking-[.12em] uppercase before:text-[9px] before:text-gold before:content-['◆'] leading-[1.65]">
+          <p className="mb-[17px] flex items-center gap-2.5 text-[11px] tracking-[.12em] uppercase rtl:tracking-normal before:text-[9px] before:text-gold before:content-['◆'] leading-[1.65]">
             {page.eyebrow[lang]}
           </p>
-          <h1 className="text-[clamp(2.6rem,4.6vw,4.6rem)] leading-[1.07] font-normal tracking-[-.05em] text-balance rtl:leading-[1.4] rtl:tracking-normal">
+          <h1 className="font-sans text-[clamp(2.4rem,6vw,4rem)] leading-[1.08] font-normal tracking-[-.035em] text-balance rtl:leading-[1.4] rtl:tracking-normal">
             {page.title[lang]}
           </h1>
           <p className="mt-[22px] max-w-[550px] text-base opacity-[.78] leading-[1.65]">
             {page.description[lang]}
           </p>
           <div className="mt-[30px] flex flex-wrap items-center gap-5">
-            <BookingCta href="#appointment" label={ui.book[lang]} />
-            <TextLink href={`/${lang}/${detail ? "salon" : "our-space"}`}>
-              {detail ? ui.salon[lang] : ui.gallery[lang]}
-            </TextLink>
+            <BookingCta href={`/${lang}/appointments`} label={ui.book[lang]} />
+            <TextLink href={`/${lang}/our-space`}>{ui.gallery[lang]}</TextLink>
           </div>
-          <p className="mt-[30px] text-[11px] tracking-[.16em] uppercase opacity-65 leading-[1.65]">
+          <p className="mt-[30px] text-[11px] tracking-[.16em] uppercase rtl:tracking-normal opacity-65 leading-[1.65]">
             {ui.footer[lang]}
           </p>
         </div>

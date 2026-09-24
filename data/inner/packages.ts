@@ -1,4 +1,4 @@
-import { services, type Service } from "./services";
+import { services, type Service } from "@/data/catalogue";
 import { localized, type LocalizedText } from "./localization";
 
 export type CarePackage = {

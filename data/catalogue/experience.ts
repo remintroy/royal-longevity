@@ -46,6 +46,7 @@ export const membershipPlans: MembershipPlan[] = [
 ];
 
 export const catalogueUi = {
+  bookNow: localized("Book now", "احجزي الآن"),
   categories: localized("Service categories", "فئات الخدمات"),
   discover: localized(
     "Find your way to feeling good.",

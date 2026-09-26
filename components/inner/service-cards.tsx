@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   categories,
@@ -7,7 +8,8 @@ import {
 import { catalogueUi } from "@/data/catalogue/experience";
 import type { Language } from "@/data/site";
 import { SectionHeading } from "./section-heading";
-import { TextLink } from "./text-link";
+import { BookingCta } from "@/components/ui/booking-cta";
+import { getBookingHref } from "@/lib/booking";
 import { AccessLabel } from "./catalogue";
 
 export function ServiceCards({
@@ -26,29 +28,48 @@ export function ServiceCards({
         eyebrow={collection.title[lang]}
         title={catalogueUi.services[lang]}
       />
-      <div className="mt-8 grid gap-5 min-[600px]:grid-cols-2 min-[1100px]:grid-cols-3">
+      <div className="mt-8 grid w-full grid-cols-1 items-stretch gap-5 min-[600px]:grid-cols-2">
         {visibleServices.map((service) => (
           <article
             key={service.slug}
-            className="flex flex-col rounded-3xl border border-border bg-white p-6"
+            className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white"
           >
-            <div>
-              <AccessLabel access={service.access} lang={lang} />
+            {/* Temporary seeded imagery until service photography is supplied. */}
+            <Image
+              src={`https://picsum.photos/seed/${service.slug}/960/540`}
+              alt=""
+              width={960}
+              height={540}
+              unoptimized
+              className="aspect-video w-full object-cover bg-ivory"
+            />
+            <div className="flex flex-1 flex-col p-6">
+              <div>
+                <AccessLabel access={service.access} lang={lang} />
+              </div>
+              <h3 className="mt-5 text-2xl leading-snug">
+                <Link href={`/${lang}/services/${service.slug}`}>
+                  {service.title[lang]}
+                </Link>
+              </h3>
+              <p className="mt-3 mb-6 text-sm leading-relaxed text-espresso/75">
+                {service.description[lang]}
+              </p>
+              <div className="mt-auto flex flex-wrap items-center gap-3">
+                <BookingCta
+                  href={getBookingHref(lang, service.title[lang])}
+                  label={catalogueUi.bookNow[lang]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                />
+                <Link
+                  className="inline-flex min-h-[54px] items-center justify-center rounded-full border border-border px-5 text-sm text-espresso transition-colors duration-200 hover:bg-ivory focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 motion-reduce:transition-none"
+                  href={`/${lang}/services/${service.slug}`}
+                >
+                  {catalogueUi.details[lang]}
+                </Link>
+              </div>
             </div>
-            <h3 className="mt-5 text-2xl leading-snug">
-              <Link href={`/${lang}/services/${service.slug}`}>
-                {service.title[lang]}
-              </Link>
-            </h3>
-            <p className="mt-3 mb-6 text-sm leading-relaxed text-espresso/75">
-              {service.description[lang]}
-            </p>
-            <TextLink
-              className="mt-auto"
-              href={`/${lang}/services/${service.slug}`}
-            >
-              {catalogueUi.details[lang]}
-            </TextLink>
           </article>
         ))}
       </div>

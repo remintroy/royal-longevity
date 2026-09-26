@@ -12,6 +12,7 @@ import { BookingCta } from "@/components/ui/booking-cta";
 import { getBookingHref } from "@/lib/booking";
 import { AccessLabel } from "./catalogue";
 import { ServiceCardsMotion } from "./service-cards-motion";
+import { ElasticDivider } from "./elastic-divider";
 
 export function ServiceCards({
   lang,
@@ -25,6 +26,7 @@ export function ServiceCards({
   if (!collection) return null;
   return (
     <section className="my-12 min-[900px]:my-20" id="treatments">
+      <ElasticDivider />
       <SectionHeading
         key={`heading-${lang}-${category}`}
         animate

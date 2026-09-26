@@ -49,10 +49,10 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const { lang, category } = resolveCategory(language, id);
   return (
     <SiteFrame lang={lang} path={`services/categories/${id}`}>
-      <section className="grid items-center gap-10 py-12 min-[900px]:grid-cols-2 min-[900px]:py-20">
-        <div>
-          <TextLink href={`/${lang}/services`}>{ui.all[lang]}</TextLink>
-          <div className="mt-8">
+      <section className="grid items-center gap-10 p-5 min-[900px]:p-8 min-[900px]:grid-cols-2 bg-[color-mix(in_srgb,var(--color-ivory)_82%,white)] rounded-4xl">
+        <div className="min-[900px]:p-12">
+          {/* <TextLink href={`/${lang}/services`}>{ui.all[lang]}</TextLink> */}
+          <div className="">
             <AccessLabel access={category.access} lang={lang} />
           </div>
           <h1 className="mt-6 text-balance text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">

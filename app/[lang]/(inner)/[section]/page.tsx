@@ -54,6 +54,7 @@ export default async function InnerPage({ params }: InnerPageProps) {
       {layout.hero === "intro" ? (
         <CatalogueIntro
           lang={lang}
+          eyebrow={page.eyebrow[lang]}
           title={page.title[lang]}
           description={page.description[lang]}
         />

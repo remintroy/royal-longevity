@@ -1,3 +1,4 @@
+import { PageHero } from "@/components/inner/page-hero";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -51,11 +52,15 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const membership = service.access === "membership";
   return (
     <SiteFrame lang={lang} path={`services/${slug}`}>
-      <section className="grid items-center gap-10 py-12 min-[900px]:grid-cols-2 min-[900px]:py-20">
-        <div>
+      <PageHero
+        lang={lang}
+        title={service.title[lang]}
+        description={service.description[lang]}
+        eyebrow={<AccessLabel access={service.access} lang={lang} />}
+        navigation={
           <nav
             aria-label={ui.home[lang]}
-            className="mb-8 flex flex-wrap items-center gap-3 text-sm"
+            className="flex flex-wrap items-center gap-3"
           >
             <Link href={`/${lang}/services`} className="hover:underline">
               {ui.all[lang]}
@@ -68,35 +73,30 @@ export default async function ServicePage({ params }: ServicePageProps) {
               {category.title[lang]}
             </Link>
           </nav>
-          <AccessLabel access={service.access} lang={lang} />
-          <h1 className="mt-6 text-balance text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
-            {service.title[lang]}
-          </h1>
-          <p className="mt-6 max-w-xl leading-relaxed text-espresso/75">
-            {service.description[lang]}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-5">
+        }
+        media={<ServiceImage image={service.image} category={category.id} />}
+        actions={
+          <>
             <BookingCta
-              href={membership ? `/${lang}/memberships` : "#appointment"}
-              label={
-                membership
-                  ? catalogueUi.memberships[lang]
-                  : catalogueUi.appointments[lang]
-              }
-            />
-            <TextLink
               href={getBookingHref(
                 lang,
                 `${category.title[lang]} · ${service.title[lang]}`,
               )}
+              label={catalogueUi.bookNow[lang]}
+              target="_blank"
+              rel="noreferrer"
+            />
+            <TextLink
+              href={membership ? `/${lang}/memberships` : "#appointment"}
             >
-              {catalogueUi.enquiry[lang]}
+              {membership
+                ? catalogueUi.memberships[lang]
+                : catalogueUi.appointments[lang]}
             </TextLink>
-          </div>
-        </div>
-        <ServiceImage image={service.image} category={category.id} />
-      </section>
-      <section className="my-12 max-w-3xl border-y border-border py-8">
+          </>
+        }
+      />
+      <section className="my-12 rounded-3xl border border-border bg-white p-6 min-[900px]:p-10">
         <h2 className="text-2xl">{catalogueUi.pricing[lang]}</h2>
         <p className="mt-4 leading-relaxed text-espresso/75">
           {catalogueUi.pricingBody[lang]}

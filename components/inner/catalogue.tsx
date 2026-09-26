@@ -1,3 +1,5 @@
+import { PageHero } from "./page-hero";
+import { ContentReveal } from "./content-reveal";
 import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
@@ -32,21 +34,21 @@ export function CatalogueIntro({
   lang,
   title = catalogueUi.discover[lang],
   description = catalogueUi.introduction[lang],
+  eyebrow,
 }: {
   lang: Language;
   title?: string;
   description?: string;
+  eyebrow?: string;
 }) {
   return (
-    <section className="py-12 min-[900px]:py-20">
-      <TextLink href={`/${lang}`}>{ui.home[lang]}</TextLink>
-      <h1 className="mt-8 max-w-[850px] text-balance text-[clamp(2.4rem,6vw,4rem)] font-normal leading-[1.08] tracking-[-.035em] rtl:leading-[1.4] rtl:tracking-normal">
-        {title}
-      </h1>
-      <p className="mt-6 max-w-[650px] text-base leading-relaxed text-espresso/75">
-        {description}
-      </p>
-    </section>
+    <PageHero
+      lang={lang}
+      title={title}
+      description={description}
+      eyebrow={eyebrow}
+      navigation={<TextLink href={`/${lang}`}>{ui.home[lang]}</TextLink>}
+    />
   );
 }
 
@@ -66,18 +68,30 @@ export function CategoryCards({
       aria-labelledby="collections-title"
     >
       <SectionHeading
+        animate
         id="collections-title"
         eyebrow={catalogueUi.categories[lang]}
         title={ui.services[lang]}
       />
-      <div className="mt-8 grid gap-5 min-[600px]:grid-cols-2 min-[1100px]:grid-cols-3">
+      <ContentReveal className="mt-8 grid gap-5 min-[700px]:grid-cols-2">
         {visible.map((category) => {
           const items = getCategoryServices(category.id);
           return (
             <article
+              data-content-reveal
               key={category.id}
               className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white"
             >
+              <div className="relative aspect-video overflow-hidden bg-ivory">
+                <Image
+                  data-content-image
+                  src={`/assets/images/gallery/${items[0]?.image ?? category.image ?? "salon"}.webp`}
+                  alt=""
+                  fill
+                  sizes="(max-width: 699px) 92vw, (max-width: 1434px) 46vw, 675px"
+                  className="object-cover"
+                />
+              </div>
               <div className="flex items-center justify-between gap-3 border-b border-border p-6">
                 <CategoryIcon
                   category={category.id}
@@ -123,7 +137,7 @@ export function CategoryCards({
             </article>
           );
         })}
-      </div>
+      </ContentReveal>
     </section>
   );
 }

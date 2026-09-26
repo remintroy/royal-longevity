@@ -48,6 +48,7 @@ export function AppointmentEnquiry({
       aria-labelledby="appointment-title"
     >
       <SectionHeading
+        animate
         eyebrow={ui.visit[lang]}
         title={ui.visitTitle[lang]}
         id="appointment-title"
@@ -55,14 +56,14 @@ export function AppointmentEnquiry({
       <p className="mt-[22px] max-w-[550px] text-base opacity-[.78] leading-[1.65]">
         {catalogueUi.appointmentIntro[lang]}
       </p>
-      <div className="mt-7 grid gap-[18px] min-[900px]:grid-cols-[1.6fr_1fr]">
+      <div className="mt-8 grid items-start gap-5 min-[900px]:grid-cols-[1.2fr_0.8fr]">
         <div className="min-w-0 rounded-3xl border border-border bg-white p-6 max-[380px]:p-[18px] min-[900px]:p-[35px]">
           <label className="grid min-w-0 gap-[15px] text-sm">
             <span className="flex items-center gap-[15px] text-gold">
               01 <span className="text-espresso">{ui.select[lang]}</span>
             </span>
             <select
-              className="h-14 w-full min-w-0 rounded-xl border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] px-4 text-espresso"
+              className="h-14 w-full min-w-0 rounded-full border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] px-4 text-espresso"
               value={selectedServiceSlug}
               onChange={(event) => setSelectedServiceSlug(event.target.value)}
             >
@@ -92,7 +93,7 @@ export function AppointmentEnquiry({
                 02 <span className="text-espresso">{ui.date[lang]}</span>
               </span>
               <input
-                className="h-14 w-full min-w-0 rounded-xl border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] px-4 text-espresso"
+                className="h-14 w-full min-w-0 rounded-full border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] px-4 text-espresso"
                 type="date"
                 value={preferredDate}
                 onChange={(event) => setPreferredDate(event.target.value)}
@@ -103,7 +104,7 @@ export function AppointmentEnquiry({
                 03 <span className="text-espresso">{ui.time[lang]}</span>
               </span>
               <input
-                className="h-14 w-full min-w-0 rounded-xl border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] px-4 text-espresso"
+                className="h-14 w-full min-w-0 rounded-full border border-border bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] px-4 text-espresso"
                 type="time"
                 value={preferredTime}
                 onChange={(event) => setPreferredTime(event.target.value)}
@@ -119,14 +120,14 @@ export function AppointmentEnquiry({
             {ui.requestNote[lang]}
           </p>
         </div>
-        <aside className="min-w-0 rounded-3xl border border-border bg-white p-6 max-[380px]:p-[18px]">
-          <div className="relative mb-5 h-[150px] overflow-hidden rounded-[15px]">
+        <aside className="min-w-0 rounded-3xl border border-border bg-ivory/60 p-6 max-[380px]:p-[18px]">
+          <div className="relative mb-6 aspect-video overflow-hidden rounded-3xl">
             <Image
               className="object-cover"
               src={`/assets/images/gallery/${selectedService?.image ?? "salon"}.webp`}
               alt=""
               fill
-              sizes="(max-width: 760px) 90vw, 400px"
+              sizes="(max-width: 899px) 90vw, 500px"
             />
           </div>
           <h3 className="text-[1.22rem] leading-[1.35] font-medium mb-5">

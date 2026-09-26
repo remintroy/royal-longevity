@@ -1,8 +1,10 @@
+import { PageHero } from "./page-hero";
+import { ContentReveal } from "./content-reveal";
+import { getBookingHref } from "@/lib/booking";
 import { SectionHeading } from "./section-heading";
 import type { Language } from "@/data/site";
 import { ui } from "@/data/inner/ui";
 import Image from "next/image";
-import Link from "next/link";
 import { Heart, Leaf, Sparkles, UserRound } from "lucide-react";
 import { getGalleryContent } from "@/data/gallery";
 import type { InnerPage } from "@/data/inner-pages";
@@ -52,36 +54,28 @@ export function Photo({
 export function Hero({ page, lang }: { page: InnerPage; lang: Language }) {
   return (
     <>
-      <section className="grid gap-[30px] pt-[18px] pb-[30px] min-[900px]:grid-cols-[1fr_1.08fr] min-[900px]:items-center min-[900px]:gap-10 min-[900px]:pt-2.5">
-        <div className="px-1 py-3 min-[900px]:px-2.5 min-[900px]:py-[30px]">
-          <nav
-            className="mb-8 flex items-center gap-2.5 text-xs opacity-[.72]"
-            aria-label={ui.home[lang]}
-          >
-            <Link href={`/${lang}`}>{ui.home[lang]}</Link>
-            <span aria-hidden="true">/</span>
-            <Link href={`/${lang}/services`}>{ui.all[lang]}</Link>
-          </nav>
-          <p className="mb-[17px] flex items-center gap-2.5 text-[11px] tracking-[.12em] uppercase rtl:tracking-normal before:text-[9px] before:text-gold before:content-['◆'] leading-[1.65]">
-            {page.eyebrow[lang]}
-          </p>
-          <h1 className="font-sans text-[clamp(2.4rem,6vw,4rem)] leading-[1.08] font-normal tracking-[-.035em] text-balance rtl:leading-[1.4] rtl:tracking-normal">
-            {page.title[lang]}
-          </h1>
-          <p className="mt-[22px] max-w-[550px] text-base opacity-[.78] leading-[1.65]">
-            {page.description[lang]}
-          </p>
-          <div className="mt-[30px] flex flex-wrap items-center gap-5">
-            <BookingCta href={`/${lang}/appointments`} label={ui.book[lang]} />
+      <PageHero
+        lang={lang}
+        title={page.title[lang]}
+        description={page.description[lang]}
+        eyebrow={page.eyebrow[lang]}
+        navigation={<TextLink href={`/${lang}`}>{ui.home[lang]}</TextLink>}
+        media={<Photo image={page.image} lang={lang} hero />}
+        actions={
+          <>
+            <BookingCta
+              href={getBookingHref(lang)}
+              label={ui.book[lang]}
+              target="_blank"
+              rel="noreferrer"
+            />
             <TextLink href={`/${lang}/our-space`}>{ui.gallery[lang]}</TextLink>
-          </div>
-          <p className="mt-[30px] text-[11px] tracking-[.16em] uppercase rtl:tracking-normal opacity-65 leading-[1.65]">
-            {ui.footer[lang]}
-          </p>
-        </div>
-        <Photo image={page.image} lang={lang} hero />
-      </section>
-      <Values lang={lang} />
+          </>
+        }
+      />
+      <div className="mt-8">
+        <Values lang={lang} />
+      </div>
     </>
   );
 }
@@ -126,9 +120,20 @@ export function Values({ lang }: { lang: Language }) {
 export function Story({ page, lang }: { page: InnerPage; lang: Language }) {
   return (
     <section className="my-[65px] scroll-mt-[25px] min-[900px]:my-[85px] grid items-center gap-[30px] min-[900px]:grid-cols-[1.15fr_1fr] min-[900px]:gap-[60px]">
-      <Photo image={page.image === "salon" ? "hair" : "salon"} lang={lang} />
+      <ContentReveal>
+        <div data-content-reveal>
+          <Photo
+            image={page.image === "salon" ? "hair" : "salon"}
+            lang={lang}
+          />
+        </div>
+      </ContentReveal>
       <div className="px-1 py-2.5 min-[900px]:px-[15px] min-[900px]:py-[25px]">
-        <SectionHeading eyebrow={ui.care[lang]} title={page.storyTitle[lang]} />
+        <SectionHeading
+          animate
+          eyebrow={ui.care[lang]}
+          title={page.storyTitle[lang]}
+        />
         <p className="mt-[22px] max-w-[550px] text-base opacity-[.78] leading-[1.65]">
           {page.story[lang]}
         </p>

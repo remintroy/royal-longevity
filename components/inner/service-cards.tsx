@@ -44,15 +44,14 @@ export function ServiceCards({
             data-service-card
             className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white text-espresso"
           >
-            {/* Temporary seeded imagery until service photography is supplied. */}
             <div className="aspect-video overflow-hidden bg-ivory">
               <Image
                 data-service-image
-                src={`https://picsum.photos/seed/${service.slug}/960/540`}
+                src={`/assets/images/gallery/${service.image ?? "salon"}.webp`}
                 alt=""
-                width={960}
-                height={540}
-                unoptimized
+                width={1312}
+                height={1199}
+                sizes="(max-width: 599px) calc(100vw - 40px), (max-width: 1434px) calc((100vw - 84px) / 2), 675px"
                 className="h-full w-full object-cover"
               />
             </div>

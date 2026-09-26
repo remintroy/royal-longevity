@@ -37,7 +37,7 @@ Use `20`, `30`, etc. for later positions. Set `homepageOrder: null` to remove it
 
 1. Add a typed record to the appropriate `services/<category>.ts` file with a unique slug and complete translations.
 2. Match `access` to the category. Pool services may use either route; membership-only pool access is explicitly marked.
-3. Use an existing gallery image ID when it is appropriate, or omit `image` to show the category icon.
+3. Use an existing gallery image ID when it is appropriate, or omit `image` to show the category icon. Generated service illustrations use `services/<service-slug>` and are stored as WebP files in `public/assets/images/gallery/services/`. These are illustrative images, not photographs of the actual premises or treatments.
 4. Set `published: false` to hide a service from discovery, route generation, enquiries and homepage selection. Remove it from any package references at the same time.
 5. Rebuild the static site after content edits. The category cards, detail routes and enquiry groups are generated from this catalogue.
 

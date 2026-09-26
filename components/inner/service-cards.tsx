@@ -26,7 +26,7 @@ export function ServiceCards({
   if (!collection) return null;
   return (
     <section
-      className="relative isolate my-12 pt-28 pb-12 text-ivory min-[900px]:my-20 min-[900px]:pt-32 min-[900px]:pb-20"
+      className="relative isolate my-12 pt-28 pb-28 text-ivory min-[900px]:my-20 min-[900px]:pt-32 min-[900px]:pb-32"
       id="treatments"
     >
       <ElasticSectionBackground />

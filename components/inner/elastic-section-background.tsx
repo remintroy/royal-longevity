@@ -9,15 +9,19 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 const straightEdge = "M 0 40 Q 500 40 1000 40 L 1000 80 L 0 80 Z";
 
+const straightBottomEdge = "M 0 40 Q 500 40 1000 40 L 1000 0 L 0 0 Z";
+
 export function ElasticSectionBackground() {
   const container = useRef<HTMLDivElement>(null);
   const line = useRef<SVGPathElement>(null);
+  const bottomLine = useRef<SVGPathElement>(null);
 
   useGSAP(
     () => {
       const root = container.current;
       const path = line.current;
-      if (!root || !path) return;
+      const bottomPath = bottomLine.current;
+      if (!root || !path || !bottomPath) return;
 
       // Use the usable viewport width, excluding the scrollbar, for a full-bleed line.
       const resize = () => {
@@ -36,6 +40,10 @@ export function ElasticSectionBackground() {
           path.setAttribute(
             "d",
             `M 0 40 Q 500 ${40 + shape.bend * 2} 1000 40 L 1000 80 L 0 80 Z`,
+          );
+          bottomPath.setAttribute(
+            "d",
+            `M 0 40 Q 500 ${40 + shape.bend * 2} 1000 40 L 1000 0 L 0 0 Z`,
           );
         };
         const pull = gsap.quickTo(shape, "bend", {
@@ -71,7 +79,10 @@ export function ElasticSectionBackground() {
           },
         });
 
-        return () => path.setAttribute("d", straightEdge);
+        return () => {
+          path.setAttribute("d", straightEdge);
+          bottomPath.setAttribute("d", straightBottomEdge);
+        };
       });
 
       return () => {
@@ -97,7 +108,15 @@ export function ElasticSectionBackground() {
         <path ref={line} d={straightEdge} fill="currentColor" />
       </svg>
       {/* A 1px overlap keeps the curved edge and solid surface seamless. */}
-      <div className="absolute inset-x-0 top-[79px] bottom-0 bg-ink" />
+      <div className="absolute inset-x-0 top-[79px] bottom-[79px] bg-ink" />
+      <svg
+        className="absolute inset-x-0 bottom-0 block h-20 w-full"
+        viewBox="0 0 1000 80"
+        preserveAspectRatio="none"
+        focusable="false"
+      >
+        <path ref={bottomLine} d={straightBottomEdge} fill="currentColor" />
+      </svg>
     </div>
   );
 }

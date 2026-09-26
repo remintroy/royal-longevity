@@ -11,6 +11,7 @@ import { SectionHeading } from "./section-heading";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { getBookingHref } from "@/lib/booking";
 import { AccessLabel } from "./catalogue";
+import { ServiceCardsMotion } from "./service-cards-motion";
 
 export function ServiceCards({
   lang,
@@ -25,24 +26,31 @@ export function ServiceCards({
   return (
     <section className="my-12 min-[900px]:my-20" id="treatments">
       <SectionHeading
+        key={`heading-${lang}-${category}`}
+        animate
+        startAfter={2}
         eyebrow={collection.title[lang]}
         title={catalogueUi.services[lang]}
       />
-      <div className="mt-8 grid w-full grid-cols-1 items-stretch gap-5 min-[600px]:grid-cols-2">
+      <ServiceCardsMotion key={`cards-${lang}-${category}`}>
         {visibleServices.map((service) => (
           <article
             key={service.slug}
+            data-service-card
             className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white"
           >
             {/* Temporary seeded imagery until service photography is supplied. */}
-            <Image
-              src={`https://picsum.photos/seed/${service.slug}/960/540`}
-              alt=""
-              width={960}
-              height={540}
-              unoptimized
-              className="aspect-video w-full object-cover bg-ivory"
-            />
+            <div className="aspect-video overflow-hidden bg-ivory">
+              <Image
+                data-service-image
+                src={`https://picsum.photos/seed/${service.slug}/960/540`}
+                alt=""
+                width={960}
+                height={540}
+                unoptimized
+                className="h-full w-full object-cover"
+              />
+            </div>
             <div className="flex flex-1 flex-col p-6">
               <div>
                 <AccessLabel access={service.access} lang={lang} />
@@ -72,7 +80,7 @@ export function ServiceCards({
             </div>
           </article>
         ))}
-      </div>
+      </ServiceCardsMotion>
     </section>
   );
 }

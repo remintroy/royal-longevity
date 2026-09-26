@@ -9,57 +9,94 @@ gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 type RevealHeadingProps = Omit<ComponentPropsWithoutRef<"h2">, "children"> & {
   children: string;
+  startAfter?: number;
 };
 
-export function RevealHeading({ children, ...props }: RevealHeadingProps) {
+export function RevealHeading({
+  children,
+  startAfter = 0,
+  ...props
+}: RevealHeadingProps) {
   const heading = useRef<HTMLHeadingElement>(null);
 
-  useGSAP(() => {
-    const element = heading.current;
-    if (!element) return;
+  useGSAP(
+    () => {
+      const element = heading.current;
+      if (!element) return;
 
-    const media = gsap.matchMedia();
-    media.add({
-      desktop: "(min-width: 700px)",
-      mobile: "(max-width: 699px)",
-      reducedMotion: "(prefers-reduced-motion: reduce)",
-    }, (context) => {
-      if (context.conditions?.reducedMotion) return;
+      const readyAt = performance.now() + startAfter * 1000;
+      const media = gsap.matchMedia();
+      media.add(
+        {
+          desktop: "(min-width: 700px)",
+          mobile: "(max-width: 699px)",
+          reducedMotion: "(prefers-reduced-motion: reduce)",
+        },
+        (context) => {
+          if (context.conditions?.reducedMotion) return;
 
-      const words = element.querySelectorAll<HTMLElement>("[data-reveal-word]");
+          const words =
+            element.querySelectorAll<HTMLElement>("[data-reveal-word]");
 
-      // Animate whole words so Arabic letters remain joined.
-      // Content stays visible without JavaScript or with reduced motion enabled.
-      gsap.fromTo(words, {
-        opacity: 0,
-        y: 15,
-        filter: context.conditions?.desktop ? "blur(8px)" : "blur(4px)",
-      }, {
-        opacity: 1,
-        y: 0,
-        filter: "blur(0px)",
-        duration: 0.7,
-        stagger: 0.1,
-        ease: "power3.out",
-        scrollTrigger: { trigger: element, start: "top 90%", once: true },
-        clearProps: "opacity,transform,filter",
-      });
-    });
+          // Animate whole words so Arabic letters remain joined.
+          // Content stays visible without JavaScript or with reduced motion enabled.
+          const reveal = gsap.fromTo(
+            words,
+            {
+              opacity: 0,
+              y: 15,
+              filter: context.conditions?.desktop ? "blur(8px)" : "blur(4px)",
+            },
+            {
+              opacity: 1,
+              y: 0,
+              filter: "blur(0px)",
+              duration: 0.7,
+              stagger: 0.1,
+              ease: "power3.out",
+              paused: true,
+              clearProps: "opacity,transform,filter",
+            },
+          );
+          ScrollTrigger.create({
+            trigger: element,
+            start: "top 90%",
+            once: true,
+            onEnter: () => {
+              reveal
+                .delay(Math.max(0, (readyAt - performance.now()) / 1000))
+                .play();
+            },
+          });
+        },
+      );
 
-    return () => media.revert();
-  }, { scope: heading, dependencies: [children], revertOnUpdate: true });
+      return () => media.revert();
+    },
+    {
+      scope: heading,
+      dependencies: [children, startAfter],
+      revertOnUpdate: true,
+    },
+  );
 
   return (
     <h2 {...props} ref={heading}>
       <span className="sr-only">{children}</span>
       <span aria-hidden="true">
-        {children.split(/(\s+)/u).map((part, index) => (
-          /\s/u.test(part) ? part : (
-            <span key={index} data-reveal-word className="inline-block whitespace-nowrap">
+        {children.split(/(\s+)/u).map((part, index) =>
+          /\s/u.test(part) ? (
+            part
+          ) : (
+            <span
+              key={index}
+              data-reveal-word
+              className="inline-block whitespace-nowrap"
+            >
               {part}
             </span>
-          )
-        ))}
+          ),
+        )}
       </span>
     </h2>
   );

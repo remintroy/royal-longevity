@@ -169,7 +169,7 @@ export function ServiceImage({
   category: Category["id"];
 }) {
   return (
-    <div className="relative flex aspect-[1.65] items-center justify-center overflow-hidden rounded-3xl bg-ivory">
+    <div className="relative flex aspect-[1.4] items-center justify-center overflow-hidden rounded-3xl bg-ivory">
       {image ? (
         <Image
           src={`/assets/images/gallery/${image}.webp`}

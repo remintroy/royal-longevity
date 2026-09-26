@@ -12,7 +12,7 @@ import { BookingCta } from "@/components/ui/booking-cta";
 import { getBookingHref } from "@/lib/booking";
 import { AccessLabel } from "./catalogue";
 import { ServiceCardsMotion } from "./service-cards-motion";
-import { ElasticDivider } from "./elastic-divider";
+import { ElasticSectionBackground } from "./elastic-section-background";
 
 export function ServiceCards({
   lang,
@@ -25,8 +25,11 @@ export function ServiceCards({
   const collection = categories.find((item) => item.id === category);
   if (!collection) return null;
   return (
-    <section className="my-12 min-[900px]:my-20" id="treatments">
-      <ElasticDivider />
+    <section
+      className="relative isolate my-12 pt-28 pb-12 text-ivory min-[900px]:my-20 min-[900px]:pt-32 min-[900px]:pb-20"
+      id="treatments"
+    >
+      <ElasticSectionBackground />
       <SectionHeading
         key={`heading-${lang}-${category}`}
         animate
@@ -39,7 +42,7 @@ export function ServiceCards({
           <article
             key={service.slug}
             data-service-card
-            className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white"
+            className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white text-espresso"
           >
             {/* Temporary seeded imagery until service photography is supplied. */}
             <div className="aspect-video overflow-hidden bg-ivory">

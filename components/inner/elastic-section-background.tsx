@@ -7,9 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-const straightLine = "M 0 40 Q 500 40 1000 40";
+const straightEdge = "M 0 40 Q 500 40 1000 40 L 1000 80 L 0 80 Z";
 
-export function ElasticDivider() {
+export function ElasticSectionBackground() {
   const container = useRef<HTMLDivElement>(null);
   const line = useRef<SVGPathElement>(null);
 
@@ -33,7 +33,10 @@ export function ElasticDivider() {
       media.add("(prefers-reduced-motion: no-preference)", () => {
         const shape = { bend: 0 };
         const draw = () => {
-          path.setAttribute("d", `M 0 40 Q 500 ${40 + shape.bend * 2} 1000 40`);
+          path.setAttribute(
+            "d",
+            `M 0 40 Q 500 ${40 + shape.bend * 2} 1000 40 L 1000 80 L 0 80 Z`,
+          );
         };
         const pull = gsap.quickTo(shape, "bend", {
           duration: 0.2,
@@ -68,7 +71,7 @@ export function ElasticDivider() {
           },
         });
 
-        return () => path.setAttribute("d", straightLine);
+        return () => path.setAttribute("d", straightEdge);
       });
 
       return () => {
@@ -82,24 +85,19 @@ export function ElasticDivider() {
   return (
     <div
       ref={container}
-      className="pointer-events-none mb-8 h-20 text-border"
+      className="pointer-events-none absolute inset-y-0 start-0 -z-10 w-full text-ink"
       aria-hidden="true"
     >
       <svg
-        className="block h-full w-full"
+        className="block h-20 w-full"
         viewBox="0 0 1000 80"
         preserveAspectRatio="none"
         focusable="false"
       >
-        <path
-          ref={line}
-          d={straightLine}
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1"
-          vectorEffect="non-scaling-stroke"
-        />
+        <path ref={line} d={straightEdge} fill="currentColor" />
       </svg>
+      {/* A 1px overlap keeps the curved edge and solid surface seamless. */}
+      <div className="absolute inset-x-0 top-[79px] bottom-0 bg-ink" />
     </div>
   );
 }

@@ -63,9 +63,9 @@ export function ElasticSectionBackground() {
             if (!trigger.isActive) return;
             release.tween.pause();
             // Fixed ends, with a restrained centre deflection in the scroll direction.
-            const limit = window.innerWidth < 600 ? 16 : 26;
+            const limit = window.innerWidth < 600 ? 21 : 34;
             pull(
-              gsap.utils.clamp(-limit, limit, trigger.getVelocity() * 0.018),
+              gsap.utils.clamp(-limit, limit, trigger.getVelocity() * 0.023),
             );
             settle.restart(true);
           },

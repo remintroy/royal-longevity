@@ -35,7 +35,7 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
     })),
   };
   return (
-    <div className="min-h-screen bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] text-espresso [&_:is(a,button,summary,input,select):focus-visible]:outline-2 [&_:is(a,button,summary,input,select):focus-visible]:outline-gold [&_:is(a,button,summary,input,select):focus-visible]:outline-offset-5">
+    <div className="@container min-h-screen bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] text-espresso [&_:is(a,button,summary,input,select):focus-visible]:outline-2 [&_:is(a,button,summary,input,select):focus-visible]:outline-gold [&_:is(a,button,summary,input,select):focus-visible]:outline-offset-5">
       <a
         href="#page-content"
         className="fixed start-5 -top-[100px] z-100 rounded-full bg-espresso px-6 py-[15px] text-white focus:top-2.5"

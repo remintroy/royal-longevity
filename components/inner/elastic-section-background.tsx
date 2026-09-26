@@ -23,16 +23,6 @@ export function ElasticSectionBackground() {
       const bottomPath = bottomLine.current;
       if (!root || !path || !bottomPath) return;
 
-      // Use the usable viewport width, excluding the scrollbar, for a full-bleed line.
-      const resize = () => {
-        const width = document.documentElement.clientWidth;
-        root.style.width = `${width}px`;
-        root.style.marginInline = `calc((100% - ${width}px) / 2)`;
-      };
-      resize();
-      const observer = new ResizeObserver(resize);
-      observer.observe(document.documentElement);
-
       const media = gsap.matchMedia();
       media.add("(prefers-reduced-motion: no-preference)", () => {
         const shape = { bend: 0 };
@@ -85,18 +75,16 @@ export function ElasticSectionBackground() {
         };
       });
 
-      return () => {
-        observer.disconnect();
-        media.revert();
-      };
+      return () => media.revert();
     },
     { scope: container },
   );
 
+  // The SiteFrame container provides full page width before hydration, excluding scrollbars.
   return (
     <div
       ref={container}
-      className="pointer-events-none absolute inset-y-0 start-0 -z-10 w-full text-ink"
+      className="pointer-events-none absolute inset-y-0 start-0 -z-10 ms-[calc((100%-100cqw)/2)] w-[100cqw] text-ink"
       aria-hidden="true"
     >
       <svg

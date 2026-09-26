@@ -84,7 +84,7 @@ export function ElasticSectionBackground() {
   return (
     <div
       ref={container}
-      className="pointer-events-none absolute inset-y-0 start-0 -z-10 ms-[calc((100%-100cqw)/2)] w-[100cqw] text-ink"
+      className="pointer-events-none absolute inset-y-0 start-0 -z-10 ms-[calc((100%-100cqw)/2)] w-[100cqw] text-ivory"
       aria-hidden="true"
     >
       <svg
@@ -96,7 +96,7 @@ export function ElasticSectionBackground() {
         <path ref={line} d={straightEdge} fill="currentColor" />
       </svg>
       {/* A 1px overlap keeps the curved edge and solid surface seamless. */}
-      <div className="absolute inset-x-0 top-[79px] bottom-[79px] bg-ink" />
+      <div className="absolute inset-x-0 top-[79px] bottom-[79px] bg-ivory" />
       <svg
         className="absolute inset-x-0 bottom-0 block h-20 w-full"
         viewBox="0 0 1000 80"

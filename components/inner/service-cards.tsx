@@ -44,7 +44,7 @@ export function ServiceCards({
             data-service-card
             className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white text-espresso"
           >
-            <div className="aspect-video overflow-hidden bg-ivory">
+            <div className="aspect-4/3 overflow-hidden bg-ivory">
               <Image
                 data-service-image
                 src={`/assets/images/gallery/${service.image ?? "salon"}.webp`}

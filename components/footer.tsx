@@ -98,7 +98,7 @@ export function Footer({
 
           <div className="relative isolate flex min-h-[200px] items-center justify-center overflow-hidden rounded-[24px] px-5 py-12 min-[700px]:min-h-[300px] min-[700px]:rounded-[28px] min-[700px]:px-12 min-[1200px]:min-h-[380px]">
             <Image
-              src="/assets/images/introduction-lounge.webp"
+              src="/assets/images/footer-espresso.webp"
               alt=""
               fill
               sizes="(min-width: 1664px) 1600px, 100vw"

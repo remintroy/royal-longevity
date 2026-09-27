@@ -1,0 +1,5 @@
+# Footer background generation
+
+Generated with the built-in image generation tool. Web asset: `public/assets/images/footer-espresso.webp` (2172 × 724, WebP quality 85).
+
+Use case: photorealistic-natural. Asset type: wide website footer background behind an existing large white logo. Generate a refined photographic close-up of a luxury spa interior's dark espresso plaster wall, with softly blurred warm brown architectural curves at the outer edges and very restrained reflected amber light. Composition: panoramic 3:1 landscape, entire central 75 percent quiet dark negative space with subtle tactile matte texture; works cropped to a narrow panoramic strip or a mobile rectangle. Palette closely anchored to ink #20170f and espresso #2d1d12, with extremely restrained muted gold #bb8a36 reflected light at edges. Low-key natural lighting, calm premium beauty editorial photography, understated depth. No text, no logos, no people, no furniture focal points, no bright highlights, no decorative patterns, no artificial graphic gradients. The existing white Royal Longevity logo will be overlaid by the website; do not generate any branding.

@@ -76,7 +76,7 @@ export function ServiceCardsMotion({ children }: { children: ReactNode }) {
   return (
     <div
       ref={container}
-      className="mt-8 grid w-full grid-cols-1 items-stretch gap-5 min-[600px]:grid-cols-2"
+      className="mt-8 grid w-full grid-cols-1 items-stretch gap-5 min-[850px]:grid-cols-2 min-[1400px]:grid-cols-3"
     >
       {children}
     </div>

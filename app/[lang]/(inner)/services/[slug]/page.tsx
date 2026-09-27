@@ -1,3 +1,4 @@
+import { ServiceGallery } from "@/components/inner/service-gallery";
 import { PageHero } from "@/components/inner/page-hero";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -96,6 +97,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </>
         }
       />
+      <ServiceGallery service={service} lang={lang} />
       <section className="my-12 rounded-3xl border border-border bg-white p-6 min-[900px]:p-10">
         <h2 className="text-2xl">{catalogueUi.pricing[lang]}</h2>
         <p className="mt-4 leading-relaxed text-espresso/75">

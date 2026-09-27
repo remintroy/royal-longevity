@@ -19,6 +19,11 @@ export type Category = {
   group: "fitness" | "wellness" | "beauty";
   image?: string;
 };
+export type ServiceGalleryImage = {
+  src: string;
+  alt: LocalizedText;
+};
+
 export type Service = {
   slug: string;
   category: CategoryId;
@@ -26,6 +31,8 @@ export type Service = {
   description: LocalizedText;
   access: AccessModel;
   image?: string;
+  /** Ordered gallery photography, with the lead image first. */
+  gallery?: ServiceGalleryImage[];
   published: boolean;
   /** Null excludes this service. A number selects it and sets its homepage order. */
   homepageOrder: number | null;

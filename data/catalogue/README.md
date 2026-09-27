@@ -58,3 +58,7 @@ npm run build
 ```
 
 The catalogue checks cover category/service integrity, navigation targets, package and membership references, homepage selection and existing service URLs. `tsx` is a temporary runner, not a project dependency.
+
+## Service-detail photo galleries
+
+Each service detail page includes a five-image layout preview below its hero. `service-gallery.ts` combines the service's illustrative image with four local Picsum placeholders. To supply service-specific photography, add an ordered `gallery` array to the service with `src` and bilingual `alt` values; the first photo is the lead. Use five images for the large-plus-four composition. See `design/gallery.md` for aspect ratios and placeholder disclosure.

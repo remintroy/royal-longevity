@@ -16,3 +16,11 @@ Demo image sources (images.unsplash.com/photo-ID):
 - details: 1608571423902-eed4a5ad8108
 - massage: 1544161515-4ab6ce6db874
 - hair: 1521590832167-7bcbfaa6381f
+
+## Service-detail gallery
+
+Every service-detail route includes `components/inner/service-gallery.tsx` immediately after its hero and before pricing. This is an inline, server-rendered photo mosaic: one large lead image and four smaller frames. At 700px and above, the lead occupies two columns and two rows of a four-column grid. On mobile, it spans both columns above two pairs of supporting images. Frames use a 4:3 baseline, 12–16px gaps and the existing 20–24px rounded corners. The desktop lead stretches to align precisely with the supporting rows. No carousel, automatic motion or additional client JavaScript is introduced.
+
+The preview uses the existing illustrative service image plus four generic Lorem Picsum photographs, explicitly labelled as layout placeholders rather than actual premises photography. The photographs are local 1200×900 WebP assets in `public/assets/images/service-gallery/`, optimized and lazily loaded through Next Image. Sources: `https://picsum.photos/seed/royal-gallery-{1..4}/1200/900`.
+
+`data/catalogue/service-gallery.ts` owns the preview images and English/Arabic copy. Replace the preview for an individual service using its optional `gallery` array of `{ src, alt: localized(en, ar) }` records, ordered lead-first. Five images produce the intended mosaic. Update the preview notice when approved premises photography is supplied. The shared heading, spacing, colour tokens and RTL document direction preserve the existing inner-page design; the landing-page gallery is unchanged.

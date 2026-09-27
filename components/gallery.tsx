@@ -66,10 +66,10 @@ export function Gallery({
                 data-gallery-image
                 className="object-cover"
               />
-              <figcaption className="absolute inset-x-0 bottom-0 flex items-start gap-3 bg-ink/80 px-4 py-3 text-ivory min-[700px]:px-5 min-[700px]:py-4">
+              <figcaption className="absolute inset-x-0 bottom-0 flex items-start gap-3 bg-linear-to-t from-ink/90 via-ink/70 via-45% to-transparent px-4 pb-4 pt-16 text-ivory min-[700px]:px-5 min-[700px]:pb-5 min-[700px]:pt-20">
                 <span
                   aria-hidden="true"
-                  className="pt-1 text-xs tabular-nums text-ivory/70"
+                  className="pt-1 text-xs tabular-nums text-ivory/85"
                 >
                   {String(index + 1).padStart(2, "0")}
                 </span>

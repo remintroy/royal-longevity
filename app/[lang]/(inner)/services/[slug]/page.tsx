@@ -1,3 +1,4 @@
+import { ServiceArt } from "@/components/inner/service-art";
 import { ServiceGallery } from "@/components/inner/service-gallery";
 import { PageHero } from "@/components/inner/page-hero";
 import type { Metadata } from "next";
@@ -55,6 +56,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
     <SiteFrame lang={lang} path={`services/${slug}`}>
       <PageHero
         lang={lang}
+        backgroundArt={<ServiceArt service={service} />}
         title={service.title[lang]}
         description={service.description[lang]}
         eyebrow={<AccessLabel access={service.access} lang={lang} />}

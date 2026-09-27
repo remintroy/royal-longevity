@@ -11,6 +11,7 @@ type PageHeroProps = {
   navigation?: ReactNode;
   actions?: ReactNode;
   media?: ReactNode;
+  backgroundArt?: ReactNode;
 };
 
 export function PageHero({
@@ -21,6 +22,7 @@ export function PageHero({
   navigation,
   actions,
   media,
+  backgroundArt,
 }: PageHeroProps) {
   return (
     <section
@@ -28,9 +30,11 @@ export function PageHero({
       aria-labelledby="page-title"
       className={cn(
         "grid items-center gap-8 rounded-4xl bg-[color-mix(in_srgb,var(--color-ivory)_82%,white)] p-5 min-[700px]:p-8",
+        backgroundArt && "relative isolate overflow-hidden",
         media && "min-[900px]:grid-cols-2 min-[900px]:gap-10",
       )}
     >
+      {backgroundArt}
       <div
         className={cn(
           "min-w-0 py-5 min-[700px]:p-8",

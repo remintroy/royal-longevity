@@ -102,7 +102,10 @@ export function Highlights({ content }: { content: HighlightsContent }) {
           className="grid gap-4 min-[1000px]:grid-cols-3"
           aria-labelledby="highlights-details"
         >
-          <div className="flex min-h-[220px] flex-col items-center justify-center gap-6 rounded-[24px] border border-border p-8 text-center min-[1000px]:col-start-2 min-[1000px]:row-start-1">
+          <Link
+            href={content.allServices.href}
+            className="group focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold hover:border-gold hover:bg-ivory/40 transition-colors duration-200 flex min-h-[220px] flex-col items-center justify-center gap-6 rounded-[24px] border border-border p-8 text-center min-[1000px]:col-start-2 min-[1000px]:row-start-1"
+          >
             <Image
               src="/branding/icon-gold.png"
               alt=""
@@ -113,22 +116,37 @@ export function Highlights({ content }: { content: HighlightsContent }) {
             <p className="whitespace-pre-line text-2xl leading-snug rtl:leading-relaxed">
               {content.centerpiece}
             </p>
-          </div>
+            <span className="inline-flex items-center gap-2 text-sm">
+              {content.allServices.label}
+              <ArrowRight
+                className="size-4 rtl:rotate-180"
+                aria-hidden="true"
+              />
+            </span>
+          </Link>
           {[content.details.slice(0, 3), content.details.slice(3)].map(
             (group, index) => (
               <ul
-                key={group[0].id}
+                key={index}
                 className={`grid gap-4 min-[1000px]:row-start-1 ${index === 0 ? "min-[1000px]:col-start-1" : "min-[1000px]:col-start-3"}`}
               >
                 {group.map((detail) => (
-                  <li
-                    key={detail.id}
-                    className="flex min-h-[86px] items-center justify-between gap-5 rounded-[20px] border border-border px-6 py-5 min-[1200px]:px-8"
-                  >
-                    <span className="text-xl leading-snug min-[1200px]:text-2xl rtl:leading-relaxed">
-                      {detail.label}
-                    </span>
-                    <HighlightSymbol name={detail.icon} />
+                  <li key={detail.id}>
+                    <Link
+                      href={detail.href}
+                      className="group h-full transition-colors duration-200 hover:border-gold hover:bg-ivory/40 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold flex min-h-[86px] items-center justify-between gap-5 rounded-[20px] border border-border px-6 py-5 min-[1200px]:px-8"
+                    >
+                      <span className="text-xl leading-snug min-[1200px]:text-2xl rtl:leading-relaxed">
+                        {detail.label}
+                      </span>
+                      <span className="flex shrink-0 items-center gap-3">
+                        <HighlightSymbol name={detail.icon} />
+                        <ArrowRight
+                          className="size-4 rtl:rotate-180"
+                          aria-hidden="true"
+                        />
+                      </span>
+                    </Link>
                   </li>
                 ))}
               </ul>

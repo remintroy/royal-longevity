@@ -1,3 +1,4 @@
+import { ServicesDirectoryHero } from "@/components/inner/catalogue-heroes";
 import { Suspense } from "react";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -51,7 +52,9 @@ export default async function InnerPage({ params }: InnerPageProps) {
   const { lang, page, layout } = resolvePage(language, section);
   return (
     <SiteFrame lang={lang} path={section}>
-      {layout.hero === "intro" ? (
+      {section === "services" ? (
+        <ServicesDirectoryHero lang={lang} />
+      ) : layout.hero === "intro" ? (
         <CatalogueIntro
           lang={lang}
           eyebrow={page.eyebrow[lang]}

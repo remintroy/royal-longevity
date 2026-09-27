@@ -47,3 +47,13 @@ Inner navigation follows Home, About, Services, Memberships, Appointments, Our S
 Memberships compare illustrative plans and send contextual WhatsApp enquiries. Appointment options are grouped by category and exclude membership-only services. The pool supports both paths. The diagram's sign-up/payment/confirmation stages remain operational discussions with the team; no backend or payment system is introduced. Terms, Privacy, Careers and Blog await supplied content and are marked noindex.
 
 Each service has `published` and `homepageOrder`. The homepage selection helper is ready for future use, but is deliberately not connected to the existing landing page. Images remain illustrative; categories without relevant supplied imagery use category icons.
+
+## Catalogue hero hierarchy
+
+The service discovery routes use three distinct visual levels:
+
+- `/services`: a dark ink directory hero with a large editorial title and direct links to all nine collections.
+- `/services/categories/[category]`: a compact, open editorial header between fine rules, with a live published-service count, access label and an anchor to the collection's service list. It has no large hero image, so it reads as a browsing page.
+- `/services/[slug]`: the ivory image-led hero, service artwork and appointment actions remain, with an explicit selected-service label.
+
+All three levels use `CatalogueBreadcrumbs`: Home → All services → Collection → Service, as applicable. The last item is non-interactive and marked `aria-current="page"`. Ancestor links have touch-sized targets; wrapping and direction-aware separators support mobile and Arabic. `data/catalogue/hero.ts` owns bilingual hero labels and directory copy. Directory and collection presentation is in `components/inner/catalogue-heroes.tsx`. Other supporting-page heroes and the landing page retain their existing presentation.

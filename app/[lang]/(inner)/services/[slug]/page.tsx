@@ -1,8 +1,9 @@
+import { CatalogueBreadcrumbs } from "@/components/inner/catalogue-breadcrumbs";
+import { catalogueHero } from "@/data/catalogue/hero";
 import { ServiceArt } from "@/components/inner/service-art";
 import { ServiceGallery } from "@/components/inner/service-gallery";
 import { PageHero } from "@/components/inner/page-hero";
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { services, getService, categories } from "@/data/catalogue";
 import { catalogueUi } from "@/data/catalogue/experience";
@@ -54,28 +55,30 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const membership = service.access === "membership";
   return (
     <SiteFrame lang={lang} path={`services/${slug}`}>
+      <CatalogueBreadcrumbs
+        lang={lang}
+        items={[
+          { label: ui.home[lang], href: `/${lang}` },
+          { label: ui.all[lang], href: `/${lang}/services` },
+          {
+            label: category.title[lang],
+            href: `/${lang}/services/categories/${category.id}`,
+          },
+          { label: service.title[lang] },
+        ]}
+      />
       <PageHero
         lang={lang}
         backgroundArt={<ServiceArt service={service} />}
         title={service.title[lang]}
         description={service.description[lang]}
-        eyebrow={<AccessLabel access={service.access} lang={lang} />}
-        navigation={
-          <nav
-            aria-label={ui.home[lang]}
-            className="flex flex-wrap items-center gap-3"
-          >
-            <Link href={`/${lang}/services`} className="hover:underline">
-              {ui.all[lang]}
-            </Link>
-            <span aria-hidden="true">/</span>
-            <Link
-              href={`/${lang}/services/categories/${category.id}`}
-              className="hover:underline"
-            >
-              {category.title[lang]}
-            </Link>
-          </nav>
+        eyebrow={
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="text-xs tracking-[.1em] uppercase text-espresso/65 rtl:tracking-normal">
+              {catalogueHero.service[lang]}
+            </span>
+            <AccessLabel access={service.access} lang={lang} />
+          </div>
         }
         media={<ServiceImage image={service.image} category={category.id} />}
         actions={

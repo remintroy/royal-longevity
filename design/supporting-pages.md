@@ -57,3 +57,9 @@ The service discovery routes use three distinct visual levels:
 - `/services/[slug]`: the ivory image-led hero, service artwork and appointment actions remain, with an explicit selected-service label.
 
 All three levels use `CatalogueBreadcrumbs`: Home → All services → Collection → Service, as applicable. The last item is non-interactive and marked `aria-current="page"`. Ancestor links have touch-sized targets; wrapping and direction-aware separators support mobile and Arabic. `data/catalogue/hero.ts` owns bilingual hero labels and directory copy. Directory and collection presentation is in `components/inner/catalogue-heroes.tsx`. Other supporting-page heroes and the landing page retain their existing presentation.
+
+## Explore more after FAQs
+
+Collection and individual service pages show an eight-card discovery carousel after the FAQ and before the footer. This keeps the selected collection or service, its details and booking options ahead of alternative destinations. `data/catalogue/explore-more.ts` selects the next four nonempty collections in catalogue order, wrapping at the end and excluding the current collection, and pairs each with its first published service. No popularity or recommendation claims are inferred.
+
+`ExploreMore` renders linked cards on the server using existing imagery or category icons. `ExploreCarousel` provides native horizontal scrolling, snap positions, touch swiping and 48px previous/next buttons. It accounts for RTL scroll direction, disables controls at the ends and respects reduced motion. Cards show a partial next card on mobile and four cards on desktop. The scrollbar is hidden while native scrolling, touch swiping and arrow controls remain available. Images are lazy-loaded; no new dependency or autoplay is introduced. Only the small scroll wrapper is a Client Component.

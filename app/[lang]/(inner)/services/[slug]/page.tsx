@@ -1,3 +1,4 @@
+import { ExploreMore } from "@/components/inner/explore-more";
 import { CatalogueBreadcrumbs } from "@/components/inner/catalogue-breadcrumbs";
 import { catalogueHero } from "@/data/catalogue/hero";
 import { ServiceArt } from "@/components/inner/service-art";
@@ -114,6 +115,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
       {!membership && <AppointmentEnquiry lang={lang} initialService={slug} />}
       <ServiceCards lang={lang} category={category.id} />
       <Questions lang={lang} />
+      <ExploreMore lang={lang} category={category.id} />
     </SiteFrame>
   );
 }

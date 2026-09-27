@@ -1,3 +1,4 @@
+import { ExploreMore } from "@/components/inner/explore-more";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { categories } from "@/data/catalogue";
@@ -46,6 +47,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       {category.access === "both" && <PoolAccess lang={lang} />}
       <ServiceCards lang={lang} category={category.id} />
       <Questions lang={lang} />
+      <ExploreMore lang={lang} category={category.id} />
     </SiteFrame>
   );
 }

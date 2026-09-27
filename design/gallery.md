@@ -1,21 +1,10 @@
 # Gallery
 
-Reference: https://stayscape.framer.website/ — centered introduction and pill booking action, staggered three-column photography, larger center frame, rounded corners, and numbered captions. Adapted for Royal Longevity with existing ivory, espresso and gold tokens.
+The landing-page gallery uses six coordinated AI-generated editorial beauty and wellness photographs in the existing ivory, espresso and restrained gold palette. These are illustrative demo assets, not photographs of Royal Longevity premises, products or clients. Files are local WebP assets at `public/assets/images/gallery/brand-*.webp`; generation prompts are in `design/gallery-image-prompts.md`. English and Arabic titles and alternative text live in `data/gallery.ts`.
 
-The homepage gallery follows Experience. Six demo beauty/wellness images are served locally as WebP and lazily optimized with Next Image. Replace these with approved business photography before publication; they do not depict Royal Longevity premises. Copy and localized alternative text live in `data/gallery.ts`.
+The responsive bento grid uses two columns on mobile: a full-width salon image, two pairs of supporting tiles, then a full-width hair image. At 1000px it becomes four columns and three equal rows: the salon spans two columns and two rows; skincare spans two rows; ritual and product details fill the remaining smaller cells; massage and hair each span two columns across the final row. Gaps are 12–16px, with existing 24px corners. Native grid flow mirrors in RTL without changing content order. Quiet ink caption panels provide consistent contrast over every image.
 
-Mobile uses one column; tablet uses paired images; desktop (1000px+) uses three columns in a 1:1.35:1 ratio, with 120px and 158px side offsets. Logical alignment mirrors the composition in Arabic. White numbered captions sit directly over the lower image edge with 16px padding, matching the supplied reference. A localized dark gradient scrim preserves readability without a hard caption panel. The center and upper end-column images are square on desktop; the second start-column image is portrait.
-
-GSAP settles each photograph from scale 1.12 to 1 over 700ms with power3.out easing when the frame enters view. Frames and captions stay stationary. The heading retains its 650ms fade and translation. Reduced motion disables these animations. Content is server-rendered and visible without JavaScript. The shared booking CTA uses the existing WhatsApp destination.
-
-Demo image sources (images.unsplash.com/photo-ID):
-
-- salon: 1560066984-138dadb4c035
-- ritual: 1540555700478-4be289fbecef
-- skincare: 1570172619644-dfd03ed5d881
-- details: 1608571423902-eed4a5ad8108
-- massage: 1544161515-4ab6ce6db874
-- hair: 1521590832167-7bcbfaa6381f
+Images remain lazy-loaded through Next Image with responsive sizes. The existing GalleryMotion hooks, reduced-motion support, server rendering, heading and reusable booking CTA are preserved. No dependencies or client boundaries are added.
 
 ## Service-detail gallery
 

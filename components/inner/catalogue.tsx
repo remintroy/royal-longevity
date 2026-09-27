@@ -85,7 +85,7 @@ export function CategoryCards({
               <div className="relative aspect-video overflow-hidden bg-ivory">
                 <Image
                   data-content-image
-                  src={`/assets/images/gallery/${items[0]?.image ?? category.image ?? "salon"}.webp`}
+                  src={`/assets/images/gallery/${category.image ?? items[0]?.image ?? "salon"}.webp`}
                   alt=""
                   fill
                   sizes="(max-width: 699px) 92vw, (max-width: 1434px) 46vw, 675px"

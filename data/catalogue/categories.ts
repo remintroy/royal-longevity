@@ -4,6 +4,7 @@ import type { Category } from "./types";
 export const categories: Category[] = [
   {
     id: "gym-fitness",
+    image: "collections/gym-fitness",
     title: localized("Gym & Fitness", "النادي واللياقة"),
     description: localized(
       "Make room for movement, strength and personal training.",
@@ -14,6 +15,7 @@ export const categories: Category[] = [
   },
   {
     id: "yoga",
+    image: "collections/yoga",
     title: localized("Yoga", "اليوغا"),
     description: localized(
       "Find space for mindful movement, breathing and stillness.",
@@ -24,6 +26,7 @@ export const categories: Category[] = [
   },
   {
     id: "pilates",
+    image: "collections/pilates",
     title: localized("Pilates", "البيلاتس"),
     description: localized(
       "Explore considered movement in a class or a private session.",
@@ -34,6 +37,7 @@ export const categories: Category[] = [
   },
   {
     id: "swimming-pool",
+    image: "collections/swimming-pool",
     title: localized("Swimming Pool", "المسبح"),
     description: localized(
       "Discover pool access through selected memberships or a separate appointment.",
@@ -44,6 +48,7 @@ export const categories: Category[] = [
   },
   {
     id: "spa-wellness",
+    image: "collections/spa-wellness",
     title: localized("Spa & Wellness", "السبا والعافية"),
     description: localized(
       "Slow down with massage, body treatments, hammam and spa rituals.",
@@ -51,10 +56,10 @@ export const categories: Category[] = [
     ),
     access: "appointment",
     group: "wellness",
-    image: "massage",
   },
   {
     id: "facial-treatments",
+    image: "collections/facial-treatments",
     title: localized("Facial Treatments", "العناية بالوجه"),
     description: localized(
       "Explore facial care and discuss the approach that suits your skin.",
@@ -62,10 +67,10 @@ export const categories: Category[] = [
     ),
     access: "appointment",
     group: "beauty",
-    image: "skincare",
   },
   {
     id: "makeup",
+    image: "collections/makeup",
     title: localized("Makeup", "المكياج"),
     description: localized(
       "A considered look for your celebration, occasion or everyday style.",
@@ -76,6 +81,7 @@ export const categories: Category[] = [
   },
   {
     id: "salon-hair",
+    image: "collections/salon-hair",
     title: localized("Salon & Hair", "الصالون والشعر"),
     description: localized(
       "Discover cuts, colour, hair care and occasion styling.",
@@ -83,10 +89,10 @@ export const categories: Category[] = [
     ),
     access: "appointment",
     group: "beauty",
-    image: "hair",
   },
   {
     id: "nails-pedicure",
+    image: "collections/nails-pedicure",
     title: localized("Nails & Pedicure", "الأظافر والبديكير"),
     description: localized(
       "Care for hands and feet, finished in your own style.",
@@ -94,6 +100,5 @@ export const categories: Category[] = [
     ),
     access: "appointment",
     group: "beauty",
-    image: "ritual",
   },
 ];

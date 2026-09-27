@@ -1,3 +1,4 @@
+import { CatalogueArt } from "./catalogue-art";
 import Link from "next/link";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import {
@@ -24,8 +25,9 @@ export function ServicesDirectoryHero({ lang }: { lang: Language }) {
       />
       <section
         aria-labelledby="directory-title"
-        className="rounded-3xl bg-ink px-6 py-10 text-ivory min-[700px]:px-12 min-[900px]:py-16"
+        className="relative isolate overflow-hidden rounded-3xl bg-ink px-6 py-10 text-ivory min-[700px]:px-12 min-[900px]:py-16"
       >
+        <CatalogueArt />
         <p className="mb-6 text-xs tracking-[.12em] uppercase text-ivory/65 rtl:tracking-normal">
           {catalogueHero.directory[lang]}
         </p>
@@ -88,8 +90,9 @@ export function CollectionHero({
       />
       <section
         aria-labelledby="category-title"
-        className="grid gap-8 border-y border-border py-10 min-[900px]:grid-cols-[1fr_280px] min-[900px]:gap-16 min-[900px]:py-14"
+        className="relative isolate grid gap-8 overflow-hidden border-y border-border py-10 min-[900px]:grid-cols-[1fr_280px] min-[900px]:gap-16 min-[900px]:py-14"
       >
+        <CatalogueArt category={category.id} />
         <div>
           <p className="mb-5 text-xs tracking-[.12em] uppercase text-espresso/65 rtl:tracking-normal">
             {catalogueHero.collection[lang]}

@@ -1,15 +1,7 @@
 import type { ServiceArtAnimation } from "@/data/catalogue/service-art-motion";
 import { ServiceArtMotion } from "./service-art-motion";
 
-// Fine lane-like contours suggest a swimmer's wake without literal pool graphics.
-const wakeLines = [
-  "M-60 155 C100 85 180 225 350 150 S570 75 760 130",
-  "M-60 176 C100 106 180 246 350 171 S570 96 760 151",
-  "M-60 197 C100 127 180 267 350 192 S570 117 760 172",
-  "M-60 218 C100 148 180 288 350 213 S570 138 760 193",
-  "M-60 239 C100 169 180 309 350 234 S570 159 760 214",
-  "M-60 260 C100 190 180 330 350 255 S570 180 760 235",
-];
+import { swimmingWakeLines } from "@/data/catalogue/service-art";
 
 export function SwimmingArt({ animation }: { animation: ServiceArtAnimation }) {
   return (
@@ -21,7 +13,7 @@ export function SwimmingArt({ animation }: { animation: ServiceArtAnimation }) {
         focusable="false"
         className="absolute -bottom-10 -start-16 h-full w-[640px] min-[700px]:-bottom-12 min-[700px]:start-0 min-[700px]:w-[900px]"
       >
-        {wakeLines.map((line) => (
+        {swimmingWakeLines.map((line) => (
           <path
             key={line}
             data-service-art-line

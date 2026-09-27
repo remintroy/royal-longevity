@@ -31,3 +31,9 @@ The optional `PageHero.backgroundArt` slot leaves category pages, other supporti
 `data/catalogue/service-art-motion.ts` contains the typed shared animation defaults and optional per-service overrides. For example, add `"lap-swimming": { offsetY: 4, duration: 0.7 }` to `serviceArtAnimationOverrides` to tune that service without editing a component. Unspecified values inherit the defaults. Timing values are seconds; vertical displacement is pixels. Current values preserve the original animation.
 
 The server selects the configuration and passes only the resolved settings into `ServiceArtMotion`. GSAP execution, cleanup, reduced-motion handling and the one-time-only behavior remain in the component. Changes to settings revert the previous animation before applying the new one.
+
+## Directory and collections
+
+The all-services directory uses six open sweeping contours on the dark hero, positioned toward the outer edge at 18% mobile / 28% larger-screen gold opacity. Each collection uses its category's existing line motif at 10% / 14% opacity, with swimming reusing the shared water paths. These compositions preserve the visual difference between the dark directory, open collection header and image-led service details.
+
+`data/catalogue/catalogue-art.ts` owns directory geometry and animation settings and resolves collection artwork. `CatalogueArt` renders the server-side SVG through the existing reduced-motion-aware `ServiceArtMotion` wrapper. The wrapper accepts layout class overrides; existing service placement and timing remain unchanged. All artwork is clipped, decorative, non-interactive and mirrored for Arabic. No looping motion or new visual effects are introduced.

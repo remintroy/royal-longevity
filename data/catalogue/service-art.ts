@@ -117,3 +117,13 @@ export function getServiceArt(
   const motif = serviceMotifs[slug] ?? categoryMotifs[category];
   return { motif, paths: motifs[motif] };
 }
+
+// Fine lane-like contours suggest a swimmer's wake without literal pool graphics.
+export const swimmingWakeLines = [
+  "M-60 155 C100 85 180 225 350 150 S570 75 760 130",
+  "M-60 176 C100 106 180 246 350 171 S570 96 760 151",
+  "M-60 197 C100 127 180 267 350 192 S570 117 760 172",
+  "M-60 218 C100 148 180 288 350 213 S570 138 760 193",
+  "M-60 239 C100 169 180 309 350 234 S570 159 760 214",
+  "M-60 260 C100 190 180 330 350 255 S570 180 760 235",
+];

@@ -4,6 +4,7 @@ import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 
+import { cn } from "@/lib/utils";
 import type { ServiceArtAnimation } from "@/data/catalogue/service-art-motion";
 
 gsap.registerPlugin(useGSAP);
@@ -11,9 +12,11 @@ gsap.registerPlugin(useGSAP);
 export function ServiceArtMotion({
   children,
   animation,
+  className,
 }: {
   children: ReactNode;
   animation: ServiceArtAnimation;
+  className?: string;
 }) {
   const container = useRef<HTMLDivElement>(null);
 
@@ -49,7 +52,10 @@ export function ServiceArtMotion({
     <div
       ref={container}
       aria-hidden="true"
-      className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-44 select-none overflow-hidden text-gold opacity-[0.13] min-[700px]:h-64 min-[700px]:opacity-[0.18] min-[900px]:top-auto min-[900px]:bottom-0 rtl:-scale-x-100"
+      className={cn(
+        "pointer-events-none absolute inset-x-0 top-0 -z-10 h-44 select-none overflow-hidden text-gold opacity-[0.13] min-[700px]:h-64 min-[700px]:opacity-[0.18] min-[900px]:top-auto min-[900px]:bottom-0 rtl:-scale-x-100",
+        className,
+      )}
     >
       {children}
     </div>

@@ -113,10 +113,10 @@ export function Footer({
               dir="ltr"
             >
               <Image
-                src="/branding/icon-white.png"
+                src="/branding/icon-white.svg"
                 alt=""
-                width={1000}
-                height={900}
+                width={1002}
+                height={902}
                 sizes="(min-width: 700px) 16vw, 18vw"
                 className="h-auto w-[18%] max-w-[230px] shrink-0"
               />

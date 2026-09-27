@@ -45,9 +45,9 @@ const content: Record<Language, FooterContent> = {
     backToTop: "Back to top",
     brandAlt: "Royal Longevity",
     wordmark: {
-      src: "/branding/text-english-white.png",
-      width: 817,
-      height: 56,
+      src: "/branding/text-english-white.svg",
+      width: 1040,
+      height: 72,
     },
   },
   ar: {
@@ -74,9 +74,9 @@ const content: Record<Language, FooterContent> = {
     backToTop: "العودة إلى الأعلى",
     brandAlt: "رويال لونجيفيتي",
     wordmark: {
-      src: "/branding/text-arabic-white.png",
-      width: 887,
-      height: 177,
+      src: "/branding/text-arabic-white.svg",
+      width: 950,
+      height: 146,
     },
   },
 };

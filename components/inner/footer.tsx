@@ -33,10 +33,10 @@ export function InnerFooter({
             className="inline-flex min-h-11 max-w-full items-center gap-4 rounded-sm"
           >
             <Image
-              src="/branding/icon-white.png"
+              src="/branding/icon-white.svg"
               alt=""
-              width={1000}
-              height={900}
+              width={1002}
+              height={902}
               className="h-10 w-auto"
               sizes="45px"
             />

@@ -1,18 +1,12 @@
 import { HeroMenu } from "@/components/hero-menu";
 import { BrandLogo } from "@/components/ui/brand-logo";
 import { IconButton } from "@/components/ui/icon-button";
-import {
-  getInnerMenuContent,
-  mainNavigation,
-  supportingNavigation,
-} from "@/data/catalogue/navigation";
-import { Footer } from "@/components/footer";
-import { getFooterContent } from "@/data/footer";
+import { getInnerMenuContent } from "@/data/catalogue/navigation";
+import { InnerFooter } from "./footer";
 import Link from "next/link";
 import type { Language } from "@/data/site";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
-import { BookingCta } from "@/components/ui/booking-cta";
 
 type SiteFrameProps = {
   lang: Language;
@@ -23,17 +17,6 @@ type SiteFrameProps = {
 export function SiteFrame({ lang, path, children }: SiteFrameProps) {
   const otherLanguage = lang === "en" ? "ar" : "en";
   const innerMenuContent = getInnerMenuContent(lang);
-  const footerContent = {
-    ...getFooterContent(lang),
-    menu: mainNavigation.map((item) => ({
-      label: item.label[lang],
-      href: `/${lang}${item.slug ? `/${item.slug}` : ""}`,
-    })),
-    explore: supportingNavigation.map((item) => ({
-      label: item.label[lang],
-      href: `/${lang}/${item.slug}`,
-    })),
-  };
   return (
     <div className="@container min-h-screen bg-[color-mix(in_srgb,var(--color-ivory)_22%,white)] text-espresso [&_:is(a,button,summary,input,select):focus-visible]:outline-2 [&_:is(a,button,summary,input,select):focus-visible]:outline-gold [&_:is(a,button,summary,input,select):focus-visible]:outline-offset-5">
       <a
@@ -76,28 +59,8 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
         className="mx-auto w-[min(calc(100%-40px),1370px)] min-[600px]:w-[min(calc(100%-64px),1370px)]"
       >
         {children}
-        <section className="my-[65px] flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-border bg-[color-mix(in_srgb,var(--color-ivory)_35%,white)] p-[30px] min-[900px]:p-10">
-          <div>
-            <h2 className="max-w-[760px] text-[clamp(1.6rem,3vw,2.2rem)] leading-[1.13] font-normal tracking-[-.035em] text-balance rtl:leading-[1.4] rtl:tracking-normal">
-              {ui.ready[lang]}
-            </h2>
-            <p className="leading-[1.65] mt-3 text-sm opacity-75">
-              {ui.readyBody[lang]}
-            </p>
-          </div>
-          <BookingCta
-            href={getBookingHref(lang)}
-            label={ui.book[lang]}
-            target="_blank"
-            rel="noreferrer"
-          />
-        </section>
       </main>
-      <Footer
-        lang={lang}
-        content={footerContent}
-        bookingHref={getBookingHref(lang)}
-      />
+      <InnerFooter lang={lang} path={path} />
     </div>
   );
 }

@@ -19,8 +19,14 @@ export function ExploreMore({
   return (
     <section
       aria-labelledby="explore-more-title"
-      className="my-16 border-t border-border pt-12 min-[900px]:my-20"
+      className="relative isolate mt-16 py-12 min-[900px]:mt-20 min-[900px]:py-16"
     >
+      {/* The site frame is the query container: span its width without
+          viewport scrollbar overflow or changing the aligned content width. */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-y-0 start-1/2 -z-10 w-[100cqw] -translate-x-1/2 border-y border-border bg-ivory/60 rtl:translate-x-1/2"
+      />
       <SectionHeading
         id="explore-more-title"
         eyebrow={exploreMoreUi.eyebrow[lang]}

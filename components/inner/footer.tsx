@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import { ArrowUp, ArrowUpRight } from "lucide-react";
@@ -8,12 +9,22 @@ import { getFooterContent } from "@/data/footer";
 import type { Language } from "@/data/site";
 import { getBookingHref } from "@/lib/booking";
 
-export function InnerFooter({ lang, path }: { lang: Language; path: string }) {
+export function InnerFooter({
+  lang,
+  path,
+  flush = false,
+}: {
+  lang: Language;
+  path: string;
+  flush?: boolean;
+}) {
   const otherLanguage = lang === "en" ? "ar" : "en";
   const { wordmark } = getFooterContent(lang);
 
   return (
-    <footer className="mt-16 bg-ink text-ivory min-[900px]:mt-20">
+    <footer
+      className={cn("bg-ink text-ivory", !flush && "mt-16 min-[900px]:mt-20")}
+    >
       <div className="mx-auto w-[min(calc(100%-40px),1370px)] min-[600px]:w-[min(calc(100%-64px),1370px)]">
         <div className="flex flex-wrap items-center justify-between gap-6 border-b border-ivory/20 py-8">
           <Link

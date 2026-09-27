@@ -42,7 +42,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   const { lang: language, category: id } = await params;
   const { lang, category } = resolveCategory(language, id);
   return (
-    <SiteFrame lang={lang} path={`services/categories/${id}`}>
+    <SiteFrame flushFooter lang={lang} path={`services/categories/${id}`}>
       <CollectionHero lang={lang} category={category} />
       {category.access === "both" && <PoolAccess lang={lang} />}
       <ServiceCards lang={lang} category={category.id} />

@@ -55,7 +55,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
   const { lang, service, category } = resolveService(language, slug);
   const membership = service.access === "membership";
   return (
-    <SiteFrame lang={lang} path={`services/${slug}`}>
+    <SiteFrame flushFooter lang={lang} path={`services/${slug}`}>
       <CatalogueBreadcrumbs
         lang={lang}
         items={[

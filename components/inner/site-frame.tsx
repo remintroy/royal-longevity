@@ -12,9 +12,15 @@ type SiteFrameProps = {
   lang: Language;
   path: string;
   children: React.ReactNode;
+  flushFooter?: boolean;
 };
 
-export function SiteFrame({ lang, path, children }: SiteFrameProps) {
+export function SiteFrame({
+  lang,
+  path,
+  children,
+  flushFooter = false,
+}: SiteFrameProps) {
   const otherLanguage = lang === "en" ? "ar" : "en";
   const innerMenuContent = getInnerMenuContent(lang);
   return (
@@ -62,7 +68,7 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
       >
         {children}
       </main>
-      <InnerFooter lang={lang} path={path} />
+      <InnerFooter lang={lang} path={path} flush={flushFooter} />
     </div>
   );
 }

@@ -35,7 +35,9 @@ export function SiteFrame({ lang, path, children }: SiteFrameProps) {
             className="inline-flex h-12 shrink-0 items-center rounded-full px-[17px] py-2 max-[380px]:px-0"
             aria-label={`Royal Longevity · ${ui.home[lang]}`}
           >
-            <BrandLogo lang={lang} />
+            {/* Transparent logo margins extend beyond this link's 48px box.
+                Let only the link itself receive clicks, not its overflowing image. */}
+            <BrandLogo lang={lang} className="pointer-events-none" />
           </Link>
           <div className="flex shrink-0 gap-2">
             <IconButton

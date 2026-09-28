@@ -48,7 +48,15 @@ export function BookingBanner({
             className="h-full w-full object-cover object-bottom lg:object-center"
           />
         </picture>
-        <div className="flex w-full flex-col items-center text-center text-espresso lg:w-[56%] lg:items-start lg:text-start lg:rtl:self-end">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[75%] bg-linear-to-b from-espresso/75 via-espresso/50 via-50% to-transparent lg:hidden"
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0 -z-10 hidden bg-linear-to-r from-espresso/50 via-espresso/25 via-35% to-transparent to-70% lg:block"
+        />
+        <div className="flex w-full flex-col items-center text-center text-ivory lg:w-[56%] lg:items-start lg:text-start lg:rtl:self-end">
           <p className="mb-5 flex items-center gap-2.5 text-sm">
             <span
               className="size-[5px] shrink-0 rounded-full bg-current"

@@ -32,7 +32,7 @@ export function BookingBanner({
       aria-labelledby="booking-banner-title"
       className="bg-white px-4 pb-16 min-[700px]:px-8 min-[700px]:pb-24"
     >
-      <div className="relative isolate mx-auto flex aspect-[2/3] min-h-[640px] max-w-[600px] flex-col overflow-hidden rounded-[24px] bg-espresso px-6 py-12 min-[700px]:rounded-[28px] lg:aspect-auto lg:min-h-[360px] lg:max-w-[1600px] lg:justify-center lg:px-12 lg:py-12 xl:min-h-[440px] xl:px-16 2xl:min-h-[530px]">
+      <div className="relative isolate mx-auto flex aspect-[2/3] min-h-[640px] w-full min-w-0 max-w-[600px] flex-col overflow-hidden rounded-[24px] bg-espresso px-6 py-12 min-[700px]:rounded-[28px] lg:aspect-auto lg:min-h-[360px] lg:max-w-[1600px] lg:justify-center lg:px-12 lg:py-12 xl:min-h-[440px] xl:px-16 2xl:min-h-[530px]">
         <picture className="absolute inset-0 -z-20">
           <source
             media="(min-width: 1024px)"

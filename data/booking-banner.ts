@@ -17,7 +17,7 @@ const content: Record<Language, BookingBannerContent> = {
     image: {
       src: "/assets/images/booking-banner-desktop.webp",
       mobileSrc: "/assets/images/booking-banner-mobile.webp",
-      alt: "An ivory towel, gold-pump lotion dispenser and white flowers on warm marble",
+      alt: "An ivory towel and lotion bottle with gold Royal Longevity branding beside white flowers on warm marble",
     },
   },
   ar: {
@@ -27,7 +27,7 @@ const content: Record<Language, BookingBannerContent> = {
     image: {
       src: "/assets/images/booking-banner-desktop.webp",
       mobileSrc: "/assets/images/booking-banner-mobile.webp",
-      alt: "منشفة عاجية وعبوة لوشن بمضخة ذهبية وزهور بيضاء على رخام دافئ",
+      alt: "منشفة عاجية وعبوة لوشن تحملان شعار رويال لونجيفيتي الذهبي بجوار زهور بيضاء على رخام دافئ",
     },
   },
 };

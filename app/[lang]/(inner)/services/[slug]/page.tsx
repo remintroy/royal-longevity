@@ -93,13 +93,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
               target="_blank"
               rel="noreferrer"
             />
-            <TextLink
-              href={membership ? `/${lang}/memberships` : "#appointment"}
-            >
-              {membership
-                ? catalogueUi.memberships[lang]
-                : catalogueUi.appointments[lang]}
-            </TextLink>
+            <TextLink href="#appointment">{catalogueUi.enquiry[lang]}</TextLink>
           </>
         }
       />
@@ -112,7 +106,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </section>
       <Journey lang={lang} membership={membership} />
       {service.access === "both" && <PoolAccess lang={lang} />}
-      {!membership && <AppointmentEnquiry lang={lang} initialService={slug} />}
+      <AppointmentEnquiry lang={lang} initialService={slug} />
       <ServiceCards lang={lang} category={category.id} />
       <Questions lang={lang} />
       <ExploreMore lang={lang} category={category.id} />

@@ -1,18 +1,19 @@
 "use client";
 
-import * as React from "react"
-import { useRef } from "react"
-import { ArrowUpRight } from "lucide-react"
-import { cn } from "@/lib/utils"
-import gsap from "gsap"
-import { useGSAP } from "@gsap/react"
+import * as React from "react";
+import { useRef } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 
 export interface BookingCtaProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   label: string;
+  iconClassName?: string;
 }
 
 export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
-  ({ className, label, ...props }, ref) => {
+  ({ className, iconClassName, label, ...props }, ref) => {
     const containerRef = useRef<HTMLAnchorElement>(null);
     const circleRef = useRef<HTMLSpanElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);
@@ -20,74 +21,90 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
 
     const { contextSafe } = useGSAP({ scope: containerRef });
 
-    const handleMouseEnter = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-      if (!circleRef.current || !textRef.current || !arrowRef.current || !containerRef.current) return;
-      
-      const containerRect = containerRef.current.getBoundingClientRect();
-      const circleRect = circleRef.current.getBoundingClientRect();
-      const textRect = textRef.current.getBoundingClientRect();
-      
-      const isRtl = document.documentElement.dir === "rtl";
-      const direction = isRtl ? -1 : 1;
+    const handleMouseEnter = contextSafe(
+      (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+          return;
+        if (
+          !circleRef.current ||
+          !textRef.current ||
+          !arrowRef.current ||
+          !containerRef.current
+        )
+          return;
 
-      let circleMoveX, textMoveX;
+        const containerRect = containerRef.current.getBoundingClientRect();
+        const circleRect = circleRef.current.getBoundingClientRect();
+        const textRect = textRef.current.getBoundingClientRect();
 
-      if (!isRtl) {
-        // LTR: Circle moves right to touch 7px right padding
-        circleMoveX = (containerRect.right - 7) - circleRect.right;
-        // LTR: Text moves left to sit exactly 20px from left edge (7px padding + 13px extra space)
-        textMoveX = (containerRect.left + 20) - textRect.left;
-      } else {
-        // RTL: Circle moves left to touch 7px left padding
-        circleMoveX = (containerRect.left + 7) - circleRect.left;
-        // RTL: Text moves right to sit exactly 20px from right edge
-        textMoveX = (containerRect.right - 20) - textRect.right;
-      }
+        const isRtl = document.documentElement.dir === "rtl";
+        const direction = isRtl ? -1 : 1;
 
-      const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
+        let circleMoveX, textMoveX;
 
-      gsap.to(circleRef.current, { x: circleMoveX, ...config });
-      gsap.to(textRef.current, { x: textMoveX, ...config });
-      gsap.to(arrowRef.current, { rotation: 360 * direction, ...config });
-      
-      props.onMouseEnter?.(e);
-    });
+        if (!isRtl) {
+          // LTR: Circle moves right to touch 7px right padding
+          circleMoveX = containerRect.right - 7 - circleRect.right;
+          // LTR: Text moves left to sit exactly 20px from left edge (7px padding + 13px extra space)
+          textMoveX = containerRect.left + 20 - textRect.left;
+        } else {
+          // RTL: Circle moves left to touch 7px left padding
+          circleMoveX = containerRect.left + 7 - circleRect.left;
+          // RTL: Text moves right to sit exactly 20px from right edge
+          textMoveX = containerRect.right - 20 - textRect.right;
+        }
 
-    const handleMouseLeave = contextSafe((e: React.MouseEvent<HTMLAnchorElement>) => {
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        gsap.set([circleRef.current, textRef.current, arrowRef.current], { clearProps: "transform" });
-        return;
-      }
-      if (!circleRef.current || !textRef.current || !arrowRef.current) return;
-      
-      const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
+        const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
 
-      gsap.to(circleRef.current, { x: 0, ...config });
-      gsap.to(textRef.current, { x: 0, ...config });
-      gsap.to(arrowRef.current, { rotation: 0, ...config });
-      
-      props.onMouseLeave?.(e);
-    });
+        gsap.to(circleRef.current, { x: circleMoveX, ...config });
+        gsap.to(textRef.current, { x: textMoveX, ...config });
+        gsap.to(arrowRef.current, { rotation: 360 * direction, ...config });
+
+        props.onMouseEnter?.(e);
+      },
+    );
+
+    const handleMouseLeave = contextSafe(
+      (e: React.MouseEvent<HTMLAnchorElement>) => {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+          gsap.set([circleRef.current, textRef.current, arrowRef.current], {
+            clearProps: "transform",
+          });
+          return;
+        }
+        if (!circleRef.current || !textRef.current || !arrowRef.current) return;
+
+        const config = { duration: 0.7, ease: "power3.inOut", overwrite: true };
+
+        gsap.to(circleRef.current, { x: 0, ...config });
+        gsap.to(textRef.current, { x: 0, ...config });
+        gsap.to(arrowRef.current, { rotation: 0, ...config });
+
+        props.onMouseLeave?.(e);
+      },
+    );
 
     return (
-      <a 
+      <a
         className={cn(
           "group relative inline-flex items-center px-[7px] py-[6px] min-h-[54px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-[#422b1b]",
-          className
+          className,
         )}
         ref={(node) => {
           containerRef.current = node;
-          if (typeof ref === 'function') ref(node);
+          if (typeof ref === "function") ref(node);
           else if (ref) ref.current = node;
         }}
         onMouseEnter={handleMouseEnter}
         onMouseLeave={handleMouseLeave}
         {...props}
       >
-        <span 
+        <span
           ref={circleRef}
-          className="relative z-10 grid w-10 h-10 flex-shrink-0 place-content-center rounded-full bg-ivory text-espresso text-[20px] me-[14px]" 
+          className={cn(
+            "relative z-10 grid w-10 h-10 flex-shrink-0 place-content-center rounded-full bg-ivory text-espresso text-[20px] me-[14px]",
+            iconClassName,
+          )}
           aria-hidden="true"
         >
           <span className="rtl:-scale-x-100 flex place-content-center">
@@ -101,7 +118,7 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
         </span>
         <span className="w-[13px] flex-shrink-0" aria-hidden="true" />
       </a>
-    )
-  }
-)
-BookingCta.displayName = "BookingCta"
+    );
+  },
+);
+BookingCta.displayName = "BookingCta";

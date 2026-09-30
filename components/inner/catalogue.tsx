@@ -15,6 +15,7 @@ import { ui } from "@/data/inner/ui";
 import { SectionHeading } from "./section-heading";
 import { TextLink } from "./text-link";
 import { CategoryIcon } from "./category-icon";
+import { BookingCta } from "@/components/ui/booking-cta";
 
 export function AccessLabel({
   access,
@@ -131,12 +132,12 @@ export function CategoryCards({
                     </li>
                   ))}
                 </ul>
-                <TextLink
-                  className="mt-auto"
+                <BookingCta
+                  className="mt-auto self-start border border-border bg-transparent text-espresso transition-colors duration-200 ease-out hover:bg-ivory motion-reduce:transition-none"
+                  iconClassName="transition-colors duration-200 ease-out group-hover:bg-white motion-reduce:transition-none"
                   href={`/${lang}/services/categories/${category.id}`}
-                >
-                  {catalogueUi.explore[lang]}
-                </TextLink>
+                  label={catalogueUi.explore[lang]}
+                />
               </div>
             </article>
           );

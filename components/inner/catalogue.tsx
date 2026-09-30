@@ -74,7 +74,7 @@ export function CategoryCards({
         eyebrow={catalogueUi.categories[lang]}
         title={ui.services[lang]}
       />
-      <ContentReveal className="mt-8 grid gap-5 min-[700px]:grid-cols-3">
+      <ContentReveal className="mt-8 grid grid-cols-1 gap-5 min-[700px]:grid-cols-2 min-[1100px]:grid-cols-3">
         {visible.map((category) => {
           const items = getCategoryServices(category.id);
           return (
@@ -89,7 +89,7 @@ export function CategoryCards({
                   src={`/assets/images/gallery/${category.image ?? items[0]?.image ?? "salon"}.webp`}
                   alt=""
                   fill
-                  sizes="(max-width: 699px) 92vw, (max-width: 1434px) 46vw, 675px"
+                  sizes="(max-width: 699px) 92vw, (max-width: 1099px) 46vw, (max-width: 1434px) 31vw, 444px"
                   className="object-cover"
                 />
                 <div

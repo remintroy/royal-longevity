@@ -4,12 +4,48 @@ import type { HeroMenuContent } from "@/data/hero-menu";
 
 export const mainNavigation = [
   { slug: "", label: localized("Home", "الرئيسية") },
-  { slug: "about", label: localized("About", "عن رويال") },
-  { slug: "services", label: localized("Services", "الخدمات") },
-  { slug: "memberships", label: localized("Memberships", "العضويات") },
-  { slug: "appointments", label: localized("Appointments", "المواعيد") },
-  { slug: "our-space", label: localized("Our Spaces", "مساحاتنا") },
-  { slug: "gallery", label: localized("Gallery", "معرض الصور") },
+  {
+    slug: "about",
+    label: localized("About", "عن رويال"),
+    description: localized("Discover our approach", "اكتشفي فلسفتنا"),
+  },
+  {
+    slug: "services",
+    label: localized("Services", "الخدمات"),
+    description: localized(
+      "Find your personal ritual",
+      "اكتشفي طقوس العناية بكِ",
+    ),
+  },
+  {
+    slug: "memberships",
+    label: localized("Memberships", "العضويات"),
+    description: localized(
+      "Make care part of your routine",
+      "اجعلي العناية جزءاً من روتينك",
+    ),
+  },
+  {
+    slug: "appointments",
+    label: localized("Appointments", "المواعيد"),
+    description: localized(
+      "Plan your next moment of care",
+      "خططي للحظتك القادمة من العناية",
+    ),
+  },
+  {
+    slug: "our-space",
+    label: localized("Our Spaces", "مساحاتنا"),
+    description: localized("Take a look inside", "ألقي نظرة على مساحتنا"),
+  },
+  {
+    slug: "gallery",
+    label: localized("Gallery", "معرض الصور"),
+    description: localized(
+      "A glimpse of the Royal experience",
+      "لمحة عن تجربة رويال",
+    ),
+  },
   { slug: "contact", label: localized("Contact", "التواصل") },
 ];
 export const supportingNavigation = [
@@ -29,12 +65,16 @@ export function getInnerMenuContent(lang: Language): HeroMenuContent {
     openLabel: localized("Open menu", "افتحي القائمة")[lang],
     closeLabel: localized("Close menu", "أغلقي القائمة")[lang],
     links: mainNavigation
-      .filter((item) => item.slug !== "contact")
+      .filter((item) => item.slug !== "" && item.slug !== "contact")
       .map((item) => ({
         href: `/${lang}${item.slug ? `/${item.slug}` : ""}`,
         label: item.label[lang],
-        description: "",
+        description: item.description?.[lang] ?? "",
       })),
+    home: {
+      href: `/${lang}`,
+      label: localized("Home", "الرئيسية")[lang],
+    },
     contact: {
       href: `/${lang}/contact`,
       label: localized("Contact", "التواصل")[lang],

@@ -60,4 +60,6 @@ export function getHeroMenuContent(lang: Language) {
     },
   };
 }
-export type HeroMenuContent = ReturnType<typeof getHeroMenuContent>;
+export type HeroMenuContent = ReturnType<typeof getHeroMenuContent> & {
+  home?: { href: string; label: string };
+};

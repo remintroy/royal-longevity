@@ -159,9 +159,11 @@ export function HeroMenu({
                 >
                   <span>
                     <span className="block text-base">{item.label}</span>
-                    <span className="mt-1 block text-xs leading-relaxed text-espresso/70">
-                      {item.description}
-                    </span>
+                    {item.description && (
+                      <span className="mt-1 block text-xs leading-relaxed text-espresso/70">
+                        {item.description}
+                      </span>
+                    )}
                   </span>
                   <ChevronRight
                     size={16}
@@ -174,8 +176,12 @@ export function HeroMenu({
               </li>
             ))}
           </ul>
-          <div className="flex flex-wrap justify-between gap-x-4 px-3 py-2 text-sm">
-            {[content.contact, content.questions].map((item) => (
+          <div className="flex flex-wrap justify-between gap-x-4 px-3 py-2 text-sm min-[700px]:px-4">
+            {[
+              ...(content.home ? [content.home] : []),
+              content.contact,
+              content.questions,
+            ].map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -196,10 +202,10 @@ export function HeroMenu({
         </nav>
         <div className="relative isolate flex min-h-32 items-center justify-center overflow-hidden rounded-[20px] p-4">
           <Image
-            src="/assets/images/introduction-lounge.webp"
+            src="/assets/images/booking-banner-desktop.webp"
             alt=""
             fill
-            sizes="(min-width: 1100px) 50vw, 100vw"
+            sizes="(min-width: 1434px) 1336px, calc(100vw - 64px)"
             className="-z-20 object-cover"
           />
           <div

@@ -73,7 +73,7 @@ export function CategoryCards({
         eyebrow={catalogueUi.categories[lang]}
         title={ui.services[lang]}
       />
-      <ContentReveal className="mt-8 grid gap-5 min-[700px]:grid-cols-2">
+      <ContentReveal className="mt-8 grid gap-5 min-[700px]:grid-cols-3">
         {visible.map((category) => {
           const items = getCategoryServices(category.id);
           return (
@@ -82,7 +82,7 @@ export function CategoryCards({
               key={category.id}
               className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white"
             >
-              <div className="relative aspect-video overflow-hidden bg-ivory">
+              <div className="relative isolate flex aspect-video items-center justify-center overflow-hidden bg-ivory p-6 text-center">
                 <Image
                   data-content-image
                   src={`/assets/images/gallery/${category.image ?? items[0]?.image ?? "salon"}.webp`}
@@ -91,6 +91,18 @@ export function CategoryCards({
                   sizes="(max-width: 699px) 92vw, (max-width: 1434px) 46vw, 675px"
                   className="object-cover"
                 />
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-0 bg-ink/60"
+                />
+                <h3 className="relative text-3xl font-normal leading-snug tracking-[-.02em] text-white min-[1100px]:text-4xl rtl:tracking-normal">
+                  <Link
+                    href={`/${lang}/services/categories/${category.id}`}
+                    className="underline-offset-4 hover:underline focus-visible:rounded-sm focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+                  >
+                    {category.title[lang]}
+                  </Link>
+                </h3>
               </div>
               <div className="flex items-center justify-between gap-3 border-b border-border p-6">
                 <CategoryIcon
@@ -100,15 +112,7 @@ export function CategoryCards({
                 <AccessLabel access={category.access} lang={lang} />
               </div>
               <div className="flex flex-1 flex-col p-6">
-                <h3 className="text-2xl font-normal leading-snug tracking-[-.02em] rtl:tracking-normal">
-                  <Link
-                    href={`/${lang}/services/categories/${category.id}`}
-                    className="hover:underline"
-                  >
-                    {category.title[lang]}
-                  </Link>
-                </h3>
-                <p className="mt-3 text-sm leading-relaxed text-espresso/75">
+                <p className="text-sm leading-relaxed text-espresso/75">
                   {category.description[lang]}
                 </p>
                 <ul className="my-5 divide-y divide-border">

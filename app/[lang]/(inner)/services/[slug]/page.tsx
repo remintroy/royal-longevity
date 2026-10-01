@@ -104,7 +104,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </section>
       {service.access === "both" && <PoolAccess lang={lang} />}
       <AppointmentEnquiry lang={lang} initialService={slug} />
-      <ServiceCards lang={lang} category={category.id} />
+      <ServiceCards lang={lang} category={category.id} decorated />
       <Questions lang={lang} />
       <ExploreMore lang={lang} category={category.id} />
     </SiteFrame>

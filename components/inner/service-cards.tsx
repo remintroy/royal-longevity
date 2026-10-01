@@ -14,12 +14,16 @@ import { AccessLabel } from "./catalogue";
 import { ServiceCardsMotion } from "./service-cards-motion";
 import { ElasticSectionBackground } from "./elastic-section-background";
 
+import { ServiceSectionArt } from "./service-section-art";
+
 export function ServiceCards({
   lang,
   category,
+  decorated = false,
 }: {
   lang: Language;
   category: CategoryId;
+  decorated?: boolean;
 }) {
   const visibleServices = getCategoryServices(category);
   const collection = categories.find((item) => item.id === category);
@@ -30,6 +34,9 @@ export function ServiceCards({
       id="treatments"
     >
       <ElasticSectionBackground />
+      {decorated && (
+        <ServiceSectionArt category={category} variant="collection" />
+      )}
       <SectionHeading
         key={`heading-${lang}-${category}`}
         animate

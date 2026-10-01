@@ -9,6 +9,8 @@ import { cn } from "@/lib/utils";
 import { SectionHeading } from "./section-heading";
 import { ElasticSectionBackground } from "./elastic-section-background";
 
+import { ServiceSectionArt } from "./service-section-art";
+
 export function ServiceGallery({
   service,
   lang,
@@ -24,6 +26,7 @@ export function ServiceGallery({
       className="relative isolate my-16 py-28 min-[900px]:my-20 min-[900px]:py-30"
     >
       <ElasticSectionBackground />
+      <ServiceSectionArt category={service.category} variant="gallery" />
       <div className="mb-7 flex flex-wrap items-end justify-between gap-4 min-[900px]:mb-9">
         <div>
           <SectionHeading

@@ -3,20 +3,23 @@
 import { useRef, type ReactNode } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 import { cn } from "@/lib/utils";
 import type { ServiceArtAnimation } from "@/data/catalogue/service-art-motion";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 export function ServiceArtMotion({
   children,
   animation,
   className,
+  revealOnScroll = false,
 }: {
   children: ReactNode;
   animation: ServiceArtAnimation;
   className?: string;
+  revealOnScroll?: boolean;
 }) {
   const container = useRef<HTMLDivElement>(null);
 
@@ -31,6 +34,9 @@ export function ServiceArtMotion({
           stagger: { amount: animation.staggerAmount },
           ease: animation.ease,
           clearProps: "opacity,transform",
+          scrollTrigger: revealOnScroll
+            ? { trigger: container.current, start: "top 92%", once: true }
+            : undefined,
         });
       });
       return () => media.revert();
@@ -38,6 +44,7 @@ export function ServiceArtMotion({
     {
       scope: container,
       dependencies: [
+        revealOnScroll,
         animation.fromOpacity,
         animation.offsetY,
         animation.duration,

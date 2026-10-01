@@ -37,3 +37,9 @@ The server selects the configuration and passes only the resolved settings into 
 The all-services directory uses six open sweeping contours on the dark hero, positioned toward the outer edge at 18% mobile / 28% larger-screen gold opacity. Each collection uses its category's existing line motif at 10% / 14% opacity, with swimming reusing the shared water paths. These compositions preserve the visual difference between the dark directory, open collection header and image-led service details.
 
 `data/catalogue/catalogue-art.ts` owns directory geometry and animation settings and resolves collection artwork. `CatalogueArt` renders the server-side SVG through the existing reduced-motion-aware `ServiceArtMotion` wrapper. The wrapper accepts layout class overrides; existing service placement and timing remain unchanged. All artwork is clipped, decorative, non-interactive and mirrored for Arabic. No looping motion or new visual effects are introduced.
+
+## Service-detail gallery and collection backgrounds
+
+`ServiceSectionArt` pairs the supplied gold icon with the category's existing line illustration on the ivory gallery and “services in this collection” surfaces. The brand mark keeps its original proportions, orientation and gold treatment at 9% opacity. Line art uses the existing gold token at 20% opacity. Mobile uses a 112px mark and 440px illustration; larger screens expand these to 240px and 700px. Logical edge positioning follows Arabic layout while only the illustration mirrors.
+
+The full-width decorative layer is clipped inside the solid portion of the existing elastic background, behind content and clear of the animated edges. It is non-interactive and hidden from assistive technology. The existing `ServiceArtMotion` wrapper accepts an optional one-time scroll reveal, using shared timing and reduced-motion handling. Only service-detail collection cards opt into the decoration; other uses of `ServiceCards` retain their existing appearance.

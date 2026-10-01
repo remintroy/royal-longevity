@@ -7,6 +7,7 @@ import {
 import type { Language } from "@/data/site";
 import { cn } from "@/lib/utils";
 import { SectionHeading } from "./section-heading";
+import { ElasticSectionBackground } from "./elastic-section-background";
 
 export function ServiceGallery({
   service,
@@ -20,8 +21,9 @@ export function ServiceGallery({
   return (
     <section
       aria-labelledby="service-gallery-title"
-      className="my-16 min-[900px]:my-20"
+      className="relative isolate my-16 py-28 min-[900px]:my-20 min-[900px]:py-30"
     >
+      <ElasticSectionBackground />
       <div className="mb-7 flex flex-wrap items-end justify-between gap-4 min-[900px]:mb-9">
         <div>
           <SectionHeading

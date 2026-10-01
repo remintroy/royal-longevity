@@ -13,10 +13,7 @@ export const enquiryControlsUi = {
   period: localized("AM or PM", "صباحاً أو مساءً"),
   am: localized("AM", "صباحاً"),
   pm: localized("PM", "مساءً"),
-  wheelHelp: localized(
-    "Scroll each column or tap a value. The middle row is selected.",
-    "مرّري كل عمود أو اضغطي على قيمة. الصف الأوسط هو المحدد.",
-  ),
+  wheelHelp: localized("Scroll to select time", "مرّري لاختيار الوقت"),
   timeHint: localized("Dubai time (GMT+4)", "توقيت دبي (GMT+4)"),
 };
 

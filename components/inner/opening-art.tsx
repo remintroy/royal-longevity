@@ -55,7 +55,7 @@ export function OpeningArt() {
     <div
       ref={container}
       aria-hidden="true"
-      className="pointer-events-none relative ms-[calc((100%-100cqw)/2)] flex h-40 w-[100cqw] items-center overflow-hidden pt-10 text-gold/35 select-none min-[700px]:h-48"
+      className="pointer-events-none relative ms-[calc((100%-100cqw)/2)] flex h-24 w-[100cqw] items-center overflow-hidden pt-10 text-gold/35 select-none min-[700px]:h-48"
     >
       <span
         data-opening-extension
@@ -71,7 +71,7 @@ export function OpeningArt() {
         strokeWidth="1"
         strokeLinecap="butt"
         focusable="false"
-        className="h-auto w-[min(60cqw,330px)] shrink-0 rtl:-scale-x-100"
+        className="h-auto w-[min(48cqw,220px)] shrink-0 min-[700px]:w-[min(60cqw,330px)] rtl:-scale-x-100"
       >
         {interludeContours.opening.map((path) => (
           <path key={path} d={path} vectorEffect="non-scaling-stroke" />

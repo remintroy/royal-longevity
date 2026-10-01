@@ -20,12 +20,13 @@ import {
   Dialog,
   DialogTrigger,
   Heading,
-  ListBox,
-  ListBoxItem,
   Popover,
+  Modal,
+  ModalOverlay,
   Radio,
   RadioGroup,
 } from "react-aria-components";
+import { cn } from "@/lib/utils";
 import type { Language } from "@/data/site";
 import {
   enquiryControlsUi as copy,
@@ -189,28 +190,41 @@ export function EnquiryTimePicker({
   const id = useId();
   const [isOpen, setIsOpen] = useState(false);
   const [hour, setHour] = useState("");
-  const [minute, setMinute] = useState("00");
-  const [period, setPeriod] = useState("am");
+  const [minute, setMinute] = useState("");
+  const [period, setPeriod] = useState("");
+  const [activeStep, setActiveStep] = useState(0);
   const numbers = new Intl.NumberFormat(enquiryLocales[lang], {
     minimumIntegerDigits: 2,
   });
   const displayTime = formatEnquiryTime(value, lang);
-  const columns = [
+  const stages = [
     {
-      id: "hour",
       label: copy.hour[lang],
-      options: enquiryHours,
+      title: copy.selectHour[lang],
+      description: copy.hourHelp[lang],
       value: hour,
       setValue: setHour,
+      options: enquiryHours,
     },
     {
-      id: "minute",
       label: copy.minute[lang],
-      options: enquiryMinutes,
+      title: copy.selectMinute[lang],
+      description: copy.minuteHelp[lang],
       value: minute,
       setValue: setMinute,
+      options: enquiryMinutes,
+    },
+    {
+      label: copy.period[lang],
+      title: copy.selectPeriod[lang],
+      description: copy.periodHelp[lang],
+      value: period,
+      setValue: setPeriod,
+      options: ["am", "pm"],
     },
   ];
+  const activeStage = stages[activeStep];
+  const isComplete = Boolean(hour && minute && period);
 
   return (
     <div className="grid min-w-0 gap-[15px] text-sm">
@@ -227,14 +241,15 @@ export function EnquiryTimePicker({
         isOpen={isOpen}
         onOpenChange={(open) => {
           if (open) {
-            const [savedHour = "", savedMinute = "00"] = value.split(":");
+            const [savedHour = "", savedMinute = ""] = value.split(":");
             setHour(
               savedHour
                 ? String(Number(savedHour) % 12 || 12).padStart(2, "0")
                 : "",
             );
             setMinute(savedMinute);
-            setPeriod(Number(savedHour) >= 12 ? "pm" : "am");
+            setPeriod(savedHour ? (Number(savedHour) >= 12 ? "pm" : "am") : "");
+            setActiveStep(0);
           }
           setIsOpen(open);
         }}
@@ -248,109 +263,159 @@ export function EnquiryTimePicker({
           </span>
           <Clock3 className="size-5 shrink-0" aria-hidden="true" />
         </Button>
-        <Popover
-          placement="bottom start"
-          offset={8}
-          containerPadding={8}
-          className="z-50 max-h-[calc(100dvh-2rem)] w-[min(20rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"
-          data-lenis-prevent
+        <ModalOverlay
+          isDismissable
+          className="fixed inset-0 z-50 flex items-center justify-center bg-espresso/20 p-2"
         >
-          <Dialog className="outline-none">
-            <div className="flex items-center justify-between gap-2">
-              <Heading slot="title" className="text-base font-medium">
-                {copy.chooseTime[lang]}
-              </Heading>
-              <Button
-                aria-label={copy.close[lang]}
-                onPress={() => setIsOpen(false)}
-                className="flex size-11 items-center justify-center rounded-full hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
-              >
-                <X className="size-4" aria-hidden="true" />
-              </Button>
-            </div>
-            <p className="mb-4 text-xs text-espresso/65">
-              {copy.timeHint[lang]}
-            </p>
-            <RadioGroup
-              aria-label={copy.period[lang]}
-              value={period}
-              onChange={setPeriod}
-              orientation="horizontal"
-              className="mb-4 grid grid-cols-2 gap-1 rounded-full border border-border bg-ivory/20 p-1"
-            >
-              {(["am", "pm"] as const).map((option) => (
-                <Radio
-                  key={option}
-                  value={option}
-                  className="flex min-h-11 cursor-pointer items-center justify-center rounded-full text-sm outline-none data-selected:bg-espresso data-selected:text-white data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold"
+          <Modal
+            className="max-h-[calc(100dvh-1rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"
+            data-lenis-prevent
+          >
+            <Dialog className="outline-none">
+              <div className="flex items-center justify-between gap-2">
+                <Heading slot="title" className="text-base font-medium">
+                  {copy.chooseTime[lang]}
+                </Heading>
+                <Button
+                  aria-label={copy.close[lang]}
+                  onPress={() => setIsOpen(false)}
+                  className="flex size-11 items-center justify-center rounded-full hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
                 >
-                  {copy[option][lang]}
-                </Radio>
-              ))}
-            </RadioGroup>
-            <div className="grid grid-cols-2 gap-3">
-              {columns.map((column) => (
-                <div key={column.id} className="min-w-0">
-                  <p
-                    id={`${id}-${column.id}`}
-                    className="mb-2 text-center text-xs text-espresso/70"
+                  <X className="size-4" aria-hidden="true" />
+                </Button>
+              </div>
+              <p className="mb-4 text-xs text-espresso/65">
+                {copy.timeHint[lang]}
+              </p>
+              <div
+                dir="ltr"
+                className="mb-3 flex items-start justify-center gap-1 rounded-2xl border border-border bg-ivory/20 p-2"
+              >
+                {stages.map((stage, index) => (
+                  <div
+                    key={stage.label}
+                    className="flex min-w-0 flex-1 items-start gap-1"
                   >
-                    {column.label}
-                  </p>
-                  <ListBox
-                    aria-labelledby={`${id}-${column.id}`}
-                    selectionMode="single"
-                    disallowEmptySelection
-                    selectedKeys={column.value ? [column.value] : []}
-                    onSelectionChange={(keys) => {
-                      if (keys !== "all") {
-                        const key = [...keys][0];
-                        if (key !== undefined) column.setValue(String(key));
-                      }
-                    }}
-                    className="h-48 overflow-y-auto overscroll-contain rounded-2xl border border-border bg-ivory/20 p-1 outline-none data-focus-visible:ring-2 data-focus-visible:ring-gold"
-                    data-lenis-prevent
-                  >
-                    {column.options.map((option) => (
-                      <ListBoxItem
-                        key={option}
-                        id={option}
-                        textValue={option}
-                        className="flex min-h-11 cursor-pointer items-center justify-center rounded-xl text-base tabular-nums outline-none data-focused:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-inset data-focus-visible:ring-gold data-selected:bg-espresso data-selected:text-white"
+                    {index === 1 && (
+                      <span
+                        aria-hidden="true"
+                        className="pt-2 text-3xl text-espresso/50"
                       >
-                        {numbers.format(Number(option))}
-                      </ListBoxItem>
-                    ))}
-                  </ListBox>
-                </div>
-              ))}
-            </div>
-            <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-3">
-              <Button
-                isDisabled={!value}
-                onPress={() => {
-                  onChange("");
-                  setIsOpen(false);
-                }}
-                className="min-h-11 rounded-full px-4 text-sm hover:underline data-focus-visible:outline-2 data-focus-visible:outline-gold data-disabled:opacity-40"
+                        :
+                      </span>
+                    )}
+                    <Button
+                      aria-label={`${stage.label}: ${stage.value ? (index === 2 ? copy[stage.value === "am" ? "am" : "pm"][lang] : numbers.format(Number(stage.value))) : "--"}`}
+                      aria-pressed={activeStep === index}
+                      onPress={() => setActiveStep(index)}
+                      className={cn(
+                        "flex min-h-20 min-w-0 flex-1 flex-col items-center justify-center gap-1 rounded-xl border border-transparent px-1 tabular-nums outline-none data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold",
+                        activeStep === index
+                          ? "border-espresso bg-espresso text-white"
+                          : "text-espresso hover:bg-ivory",
+                      )}
+                    >
+                      <span
+                        className={
+                          index === 2
+                            ? "text-xl font-medium"
+                            : "text-3xl font-medium"
+                        }
+                      >
+                        {index === 2
+                          ? period
+                            ? copy[period === "am" ? "am" : "pm"][lang]
+                            : "--"
+                          : numbers.format(Number(stage.value || "0"))}
+                      </span>
+                      <span
+                        className="text-[11px]"
+                        dir={lang === "ar" ? "rtl" : "ltr"}
+                      >
+                        {stage.label}
+                      </span>
+                    </Button>
+                  </div>
+                ))}
+              </div>
+              <p className="mb-4 text-center text-xs leading-relaxed text-espresso/65">
+                {copy.editHint[lang]}
+              </p>
+              <div aria-live="polite" aria-atomic="true" className="mb-3">
+                <h4 id={`${id}-stage`} className="text-sm font-medium">
+                  {activeStep + 1}/3 · {activeStage.title}
+                </h4>
+                <p
+                  id={`${id}-help`}
+                  className="mt-1 text-xs leading-relaxed text-espresso/65"
+                >
+                  {activeStage.description}
+                </p>
+              </div>
+              <RadioGroup
+                key={activeStep}
+                aria-labelledby={`${id}-stage`}
+                aria-describedby={`${id}-help`}
+                value={activeStage.value}
+                onChange={activeStage.setValue}
+                className={cn(
+                  "grid h-48 content-start gap-2 overflow-y-auto overscroll-contain rounded-2xl border border-border p-2",
+                  activeStep === 2
+                    ? "grid-cols-2"
+                    : activeStep === 1
+                      ? "grid-cols-5"
+                      : "grid-cols-4",
+                )}
+                data-lenis-prevent
               >
-                {copy.clear[lang]}
-              </Button>
-              <Button
-                isDisabled={!hour}
-                onPress={() => {
-                  const hour24 =
-                    (Number(hour) % 12) + (period === "pm" ? 12 : 0);
-                  onChange(`${String(hour24).padStart(2, "0")}:${minute}`);
-                  setIsOpen(false);
-                }}
-                className="min-h-11 rounded-full bg-espresso px-5 text-sm text-white hover:bg-ink data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-disabled:opacity-40"
-              >
-                {copy.done[lang]}
-              </Button>
-            </div>
-          </Dialog>
-        </Popover>
+                {activeStage.options.map((option) => (
+                  <Radio
+                    key={option}
+                    value={option}
+                    className="flex min-h-11 cursor-pointer items-center justify-center rounded-xl border border-border text-base tabular-nums outline-none hover:bg-ivory data-selected:border-espresso data-selected:bg-espresso data-selected:text-white data-focus-visible:outline-2 data-focus-visible:outline-offset-1 data-focus-visible:outline-gold"
+                  >
+                    {activeStep === 2
+                      ? copy[option === "am" ? "am" : "pm"][lang]
+                      : numbers.format(Number(option))}
+                  </Radio>
+                ))}
+              </RadioGroup>
+              <div className="mt-4 flex items-center justify-between gap-3 border-t border-border pt-3">
+                <Button
+                  isDisabled={activeStep === 0 && !value}
+                  onPress={() => {
+                    if (activeStep > 0) setActiveStep(activeStep - 1);
+                    else {
+                      onChange("");
+                      setIsOpen(false);
+                    }
+                  }}
+                  className="min-h-11 rounded-full px-4 text-sm hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold data-disabled:opacity-40"
+                >
+                  {activeStep > 0 ? copy.back[lang] : copy.clear[lang]}
+                </Button>
+                <Button
+                  isDisabled={
+                    activeStep === 2 ? !isComplete : !activeStage.value
+                  }
+                  onPress={() => {
+                    if (activeStep < 2) {
+                      setActiveStep(activeStep + 1);
+                      return;
+                    }
+                    const hour24 =
+                      (Number(hour) % 12) + (period === "pm" ? 12 : 0);
+                    onChange(`${String(hour24).padStart(2, "0")}:${minute}`);
+                    setIsOpen(false);
+                  }}
+                  className="min-h-11 rounded-full bg-espresso px-5 text-sm text-white hover:bg-ink data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-disabled:opacity-40"
+                >
+                  {activeStep === 2 ? copy.done[lang] : copy.next[lang]}
+                </Button>
+              </div>
+            </Dialog>
+          </Modal>
+        </ModalOverlay>
       </DialogTrigger>
     </div>
   );

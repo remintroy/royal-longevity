@@ -2,26 +2,27 @@ import { localized } from "./localization";
 
 export const enquiryUi = {
   eyebrow: localized("Your enquiry", "استفساركِ"),
+  title: localized("How can we help?", "كيف يمكننا مساعدتكِ؟"),
   intro: localized(
-    "Explore a treatment, ask about membership or let us help you choose. Share your preferences and continue the conversation with our team on WhatsApp.",
-    "اكتشفي جلسة، أو استفسري عن عضوية، أو دعينا نساعدكِ في الاختيار. شاركي تفضيلاتكِ وتابعي الحديث مع فريقنا عبر واتساب.",
+    "Ask about a service, prices or membership. Our team will help you on WhatsApp.",
+    "اسألي عن خدمة أو الأسعار أو العضوية. فريقنا هنا لمساعدتكِ عبر واتساب.",
+  ),
+  guidance: localized(
+    "Choose a service below, or ask us to help you choose. The date, time and message are optional.",
+    "اختاري خدمة أدناه، أو اطلبي مساعدتنا في الاختيار. التاريخ والوقت والرسالة اختيارية.",
   ),
   preferences: localized(
-    "Have a visit in mind? Add a preferred date and time, or leave them open.",
-    "هل تخططين لزيارة؟ أضيفي التاريخ والوقت المفضلين أو اتركيهما دون تحديد.",
+    "Planning a visit? You can add your preferred date and time.",
+    "تخططين لزيارة؟ يمكنكِ إضافة التاريخ والوقت المفضلين.",
   ),
   message: localized("Your message (optional)", "رسالتكِ (اختياري)"),
   placeholder: localized(
-    "Ask about pricing, membership options or tell us what you’re looking for…",
-    "اسألي عن الأسعار أو خيارات العضوية، أو أخبرينا بما تبحثين عنه…",
-  ),
-  summary: localized("Your selection", "اختياركِ"),
-  guidance: localized(
-    "We’ll help you find the care that feels right for you.",
-    "نساعدكِ في العثور على العناية المناسبة لكِ.",
+    "What would you like to know?",
+    "ما الذي تودّين معرفته؟",
   ),
   note: localized(
-    "Your details open in WhatsApp for you to review and send. Visits and memberships are confirmed directly with our team.",
-    "تُفتح تفاصيلكِ في واتساب لمراجعتها وإرسالها. تُؤكَّد الزيارات والعضويات مباشرةً مع فريقنا.",
+    "WhatsApp will open with your details. Review your message and tap Send there. Our team will confirm availability and any appointment.",
+    "سيفتح واتساب مع تفاصيلكِ. راجعي رسالتكِ واضغطي على إرسال هناك. سيؤكد فريقنا التوفر وأي موعد.",
   ),
+  continue: localized("Continue on WhatsApp", "المتابعة عبر واتساب"),
 };

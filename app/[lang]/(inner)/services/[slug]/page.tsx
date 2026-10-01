@@ -18,7 +18,6 @@ import {
   PoolAccess,
   ServiceImage,
 } from "@/components/inner/catalogue";
-import { Journey } from "@/components/inner/memberships";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { TextLink } from "@/components/inner/text-link";
 import { getBookingHref } from "@/lib/booking";
@@ -53,7 +52,6 @@ export async function generateMetadata({
 export default async function ServicePage({ params }: ServicePageProps) {
   const { lang: language, slug } = await params;
   const { lang, service, category } = resolveService(language, slug);
-  const membership = service.access === "membership";
   return (
     <SiteFrame flushFooter lang={lang} path={`services/${slug}`}>
       <CatalogueBreadcrumbs
@@ -104,7 +102,6 @@ export default async function ServicePage({ params }: ServicePageProps) {
           {catalogueUi.pricingBody[lang]}
         </p>
       </section>
-      <Journey lang={lang} membership={membership} />
       {service.access === "both" && <PoolAccess lang={lang} />}
       <AppointmentEnquiry lang={lang} initialService={slug} />
       <ServiceCards lang={lang} category={category.id} />

@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { I18nProvider } from "react-aria-components";
-import Image from "next/image";
 import { useSearchParams } from "next/navigation";
-import { CalendarDays, MessageCircle } from "lucide-react";
+import { MessageCircle } from "lucide-react";
 import type { Language } from "@/data/site";
 import { categories, services } from "@/data/catalogue";
 import { enquiryUi } from "@/data/inner/enquiry";
@@ -16,7 +15,6 @@ import { EnquirySelect } from "@/components/ui/enquiry-select";
 import {
   DatePicker,
   TimePicker,
-  formatPickerDate,
   formatPickerTime,
 } from "@/components/ui/date-time-picker";
 import { ui } from "@/data/inner/ui";
@@ -67,105 +65,78 @@ export function AppointmentEnquiry({
       className="my-16 scroll-mt-8 min-[900px]:my-20"
       aria-labelledby="appointment-title"
     >
-      <SectionHeading
-        eyebrow={enquiryUi.eyebrow[lang]}
-        title={ui.visitTitle[lang]}
-        id="appointment-title"
-      />
-      <p className="mt-5 max-w-2xl text-base leading-relaxed text-espresso/75">
-        {enquiryUi.intro[lang]}
-      </p>
-      <div className="mt-8 grid gap-8 rounded-3xl border border-border bg-white p-5 sm:p-8 min-[900px]:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] min-[900px]:gap-x-10 lg:p-10">
-        <div className="min-w-0">
+      <div className="grid gap-8 rounded-3xl bg-ivory/60 p-4 sm:p-8 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-12 lg:p-10">
+        <header className="min-w-0">
+          <SectionHeading
+            eyebrow={enquiryUi.eyebrow[lang]}
+            title={enquiryUi.title[lang]}
+            id="appointment-title"
+          />
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-espresso/75">
+            {enquiryUi.intro[lang]}
+          </p>
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-espresso/75">
+            {enquiryUi.guidance[lang]}
+          </p>
+        </header>
+        <div className="min-w-0 rounded-3xl border border-border bg-white p-4 sm:p-6 lg:p-8">
           <I18nProvider locale={enquiryLocales[lang]}>
             <EnquirySelect
               label={ui.select[lang]}
-              step="01"
               value={selectedServiceSlug}
               onChange={setSelectedServiceSlug}
               defaultOption={{ id: "any-service", label: ui.any[lang] }}
               groups={serviceGroups}
             />
-            <p className="mt-7 text-sm leading-relaxed text-espresso/65">
+            <p className="mt-6 text-sm leading-relaxed text-espresso/75">
               {enquiryUi.preferences[lang]}
             </p>
-            <div className="mt-4 grid gap-5 min-[600px]:grid-cols-2">
+            <div className="mt-4 grid gap-5 sm:grid-cols-2">
               <DatePicker
                 lang={lang}
                 label={ui.date[lang]}
-                step="02"
                 value={preferredDate}
                 onChange={setPreferredDate}
               />
               <TimePicker
                 lang={lang}
                 label={ui.time[lang]}
-                step="03"
                 value={preferredTime}
                 onChange={setPreferredTime}
               />
             </div>
           </I18nProvider>
-          <label className="mt-7 grid gap-3 text-sm">
+          <label className="mt-6 grid gap-3 text-sm">
             <span>{enquiryUi.message[lang]}</span>
             <textarea
-              className="min-h-32 w-full resize-y rounded-2xl border border-border bg-ivory/20 p-4 text-base leading-relaxed text-espresso placeholder:text-espresso/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
-              rows={4}
+              className="min-h-28 w-full resize-y rounded-2xl border border-border bg-ivory/20 p-4 text-base leading-relaxed text-espresso placeholder:text-espresso/55 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              rows={3}
               maxLength={1500}
               value={message}
               onChange={(event) => setMessage(event.target.value)}
               placeholder={enquiryUi.placeholder[lang]}
             />
           </label>
-        </div>
-        <aside className="flex min-w-0 flex-col">
-          <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-[20px]">
-            <Image
-              className="object-cover"
-              src={`/assets/images/gallery/${selectedService?.image ?? "salon"}.webp`}
-              alt=""
-              fill
-              sizes="(max-width: 899px) 90vw, 500px"
+          <div className="mt-6 flex min-w-0 flex-col gap-4 border-t border-border pt-6">
+            <p
+              id="appointment-note"
+              className="flex items-start gap-3 text-sm leading-relaxed text-espresso/75"
+            >
+              <MessageCircle
+                className="mt-1 size-4 shrink-0"
+                aria-hidden="true"
+              />
+              {enquiryUi.note[lang]}
+            </p>
+            <BookingCta
+              className="w-full max-w-full text-xs min-[380px]:text-sm sm:w-fit"
+              aria-describedby="appointment-note"
+              href={getBookingHref(lang, bookingContext)}
+              label={enquiryUi.continue[lang]}
+              target="_blank"
+              rel="noreferrer"
             />
           </div>
-          <p className="mb-3 text-xs tracking-widest text-espresso/65 uppercase rtl:tracking-normal">
-            {enquiryUi.summary[lang]}
-          </p>
-          <h3 className="mb-3 text-2xl leading-snug break-words">
-            {selectedService?.title[lang] ?? ui.summary[lang]}
-          </h3>
-          <p className="mb-6 text-sm leading-relaxed text-espresso/70">
-            {selectedCategory?.title[lang] ?? enquiryUi.guidance[lang]}
-          </p>
-          {(preferredDate || preferredTime) && (
-            <p className="mb-5 flex items-center gap-2.5 text-[13px] leading-[1.65]">
-              <CalendarDays size={18} aria-hidden="true" />
-              <span>
-                {[
-                  formatPickerDate(preferredDate, lang),
-                  formatPickerTime(preferredTime, lang),
-                ]
-                  .filter(Boolean)
-                  .join(" · ")}
-              </span>
-            </p>
-          )}
-        </aside>
-        <div className="flex min-w-0 flex-col gap-5 border-t border-border pt-6 min-[900px]:col-span-2 min-[900px]:flex-row min-[900px]:items-center min-[900px]:justify-between">
-          <p className="flex max-w-xl items-start gap-3 text-xs leading-relaxed text-espresso/70">
-            <MessageCircle
-              className="mt-0.5 size-4 shrink-0"
-              aria-hidden="true"
-            />
-            {enquiryUi.note[lang]}
-          </p>
-          <BookingCta
-            className="w-fit max-w-full shrink-0 text-xs min-[380px]:text-sm"
-            href={getBookingHref(lang, bookingContext)}
-            label={ui.send[lang]}
-            target="_blank"
-            rel="noreferrer"
-          />
         </div>
       </div>
     </section>

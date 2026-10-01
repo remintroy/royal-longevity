@@ -22,7 +22,7 @@ type EnquirySelectGroup = {
 
 type EnquirySelectProps = {
   label: string;
-  step: string;
+  step?: string;
   value: string;
   onChange: (value: string) => void;
   defaultOption: EnquirySelectOption;
@@ -46,9 +46,11 @@ export function EnquirySelect({
       }}
     >
       <Label className="flex items-center gap-[15px] text-espresso">
-        <span className="text-gold" aria-hidden="true">
-          {step}
-        </span>
+        {step && (
+          <span className="text-gold" aria-hidden="true">
+            {step}
+          </span>
+        )}
         {label}
       </Label>
       <Button className="flex min-h-14 w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-border bg-ivory/20 px-4 py-3 text-start text-base text-espresso transition-colors duration-200 hover:border-espresso/30 data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-pressed:bg-ivory/60 motion-reduce:transition-none">

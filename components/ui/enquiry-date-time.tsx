@@ -23,6 +23,8 @@ import {
   ListBox,
   ListBoxItem,
   Popover,
+  Radio,
+  RadioGroup,
 } from "react-aria-components";
 import type { Language } from "@/data/site";
 import {
@@ -167,6 +169,16 @@ export function EnquiryDatePicker({
   );
 }
 
+export function formatEnquiryTime(value: string, lang: Language) {
+  if (!value) return "";
+  const [hour, minute] = value.split(":").map(Number);
+  const numbers = new Intl.NumberFormat(enquiryLocales[lang], {
+    minimumIntegerDigits: 2,
+  });
+  const period = hour >= 12 ? copy.pm[lang] : copy.am[lang];
+  return `${numbers.format(hour % 12 || 12)}:${numbers.format(minute)} ${period}`;
+}
+
 export function EnquiryTimePicker({
   lang,
   label,
@@ -178,15 +190,11 @@ export function EnquiryTimePicker({
   const [isOpen, setIsOpen] = useState(false);
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("00");
+  const [period, setPeriod] = useState("am");
   const numbers = new Intl.NumberFormat(enquiryLocales[lang], {
     minimumIntegerDigits: 2,
   });
-  const displayTime = value
-    ? value
-        .split(":")
-        .map((part) => numbers.format(Number(part)))
-        .join(":")
-    : "";
+  const displayTime = formatEnquiryTime(value, lang);
   const columns = [
     {
       id: "hour",
@@ -220,8 +228,13 @@ export function EnquiryTimePicker({
         onOpenChange={(open) => {
           if (open) {
             const [savedHour = "", savedMinute = "00"] = value.split(":");
-            setHour(savedHour);
+            setHour(
+              savedHour
+                ? String(Number(savedHour) % 12 || 12).padStart(2, "0")
+                : "",
+            );
             setMinute(savedMinute);
+            setPeriod(Number(savedHour) >= 12 ? "pm" : "am");
           }
           setIsOpen(open);
         }}
@@ -258,6 +271,23 @@ export function EnquiryTimePicker({
             <p className="mb-4 text-xs text-espresso/65">
               {copy.timeHint[lang]}
             </p>
+            <RadioGroup
+              aria-label={copy.period[lang]}
+              value={period}
+              onChange={setPeriod}
+              orientation="horizontal"
+              className="mb-4 grid grid-cols-2 gap-1 rounded-full border border-border bg-ivory/20 p-1"
+            >
+              {(["am", "pm"] as const).map((option) => (
+                <Radio
+                  key={option}
+                  value={option}
+                  className="flex min-h-11 cursor-pointer items-center justify-center rounded-full text-sm outline-none data-selected:bg-espresso data-selected:text-white data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold"
+                >
+                  {copy[option][lang]}
+                </Radio>
+              ))}
+            </RadioGroup>
             <div className="grid grid-cols-2 gap-3">
               {columns.map((column) => (
                 <div key={column.id} className="min-w-0">
@@ -309,7 +339,9 @@ export function EnquiryTimePicker({
               <Button
                 isDisabled={!hour}
                 onPress={() => {
-                  onChange(`${hour}:${minute}`);
+                  const hour24 =
+                    (Number(hour) % 12) + (period === "pm" ? 12 : 0);
+                  onChange(`${String(hour24).padStart(2, "0")}:${minute}`);
                   setIsOpen(false);
                 }}
                 className="min-h-11 rounded-full bg-espresso px-5 text-sm text-white hover:bg-ink data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-disabled:opacity-40"

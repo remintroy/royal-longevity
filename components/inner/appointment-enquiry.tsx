@@ -17,6 +17,7 @@ import {
   EnquiryDatePicker,
   EnquiryTimePicker,
   formatEnquiryDate,
+  formatEnquiryTime,
 } from "@/components/ui/enquiry-date-time";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
@@ -55,7 +56,7 @@ export function AppointmentEnquiry({
     selectedService?.title[lang] ?? ui.any[lang],
     preferredDate && `${ui.date[lang]}: ${preferredDate}`,
     preferredTime &&
-      `${ui.time[lang]}: ${preferredTime} (${enquiryControlsUi.timeHint[lang]})`,
+      `${ui.time[lang]}: ${formatEnquiryTime(preferredTime, lang)} (${enquiryControlsUi.timeHint[lang]})`,
     message.trim() && `${enquiryUi.message[lang]}: ${message.trim()}`,
   ]
     .filter(Boolean)
@@ -140,7 +141,10 @@ export function AppointmentEnquiry({
             <p className="mb-5 flex items-center gap-2.5 text-[13px] leading-[1.65]">
               <CalendarDays size={18} aria-hidden="true" />
               <span>
-                {[formatEnquiryDate(preferredDate, lang), preferredTime]
+                {[
+                  formatEnquiryDate(preferredDate, lang),
+                  formatEnquiryTime(preferredTime, lang),
+                ]
                   .filter(Boolean)
                   .join(" · ")}
               </span>

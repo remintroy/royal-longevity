@@ -10,10 +10,10 @@ export const enquiryControlsUi = {
   nextMonth: localized("Next month", "الشهر التالي"),
   hour: localized("Hour", "الساعة"),
   minute: localized("Minute", "الدقيقة"),
-  timeHint: localized(
-    "24-hour time · Dubai (GMT+4)",
-    "نظام ٢٤ ساعة · دبي (GMT+4)",
-  ),
+  period: localized("AM or PM", "صباحاً أو مساءً"),
+  am: localized("AM", "صباحاً"),
+  pm: localized("PM", "مساءً"),
+  timeHint: localized("Dubai time (GMT+4)", "توقيت دبي (GMT+4)"),
 };
 
 export const enquiryLocales = {
@@ -21,8 +21,8 @@ export const enquiryLocales = {
   ar: "ar-AE-u-ca-gregory",
 };
 
-export const enquiryHours = Array.from({ length: 24 }, (_, hour) =>
-  String(hour).padStart(2, "0"),
+export const enquiryHours = Array.from({ length: 12 }, (_, hour) =>
+  String(hour + 1).padStart(2, "0"),
 );
 
 export const enquiryMinutes = Array.from({ length: 60 }, (_, minute) =>

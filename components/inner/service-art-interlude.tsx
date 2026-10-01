@@ -5,6 +5,7 @@ import {
   interludeContours,
   getCollectionArt,
 } from "@/data/catalogue/catalogue-art";
+import { OpeningArt } from "./opening-art";
 import { ServiceArtMotion } from "./service-art-motion";
 
 /** Quiet chapter breaks connect the treatment, experience and brand signature. */
@@ -17,6 +18,8 @@ export function ServiceArtInterlude({
   signature?: boolean;
   passage?: "opening" | "closing";
 }) {
+  if (passage === "opening") return <OpeningArt />;
+
   const art = getCollectionArt(category);
 
   return (
@@ -24,7 +27,6 @@ export function ServiceArtInterlude({
       aria-hidden="true"
       className={cn(
         "pointer-events-none relative isolate mx-auto -my-6 h-24 w-full max-w-xl overflow-hidden select-none min-[700px]:-my-4 min-[700px]:h-32",
-        passage === "opening" && "min-[700px]:ms-8 min-[700px]:me-auto",
         passage === "closing" && "min-[700px]:ms-auto min-[700px]:me-8",
       )}
     >

@@ -133,8 +133,10 @@ export function TimeWheel({
         if (!pointer || event.pointerId !== pointer.id) return;
         if (!pointer.moved && Math.abs(event.clientY - pointer.startY) < 4)
           return;
-        pointer.moved = true;
-        element!.setPointerCapture(event.pointerId);
+        if (!pointer.moved) {
+          pointer.moved = true;
+          element!.setPointerCapture(event.pointerId);
+        }
         const delta = pointer.lastY - event.clientY;
         const elapsed = Math.max(1, event.timeStamp - pointer.lastTime);
         pointer.velocity = 0.65 * (delta / elapsed) + 0.35 * pointer.velocity;
@@ -145,6 +147,11 @@ export function TimeWheel({
       }
 
       function pointerEnd(event: PointerEvent) {
+        // Touch starts with implicit capture on the number under the finger.
+        // Transferring capture to the wheel emits a bubbling loss event from
+        // that number; it is not the end of the ongoing drag.
+        if (event.type === "lostpointercapture" && event.target !== element)
+          return;
         if (!pointer || event.pointerId !== pointer.id) return;
         const { moved, velocity, lastTime } = pointer;
         pointer = undefined;
@@ -154,7 +161,7 @@ export function TimeWheel({
         if (!moved) return;
         // Project a recent flick, cap its travel, then ease into an exact row.
         const speed =
-          event.type === "pointercancel" || event.timeStamp - lastTime > 100
+          event.type !== "pointerup" || event.timeStamp - lastTime > 100
             ? 0
             : velocity;
         // Gentle drags stay precise; faster flicks gain distance progressively.

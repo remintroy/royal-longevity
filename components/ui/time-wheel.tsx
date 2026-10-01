@@ -269,27 +269,32 @@ export function TimeWheel({
         className="relative h-60 touch-none overflow-hidden overscroll-contain text-center focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-gold"
       >
         <div
-          ref={track}
           role="presentation"
-          className="py-24 will-change-transform"
+          className="h-full [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]"
         >
-          {values.map((option, index) => (
-            <div
-              key={option}
-              id={`${id}-${index}`}
-              role="option"
-              aria-selected={index === selectedIndex}
-              data-wheel-index={index}
-              className={cn(
-                "flex h-12 cursor-pointer items-center justify-center text-2xl tabular-nums select-none",
-                index === selectedIndex
-                  ? "font-medium text-espresso"
-                  : "text-espresso/50 hover:text-espresso",
-              )}
-            >
-              {option ? formatValue(option) : "—"}
-            </div>
-          ))}
+          <div
+            ref={track}
+            role="presentation"
+            className="py-24 will-change-transform"
+          >
+            {values.map((option, index) => (
+              <div
+                key={option}
+                id={`${id}-${index}`}
+                role="option"
+                aria-selected={index === selectedIndex}
+                data-wheel-index={index}
+                className={cn(
+                  "flex h-12 cursor-pointer items-center justify-center text-2xl tabular-nums select-none",
+                  index === selectedIndex
+                    ? "font-medium text-espresso"
+                    : "text-espresso/50 hover:text-espresso",
+                )}
+              >
+                {option ? formatValue(option) : "—"}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>

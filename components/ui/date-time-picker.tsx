@@ -21,7 +21,6 @@ import {
   Dialog,
   DialogTrigger,
   Heading,
-  Popover,
   Modal,
   ModalOverlay,
 } from "react-aria-components";
@@ -87,87 +86,101 @@ export function DatePicker({
             </span>
             <CalendarDays className="size-5 shrink-0" aria-hidden="true" />
           </Button>
-          <Popover
-            placement="bottom start"
-            offset={8}
-            containerPadding={8}
-            className="z-50 max-h-[calc(100dvh-2rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-3 text-espresso shadow-lg shadow-espresso/10 sm:p-4"
-            data-lenis-prevent
+          <ModalOverlay
+            isDismissable
+            className="fixed inset-0 z-50 flex items-center justify-center bg-espresso/20 p-2"
           >
-            <Dialog aria-label={label} className="outline-none">
-              <Calendar
-                aria-label={label}
-                value={value ? parseDate(value) : null}
-                minValue={today("Asia/Dubai")}
-                onChange={(date) => {
-                  onChange(date.toString());
-                  setIsOpen(false);
-                }}
-              >
-                <header className="mb-3 flex items-center justify-between gap-1">
+            <Modal
+              className="max-h-[calc(100dvh-1rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"
+              data-lenis-prevent
+            >
+              <Dialog className="outline-none">
+                <div className="mb-3 flex items-center justify-between gap-2">
+                  <Heading slot="title" className="text-base font-medium">
+                    {copy.chooseDate[lang]}
+                  </Heading>
                   <Button
-                    slot="previous"
-                    aria-label={copy.previousMonth[lang]}
-                    className="flex size-11 shrink-0 items-center justify-center rounded-full outline-none hover:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-gold data-disabled:opacity-30"
+                    aria-label={copy.close[lang]}
+                    onPress={() => setIsOpen(false)}
+                    className="flex size-11 items-center justify-center rounded-full hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
                   >
-                    <ChevronLeft
-                      className="size-5 rtl:rotate-180"
-                      aria-hidden="true"
-                    />
+                    <X className="size-4" aria-hidden="true" />
                   </Button>
-                  <Heading className="text-center text-base font-medium" />
-                  <Button
-                    slot="next"
-                    aria-label={copy.nextMonth[lang]}
-                    className="flex size-11 shrink-0 items-center justify-center rounded-full outline-none hover:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-gold data-disabled:opacity-30"
-                  >
-                    <ChevronRight
-                      className="size-5 rtl:rotate-180"
-                      aria-hidden="true"
-                    />
-                  </Button>
-                </header>
-                <CalendarGrid
-                  weekdayStyle="short"
-                  className="w-full table-fixed border-collapse"
-                >
-                  <CalendarGridHeader>
-                    {(day) => (
-                      <CalendarHeaderCell className="pb-2 text-center text-xs font-normal text-espresso/65">
-                        {day}
-                      </CalendarHeaderCell>
-                    )}
-                  </CalendarGridHeader>
-                  <CalendarGridBody>
-                    {(date) => (
-                      <CalendarCell
-                        date={date}
-                        className="flex h-11 w-full cursor-pointer items-center justify-center rounded-full text-sm tabular-nums outline-none hover:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-inset data-focus-visible:ring-gold data-selected:bg-espresso data-selected:text-white data-disabled:cursor-default data-disabled:text-espresso/30 data-disabled:hover:bg-transparent data-outside-month:hidden"
-                      />
-                    )}
-                  </CalendarGridBody>
-                </CalendarGrid>
-              </Calendar>
-              <div className="mt-3 flex items-center justify-between gap-3 border-t border-border pt-2">
-                <Button
-                  isDisabled={!value}
-                  onPress={() => {
-                    onChange("");
+                </div>
+                <Calendar
+                  aria-label={label}
+                  value={value ? parseDate(value) : null}
+                  minValue={today("Asia/Dubai")}
+                  onChange={(date) => {
+                    onChange(date.toString());
                     setIsOpen(false);
                   }}
-                  className="min-h-11 rounded-full px-4 text-sm underline-offset-4 hover:underline data-focus-visible:outline-2 data-focus-visible:outline-gold data-disabled:opacity-40"
                 >
-                  {copy.clear[lang]}
-                </Button>
-                <Button
-                  onPress={() => setIsOpen(false)}
-                  className="min-h-11 rounded-full px-4 text-sm hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
-                >
-                  {copy.close[lang]}
-                </Button>
-              </div>
-            </Dialog>
-          </Popover>
+                  <header className="mb-3 flex items-center justify-between gap-1">
+                    <Button
+                      slot="previous"
+                      aria-label={copy.previousMonth[lang]}
+                      className="flex size-11 shrink-0 items-center justify-center rounded-full outline-none hover:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-gold data-disabled:opacity-30"
+                    >
+                      <ChevronLeft
+                        className="size-5 rtl:rotate-180"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                    <Heading className="text-center text-base font-medium" />
+                    <Button
+                      slot="next"
+                      aria-label={copy.nextMonth[lang]}
+                      className="flex size-11 shrink-0 items-center justify-center rounded-full outline-none hover:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-gold data-disabled:opacity-30"
+                    >
+                      <ChevronRight
+                        className="size-5 rtl:rotate-180"
+                        aria-hidden="true"
+                      />
+                    </Button>
+                  </header>
+                  <CalendarGrid
+                    weekdayStyle="short"
+                    className="w-full table-fixed border-collapse"
+                  >
+                    <CalendarGridHeader>
+                      {(day) => (
+                        <CalendarHeaderCell className="pb-2 text-center text-xs font-normal text-espresso/65">
+                          {day}
+                        </CalendarHeaderCell>
+                      )}
+                    </CalendarGridHeader>
+                    <CalendarGridBody>
+                      {(date) => (
+                        <CalendarCell
+                          date={date}
+                          className="flex h-11 w-full cursor-pointer items-center justify-center rounded-full text-sm tabular-nums outline-none hover:bg-ivory data-focus-visible:ring-2 data-focus-visible:ring-inset data-focus-visible:ring-gold data-selected:bg-espresso data-selected:text-white data-disabled:cursor-default data-disabled:text-espresso/30 data-disabled:hover:bg-transparent data-outside-month:hidden"
+                        />
+                      )}
+                    </CalendarGridBody>
+                  </CalendarGrid>
+                </Calendar>
+                <div className="mt-3 flex items-center justify-between gap-3 border-t border-border pt-2">
+                  <Button
+                    isDisabled={!value}
+                    onPress={() => {
+                      onChange("");
+                      setIsOpen(false);
+                    }}
+                    className="min-h-11 rounded-full px-4 text-sm underline-offset-4 hover:underline data-focus-visible:outline-2 data-focus-visible:outline-gold data-disabled:opacity-40"
+                  >
+                    {copy.clear[lang]}
+                  </Button>
+                  <Button
+                    onPress={() => setIsOpen(false)}
+                    className="min-h-11 rounded-full px-4 text-sm hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
+                  >
+                    {copy.close[lang]}
+                  </Button>
+                </div>
+              </Dialog>
+            </Modal>
+          </ModalOverlay>
         </DialogTrigger>
       </div>
     </I18nProvider>

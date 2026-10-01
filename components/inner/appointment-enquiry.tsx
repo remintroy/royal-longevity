@@ -14,11 +14,11 @@ import {
 } from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
 import {
-  EnquiryDatePicker,
-  EnquiryTimePicker,
-  formatEnquiryDate,
-  formatEnquiryTime,
-} from "@/components/ui/enquiry-date-time";
+  DatePicker,
+  TimePicker,
+  formatPickerDate,
+  formatPickerTime,
+} from "@/components/ui/date-time-picker";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -56,7 +56,7 @@ export function AppointmentEnquiry({
     selectedService?.title[lang] ?? ui.any[lang],
     preferredDate && `${ui.date[lang]}: ${preferredDate}`,
     preferredTime &&
-      `${ui.time[lang]}: ${formatEnquiryTime(preferredTime, lang)} (${enquiryControlsUi.timeHint[lang]})`,
+      `${ui.time[lang]}: ${formatPickerTime(preferredTime, lang)} (${enquiryControlsUi.timeHint[lang]})`,
     message.trim() && `${enquiryUi.message[lang]}: ${message.trim()}`,
   ]
     .filter(Boolean)
@@ -90,14 +90,14 @@ export function AppointmentEnquiry({
               {enquiryUi.preferences[lang]}
             </p>
             <div className="mt-4 grid gap-5 min-[600px]:grid-cols-2">
-              <EnquiryDatePicker
+              <DatePicker
                 lang={lang}
                 label={ui.date[lang]}
                 step="02"
                 value={preferredDate}
                 onChange={setPreferredDate}
               />
-              <EnquiryTimePicker
+              <TimePicker
                 lang={lang}
                 label={ui.time[lang]}
                 step="03"
@@ -142,8 +142,8 @@ export function AppointmentEnquiry({
               <CalendarDays size={18} aria-hidden="true" />
               <span>
                 {[
-                  formatEnquiryDate(preferredDate, lang),
-                  formatEnquiryTime(preferredTime, lang),
+                  formatPickerDate(preferredDate, lang),
+                  formatPickerTime(preferredTime, lang),
                 ]
                   .filter(Boolean)
                   .join(" · ")}

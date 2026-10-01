@@ -157,13 +157,18 @@ export function TimeWheel({
           event.type === "pointercancel" || event.timeStamp - lastTime > 100
             ? 0
             : velocity;
-        const travel = preference.matches
-          ? 0
-          : gsap.utils.clamp(-rowHeight * 5, rowHeight * 5, speed * 180);
-        snap(
-          motion.position + travel,
-          Math.min(0.7, 0.26 + Math.abs(travel) / 600),
-        );
+        // Gentle drags stay precise; faster flicks gain distance progressively.
+        // Short columns (especially AM/PM) never inherit the minute wheel's travel.
+        const magnitude = Math.abs(speed);
+        const projection = 180 + Math.min(magnitude, 2.5) * 130;
+        const limit = Math.min(rowHeight * 12, maximum * 0.6);
+        const travel =
+          preference.matches || magnitude < 0.12
+            ? 0
+            : gsap.utils.clamp(-limit, limit, speed * projection);
+        const destination = clamp(motion.position + travel);
+        const distance = Math.abs(destination - motion.position);
+        snap(destination, Math.min(0.95, 0.28 + distance / 850));
       }
 
       function wheelMove(event: WheelEvent) {

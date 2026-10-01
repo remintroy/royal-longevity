@@ -35,7 +35,7 @@ export function Hero({ content, lang }: HeroProps) {
             aria-label={getHeroMenuContent(lang).label}
           >
             <a
-              className="inline-flex h-12 items-center rounded-full px-[17px] py-2"
+              className="inline-flex h-12 shrink-0 items-center rounded-full px-[17px] py-2 max-[380px]:px-0"
               href="#top"
               aria-label="Royal Longevity home"
             >

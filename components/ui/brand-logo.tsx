@@ -7,16 +7,26 @@ interface BrandLogoProps {
 
 export function BrandLogo({ lang, className = "" }: BrandLogoProps) {
   return (
-    <div className={`flex items-center gap-2 min-[700px]:gap-[10px] ${className}`}>
+    <div
+      className={`flex items-center gap-2 min-[700px]:gap-[10px] ${className}`}
+    >
       <img
         src="/branding/icon-gold.png"
         alt="Royal Longevity Icon"
         className="h-[28px] w-auto min-[700px]:h-[32px]"
       />
       <img
-        src={lang === "ar" ? "/branding/text-arabic-black.png" : "/branding/text-english-black.png"}
+        src={
+          lang === "ar"
+            ? "/branding/text-arabic-black-cropped.png"
+            : "/branding/text-english-black-cropped.png"
+        }
         alt="Royal Longevity"
-        className="h-[138px] w-auto min-[700px]:h-[180px]"
+        className={
+          lang === "ar"
+            ? "h-8 w-auto shrink-0 min-[700px]:h-9"
+            : "h-4 w-auto shrink-0 min-[400px]:h-[18px] min-[700px]:h-[22px]"
+        }
       />
     </div>
   );

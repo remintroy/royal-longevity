@@ -23,7 +23,7 @@ export function ServiceGallery({
   return (
     <section
       aria-labelledby="service-gallery-title"
-      className="relative isolate my-16 py-28 min-[900px]:my-20 min-[900px]:py-30"
+      className="relative isolate mb-16 py-28 min-[900px]:mb-20 min-[900px]:py-30"
     >
       <ElasticSectionBackground />
       <ServiceSectionArt category={service.category} variant="gallery" />

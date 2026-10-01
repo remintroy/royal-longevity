@@ -23,18 +23,28 @@ export function OpeningArt() {
               once: true,
             },
           })
-          .from("[data-opening-shape]", {
-            opacity: 0,
-            duration: 0.55,
-            ease: "power3.out",
-            clearProps: "opacity",
-          })
-          .from("[data-opening-extension]", {
-            scaleX: 0,
-            duration: 0.65,
-            ease: "power3.out",
-            clearProps: "transform",
-          });
+          .from(
+            "[data-opening-shape]",
+            {
+              opacity: 0,
+              filter: "blur(6px)",
+              duration: 0.7,
+              ease: "power3.out",
+              clearProps: "opacity,filter",
+            },
+            0,
+          )
+          .from(
+            "[data-opening-extension]",
+            {
+              scaleX: 0,
+              opacity: 0,
+              duration: 1.4,
+              ease: "power3.out",
+              clearProps: "transform,opacity",
+            },
+            0,
+          );
       });
       return () => media.revert();
     },
@@ -45,12 +55,11 @@ export function OpeningArt() {
     <div
       ref={container}
       aria-hidden="true"
-      className="pointer-events-none relative -my-6 ms-[calc((100%-100cqw)/2)] flex h-24 w-[100cqw] items-center overflow-hidden text-gold/35 select-none min-[700px]:-my-4 min-[700px]:h-32"
-      dir="ltr"
+      className="pointer-events-none relative ms-[calc((100%-100cqw)/2)] flex h-40 w-[100cqw] items-center overflow-hidden pt-10 text-gold/35 select-none min-[700px]:h-48"
     >
       <span
         data-opening-extension
-        className="h-px min-w-0 flex-1 origin-right bg-current"
+        className="h-px w-[max(24px,calc((100cqw-1370px)/2+96px))] shrink-0 origin-right bg-current rtl:origin-left"
       />
       {/* The cropped viewBox puts both path endpoints exactly on the side edges
           and on the vertical centre, so extensions stay joined at every width. */}
@@ -62,7 +71,7 @@ export function OpeningArt() {
         strokeWidth="1"
         strokeLinecap="butt"
         focusable="false"
-        className="h-auto w-[min(72cqw,330px)] shrink-0"
+        className="h-auto w-[min(60cqw,330px)] shrink-0 rtl:-scale-x-100"
       >
         {interludeContours.opening.map((path) => (
           <path key={path} d={path} vectorEffect="non-scaling-stroke" />
@@ -70,7 +79,7 @@ export function OpeningArt() {
       </svg>
       <span
         data-opening-extension
-        className="h-px min-w-0 flex-1 origin-left bg-current"
+        className="h-px min-w-0 flex-1 origin-left bg-current rtl:origin-right"
       />
     </div>
   );

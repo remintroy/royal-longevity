@@ -5,10 +5,6 @@ import type { CategoryId, Service, ServiceGalleryImage } from "./types";
 export const serviceGalleryUi = {
   eyebrow: localized("A closer look", "نظرة أقرب"),
   title: localized("Space for your experience.", "مساحة لتجربتكِ."),
-  note: localized(
-    "Service and collection inspiration · includes AI-generated imagery, not photographs of our premises.",
-    "صور إلهامية للخدمات والمجموعات · تتضمن صوراً مولّدة بالذكاء الاصطناعي، وليست صوراً لمرافقنا.",
-  ),
 };
 
 const galleryDetails = {

@@ -1,12 +1,23 @@
 "use client";
 
 import { useState } from "react";
+import { I18nProvider } from "react-aria-components";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 import { CalendarDays, MessageCircle } from "lucide-react";
 import type { Language } from "@/data/site";
 import { categories, services } from "@/data/catalogue";
 import { enquiryUi } from "@/data/inner/enquiry";
+import {
+  enquiryLocales,
+  enquiryControlsUi,
+} from "@/data/inner/enquiry-controls";
+import { EnquirySelect } from "@/components/ui/enquiry-select";
+import {
+  EnquiryDatePicker,
+  EnquiryTimePicker,
+  formatEnquiryDate,
+} from "@/components/ui/enquiry-date-time";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -32,11 +43,19 @@ export function AppointmentEnquiry({
   const selectedCategory = categories.find(
     (item) => item.id === selectedService?.category,
   );
+  const serviceGroups = categories.map((category) => ({
+    id: category.id,
+    label: category.title[lang],
+    options: services
+      .filter((service) => service.category === category.id)
+      .map((service) => ({ id: service.slug, label: service.title[lang] })),
+  }));
   const bookingContext = [
     selectedCategory?.title[lang],
     selectedService?.title[lang] ?? ui.any[lang],
     preferredDate && `${ui.date[lang]}: ${preferredDate}`,
-    preferredTime && `${ui.time[lang]}: ${preferredTime}`,
+    preferredTime &&
+      `${ui.time[lang]}: ${preferredTime} (${enquiryControlsUi.timeHint[lang]})`,
     message.trim() && `${enquiryUi.message[lang]}: ${message.trim()}`,
   ]
     .filter(Boolean)
@@ -57,56 +76,35 @@ export function AppointmentEnquiry({
       </p>
       <div className="mt-8 grid gap-8 rounded-3xl border border-border bg-white p-5 sm:p-8 min-[900px]:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] min-[900px]:gap-x-10 lg:p-10">
         <div className="min-w-0">
-          <label className="grid min-w-0 gap-[15px] text-sm">
-            <span className="flex items-center gap-[15px] text-gold">
-              01 <span className="text-espresso">{ui.select[lang]}</span>
-            </span>
-            <select
-              className="h-14 w-full min-w-0 max-w-full rounded-2xl border border-border bg-ivory/20 px-4 text-base text-espresso transition-colors hover:border-espresso/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold motion-reduce:transition-none"
+          <I18nProvider locale={enquiryLocales[lang]}>
+            <EnquirySelect
+              label={ui.select[lang]}
+              step="01"
               value={selectedServiceSlug}
-              onChange={(event) => setSelectedServiceSlug(event.target.value)}
-            >
-              <option value="">{ui.any[lang]}</option>
-              {categories.map((category) => (
-                <optgroup key={category.id} label={category.title[lang]}>
-                  {services
-                    .filter((service) => service.category === category.id)
-                    .map((item) => (
-                      <option key={item.slug} value={item.slug}>
-                        {item.title[lang]}
-                      </option>
-                    ))}
-                </optgroup>
-              ))}
-            </select>
-          </label>
-          <p className="mt-7 text-sm leading-relaxed text-espresso/65">
-            {enquiryUi.preferences[lang]}
-          </p>
-          <div className="mt-4 grid gap-5 min-[600px]:grid-cols-2">
-            <label className="grid min-w-0 gap-[15px] text-sm">
-              <span className="flex items-center gap-[15px] text-gold">
-                02 <span className="text-espresso">{ui.date[lang]}</span>
-              </span>
-              <input
-                className="h-14 w-full min-w-0 max-w-full rounded-2xl border border-border bg-ivory/20 px-4 text-base text-espresso transition-colors hover:border-espresso/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold motion-reduce:transition-none"
-                type="date"
+              onChange={setSelectedServiceSlug}
+              defaultOption={{ id: "any-service", label: ui.any[lang] }}
+              groups={serviceGroups}
+            />
+            <p className="mt-7 text-sm leading-relaxed text-espresso/65">
+              {enquiryUi.preferences[lang]}
+            </p>
+            <div className="mt-4 grid gap-5 min-[600px]:grid-cols-2">
+              <EnquiryDatePicker
+                lang={lang}
+                label={ui.date[lang]}
+                step="02"
                 value={preferredDate}
-                onChange={(event) => setPreferredDate(event.target.value)}
+                onChange={setPreferredDate}
               />
-            </label>
-            <label className="grid min-w-0 gap-[15px] text-sm">
-              <span className="flex items-center gap-[15px] text-gold">
-                03 <span className="text-espresso">{ui.time[lang]}</span>
-              </span>
-              <input
-                className="h-14 w-full min-w-0 max-w-full rounded-2xl border border-border bg-ivory/20 px-4 text-base text-espresso transition-colors hover:border-espresso/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold motion-reduce:transition-none"
-                type="time"
+              <EnquiryTimePicker
+                lang={lang}
+                label={ui.time[lang]}
+                step="03"
                 value={preferredTime}
-                onChange={(event) => setPreferredTime(event.target.value)}
+                onChange={setPreferredTime}
               />
-            </label>
-          </div>
+            </div>
+          </I18nProvider>
           <label className="mt-7 grid gap-3 text-sm">
             <span>{enquiryUi.message[lang]}</span>
             <textarea
@@ -141,8 +139,10 @@ export function AppointmentEnquiry({
           {(preferredDate || preferredTime) && (
             <p className="mb-5 flex items-center gap-2.5 text-[13px] leading-[1.65]">
               <CalendarDays size={18} aria-hidden="true" />
-              <span dir="ltr">
-                {[preferredDate, preferredTime].filter(Boolean).join(" · ")}
+              <span>
+                {[formatEnquiryDate(preferredDate, lang), preferredTime]
+                  .filter(Boolean)
+                  .join(" · ")}
               </span>
             </p>
           )}

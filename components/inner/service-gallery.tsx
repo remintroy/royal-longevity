@@ -58,9 +58,6 @@ export function ServiceGallery({
           </div>
         ))}
       </div>
-      <p className="mt-5 border-t border-border pt-4 text-xs leading-relaxed text-espresso/65">
-        {serviceGalleryUi.note[lang]}
-      </p>
     </section>
   );
 }

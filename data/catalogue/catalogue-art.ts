@@ -22,3 +22,15 @@ export function getCollectionArt(category: CategoryId) {
       : getServiceArt(category, "").paths;
   return { paths, animation: defaultServiceArtAnimation };
 }
+
+// Sparse connecting gestures for the whitespace between service-detail chapters.
+export const interludeContours = {
+  opening: [
+    "M30 145 H155 C210 145 215 55 280 55 S355 145 425 145 H570",
+    "M165 157 C224 157 228 73 280 73 S347 157 413 157",
+  ],
+  closing: [
+    "M30 75 H165 C235 75 235 155 310 155 S390 75 455 75 H570",
+    "M185 63 C246 63 254 137 310 137 S378 63 435 63",
+  ],
+} as const;

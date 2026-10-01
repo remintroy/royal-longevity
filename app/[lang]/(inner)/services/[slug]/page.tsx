@@ -1,6 +1,7 @@
 import { ExploreMore } from "@/components/inner/explore-more";
 import { CatalogueBreadcrumbs } from "@/components/inner/catalogue-breadcrumbs";
 import { catalogueHero } from "@/data/catalogue/hero";
+import { ServiceArtInterlude } from "@/components/inner/service-art-interlude";
 import { ServiceArt } from "@/components/inner/service-art";
 import { ServiceGallery } from "@/components/inner/service-gallery";
 import { PageHero } from "@/components/inner/page-hero";
@@ -95,7 +96,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
           </>
         }
       />
+      <ServiceArtInterlude category={category.id} passage="opening" />
       <ServiceGallery service={service} lang={lang} />
+      <ServiceArtInterlude category={category.id} />
       <section className="my-12 rounded-3xl border border-border bg-white p-6 min-[900px]:p-10">
         <h2 className="text-2xl">{catalogueUi.pricing[lang]}</h2>
         <p className="mt-4 leading-relaxed text-espresso/75">
@@ -104,7 +107,9 @@ export default async function ServicePage({ params }: ServicePageProps) {
       </section>
       {service.access === "both" && <PoolAccess lang={lang} />}
       <AppointmentEnquiry lang={lang} initialService={slug} />
+      <ServiceArtInterlude category={category.id} signature />
       <ServiceCards lang={lang} category={category.id} decorated />
+      <ServiceArtInterlude category={category.id} passage="closing" />
       <Questions lang={lang} />
       <ExploreMore lang={lang} category={category.id} />
     </SiteFrame>

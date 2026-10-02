@@ -45,6 +45,7 @@ export function CuratedServices({
           {content.description}
         </p>
         <BookingCta
+          enquiry
           href={bookingHref}
           label={content.bookingLabel}
           target="_blank"

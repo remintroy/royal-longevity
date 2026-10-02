@@ -30,6 +30,7 @@ export function Footer({
                 {content.title}
               </h2>
               <BookingCta
+                enquiry
                 href={bookingHref}
                 label={content.bookingLabel}
                 target="_blank"

@@ -1,6 +1,11 @@
 import { localized } from "./localization";
 
 export const enquiryUi = {
+  bookingTitle: localized("Book an appointment", "احجزي موعداً"),
+  bookingIntro: localized("Choose your service. We’ll confirm the details on WhatsApp.", "اختاري خدمتكِ. سنؤكد التفاصيل عبر واتساب."),
+  optionalDetails: localized("Add a date, time or message (optional)", "إضافة تاريخ أو وقت أو رسالة (اختياري)"),
+  bookingNote: localized("Your appointment is confirmed by our team on WhatsApp.", "يؤكد فريقنا موعدكِ عبر واتساب."),
+  close: localized("Close appointment enquiry", "إغلاق الاستفسار عن الموعد"),
   eyebrow: localized("Your enquiry", "استفساركِ"),
   title: localized("How can we help?", "كيف يمكننا مساعدتكِ؟"),
   intro: localized(

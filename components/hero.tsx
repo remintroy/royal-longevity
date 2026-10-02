@@ -85,6 +85,7 @@ export function Hero({ content, lang }: HeroProps) {
                 {content.trustSignal}
               </Badge>
               <BookingCta
+                enquiry
                 href={content.bookingHref}
                 label={content.bookingLabel}
                 target="_blank"

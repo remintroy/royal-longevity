@@ -71,6 +71,7 @@ export function BookingBanner({
             {content.title}
           </RevealHeading>
           <BookingCta
+            enquiry
             href={bookingHref}
             label={content.bookingLabel}
             target="_blank"

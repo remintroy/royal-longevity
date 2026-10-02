@@ -88,7 +88,7 @@ export function DatePicker({
           </Button>
           <ModalOverlay
             isDismissable
-            className="fixed inset-0 z-50 flex items-center justify-center bg-espresso/20 p-2"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/20 p-2"
           >
             <Modal
               className="max-h-[calc(100dvh-1rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"
@@ -281,7 +281,7 @@ export function TimePicker({
           </Button>
           <ModalOverlay
             isDismissable
-            className="fixed inset-0 z-50 flex items-center justify-center bg-espresso/20 p-2"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/20 p-2"
           >
             <Modal
               className="max-h-[calc(100dvh-1rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"

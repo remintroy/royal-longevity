@@ -76,6 +76,8 @@ export function ServiceCards({
               </p>
               <div className="mt-auto flex flex-wrap items-center gap-3">
                 <BookingCta
+                  enquiry
+                  serviceSlug={service.slug}
                   href={getBookingHref(lang, service.title[lang])}
                   label={catalogueUi.bookNow[lang]}
                   target="_blank"

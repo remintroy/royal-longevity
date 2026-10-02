@@ -60,7 +60,7 @@ export function EnquirySelect({
       <Popover
         placement="bottom start"
         offset={8}
-        className="z-50 w-[var(--trigger-width)] max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-border bg-white text-espresso shadow-lg shadow-espresso/10"
+        className="z-[70] w-[var(--trigger-width)] max-w-[calc(100vw-2rem)] overflow-hidden rounded-3xl border border-border bg-white text-espresso shadow-lg shadow-espresso/10"
       >
         <ListBox
           className="max-h-80 overflow-y-auto overscroll-contain p-2 outline-none"

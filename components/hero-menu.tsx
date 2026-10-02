@@ -209,12 +209,12 @@ export function HeroMenu({
             aria-hidden="true"
           />
           <BookingCta
+            enquiry
             href={bookingHref}
             label={bookingLabel}
             target={bookingHref.startsWith("/") ? undefined : "_blank"}
             rel={bookingHref.startsWith("/") ? undefined : "noreferrer"}
             className="bg-ivory text-espresso hover:bg-white"
-            onClick={() => setOpen(false)}
           />
         </div>
       </div>

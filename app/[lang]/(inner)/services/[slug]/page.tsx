@@ -84,6 +84,8 @@ export default async function ServicePage({ params }: ServicePageProps) {
         actions={
           <>
             <BookingCta
+              enquiry
+              serviceSlug={service.slug}
               href={getBookingHref(
                 lang,
                 `${category.title[lang]} · ${service.title[lang]}`,

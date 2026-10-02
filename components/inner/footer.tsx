@@ -84,6 +84,7 @@ export function InnerFooter({
               {innerFooter.contactBody[lang]}
             </p>
             <BookingCta
+              enquiry
               href={getBookingHref(lang)}
               label={ui.book[lang]}
               target="_blank"

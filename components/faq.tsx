@@ -24,7 +24,7 @@ export function Faq({ content, bookingHref }: { content: FaqContent; bookingHref
           >
             {content.title}
           </RevealHeading>
-          <BookingCta href={bookingHref} label={content.bookingLabel} target="_blank" rel="noreferrer" className="mt-7 min-[700px]:mt-9" />
+          <BookingCta enquiry href={bookingHref} label={content.bookingLabel} target="_blank" rel="noreferrer" className="mt-7 min-[700px]:mt-9" />
         </header>
         <FaqAccordion>
           {content.items.map((item) => (

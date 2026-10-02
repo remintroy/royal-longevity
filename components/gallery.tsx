@@ -36,6 +36,7 @@ export function Gallery({
             {content.title}
           </RevealHeading>
           <BookingCta
+            enquiry
             data-gallery-reveal
             className="mt-8"
             href={bookingHref}

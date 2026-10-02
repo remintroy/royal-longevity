@@ -64,6 +64,7 @@ export function Hero({ page, lang }: { page: InnerPage; lang: Language }) {
         actions={
           <>
             <BookingCta
+              enquiry
               href={getBookingHref(lang)}
               label={ui.book[lang]}
               target="_blank"

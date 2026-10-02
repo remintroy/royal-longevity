@@ -4,17 +4,24 @@ import * as React from "react";
 import { useRef } from "react";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useBookingDialog } from "@/components/providers/booking-provider";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 
-export interface BookingCtaProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+export interface BookingCtaProps extends React.HTMLAttributes<HTMLElement> {
+  href?: string;
+  target?: React.HTMLAttributeAnchorTarget;
+  rel?: string;
   label: string;
+  enquiry?: boolean;
+  serviceSlug?: string;
   iconClassName?: string;
 }
 
-export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
-  ({ className, iconClassName, label, ...props }, ref) => {
-    const containerRef = useRef<HTMLAnchorElement>(null);
+export const BookingCta = React.forwardRef<HTMLElement, BookingCtaProps>(
+  ({ className, iconClassName, label, enquiry = false, serviceSlug, href, target, rel, ...props }, ref) => {
+    const openBooking = useBookingDialog();
+    const containerRef = useRef<HTMLElement>(null);
     const circleRef = useRef<HTMLSpanElement>(null);
     const textRef = useRef<HTMLSpanElement>(null);
     const arrowRef = useRef<HTMLSpanElement>(null);
@@ -22,7 +29,7 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
     const { contextSafe } = useGSAP({ scope: containerRef });
 
     const handleMouseEnter = contextSafe(
-      (e: React.MouseEvent<HTMLAnchorElement>) => {
+      (e: React.MouseEvent<HTMLElement>) => {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches)
           return;
         if (
@@ -65,7 +72,7 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
     );
 
     const handleMouseLeave = contextSafe(
-      (e: React.MouseEvent<HTMLAnchorElement>) => {
+      (e: React.MouseEvent<HTMLElement>) => {
         if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
           gsap.set([circleRef.current, textRef.current, arrowRef.current], {
             clearProps: "transform",
@@ -84,21 +91,8 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
       },
     );
 
-    return (
-      <a
-        className={cn(
-          "group relative inline-flex items-center px-[7px] py-[6px] min-h-[54px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-[#422b1b]",
-          className,
-        )}
-        ref={(node) => {
-          containerRef.current = node;
-          if (typeof ref === "function") ref(node);
-          else if (ref) ref.current = node;
-        }}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        {...props}
-      >
+    const content = (
+      <>
         <span
           ref={circleRef}
           className={cn(
@@ -117,8 +111,40 @@ export const BookingCta = React.forwardRef<HTMLAnchorElement, BookingCtaProps>(
           {label}
         </span>
         <span className="w-[13px] flex-shrink-0" aria-hidden="true" />
-      </a>
+      </>
     );
+    const sharedProps = {
+      ...props,
+      className: cn(
+        "group relative inline-flex cursor-pointer items-center px-[7px] py-[6px] min-h-[54px] rounded-full bg-espresso text-ivory text-sm font-bold no-underline transition-colors focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-3 hover:bg-[#422b1b]",
+        className,
+      ),
+      ref: (node: HTMLElement | null) => {
+        containerRef.current = node;
+        if (typeof ref === "function") ref(node);
+        else if (ref) ref.current = node;
+      },
+      onMouseEnter: handleMouseEnter,
+      onMouseLeave: handleMouseLeave,
+    };
+
+    if (enquiry) {
+      return (
+        <button
+          {...sharedProps}
+          type="button"
+          aria-haspopup="dialog"
+          onClick={(event) => {
+            openBooking?.(serviceSlug);
+            props.onClick?.(event);
+          }}
+        >
+          {content}
+        </button>
+      );
+    }
+
+    return <a {...sharedProps} href={href} target={target} rel={rel}>{content}</a>;
   },
 );
 BookingCta.displayName = "BookingCta";

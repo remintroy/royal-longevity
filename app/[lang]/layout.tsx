@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
 import { notFound } from "next/navigation";
+import { BookingProvider } from "@/components/providers/booking-provider";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 
 const figtree = localFont({
@@ -47,7 +48,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <SmoothScrollProvider>
-          {children}
+          <BookingProvider lang={lang}>{children}</BookingProvider>
         </SmoothScrollProvider>
       </body>
     </html>

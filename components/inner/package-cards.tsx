@@ -13,7 +13,7 @@ export function PackageCards({ lang }: { lang: Language }) {
       <p className="mb-[17px] flex items-center gap-2.5 text-[11px] tracking-[.12em] uppercase rtl:tracking-normal before:text-[9px] before:text-gold before:content-['◆'] leading-[1.65]">
         {ui.collection[lang]}
       </p>
-      <ContentReveal className="mt-6 grid gap-5 min-[700px]:grid-cols-2">
+      <ContentReveal className="mt-6 grid grid-cols-1 gap-5 min-[700px]:grid-cols-2 min-[1100px]:grid-cols-3">
         {packages.map((item) => {
           const includedServices = getPackageServices(item);
 
@@ -30,7 +30,7 @@ export function PackageCards({ lang }: { lang: Language }) {
                   src={`/assets/images/gallery/${item.image}.webp`}
                   alt=""
                   fill
-                  sizes="(max-width: 699px) 92vw, (max-width: 1434px) 46vw, 675px"
+                  sizes="(max-width: 699px) 92vw, (max-width: 1099px) 46vw, (max-width: 1434px) 31vw, 444px"
                 />
               </div>
               <div className="flex flex-1 flex-col p-6 min-[900px]:p-8">

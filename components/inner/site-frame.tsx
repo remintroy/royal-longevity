@@ -6,7 +6,6 @@ import { InnerFooter } from "./footer";
 import Link from "next/link";
 import type { Language } from "@/data/site";
 import { ui } from "@/data/inner/ui";
-import { getBookingHref } from "@/lib/booking";
 
 type SiteFrameProps = {
   lang: Language;
@@ -54,7 +53,7 @@ export function SiteFrame({
             </IconButton>
             <HeroMenu
               content={innerMenuContent}
-              bookingHref={getBookingHref(lang)}
+              bookingHref={`/${lang}/appointments`}
               bookingLabel={ui.book[lang]}
             />
           </div>

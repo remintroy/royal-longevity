@@ -65,33 +65,6 @@ export const ui = {
   back: localized("Back to services", "العودة إلى الخدمات"),
 };
 
-export const navigation = [
-  {
-    slug: "about",
-    label: localized("About", "عن رويال"),
-  },
-  {
-    slug: "beauty",
-    label: localized("Beauty", "الجمال"),
-  },
-  {
-    slug: "wellness",
-    label: localized("Wellness", "العافية"),
-  },
-  {
-    slug: "packages",
-    label: localized("Packages", "الباقات"),
-  },
-  {
-    slug: "our-space",
-    label: localized("Our space", "مساحتنا"),
-  },
-  {
-    slug: "contact",
-    label: localized("Contact", "تواصلي معنا"),
-  },
-];
-
 type CareValue = {
   title: LocalizedText;
   description: LocalizedText;

@@ -50,7 +50,7 @@ export function Hero({ content, lang }: HeroProps) {
               </IconButton>
               <HeroMenu
                 content={getHeroMenuContent(lang)}
-                bookingHref={content.bookingHref}
+                bookingHref={`/${lang}/appointments`}
                 bookingLabel={content.bookingLabel}
               />
             </div>

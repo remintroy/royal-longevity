@@ -177,11 +177,7 @@ export function HeroMenu({
             ))}
           </ul>
           <div className="flex flex-wrap justify-between gap-x-4 px-3 py-2 text-sm min-[700px]:px-4">
-            {[
-              ...(content.home ? [content.home] : []),
-              content.contact,
-              content.questions,
-            ].map((item) => (
+            {content.secondaryLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -215,8 +211,8 @@ export function HeroMenu({
           <BookingCta
             href={bookingHref}
             label={bookingLabel}
-            target="_blank"
-            rel="noreferrer"
+            target={bookingHref.startsWith("/") ? undefined : "_blank"}
+            rel={bookingHref.startsWith("/") ? undefined : "noreferrer"}
             className="bg-ivory text-espresso hover:bg-white"
             onClick={() => setOpen(false)}
           />

@@ -15,8 +15,6 @@ import { Reviews } from "@/components/reviews";
 import { getReviewsContent } from "@/data/reviews";
 import { Faq } from "@/components/faq";
 import { getFaqContent } from "@/data/faq";
-import { CuratedServices } from "@/components/curated-services";
-import { getCuratedServicesContent } from "@/data/curated-services";
 import { Footer } from "@/components/footer";
 import { getFooterContent } from "@/data/footer";
 
@@ -50,10 +48,6 @@ export default async function Home({
         <Reviews content={getReviewsContent(lang)} />
         <Faq
           content={getFaqContent(lang)}
-          bookingHref={heroContent.bookingHref}
-        />
-        <CuratedServices
-          content={getCuratedServicesContent(lang)}
           bookingHref={heroContent.bookingHref}
         />
       </main>

@@ -23,23 +23,23 @@ export const pageLayouts: Record<string, PageLayout> = {
   services: { hero: "intro", sections: ["categories", "pool-access"] },
   memberships: {
     hero: "intro",
-    sections: ["membership-journey", "memberships", "questions"],
+    sections: ["membership-journey", "memberships"],
   },
   appointments: {
     hero: "intro",
-    sections: ["appointment-journey", "appointments", "questions"],
+    sections: ["appointment-journey", "appointments"],
   },
-  "our-space": { hero: "intro", sections: ["categories", "gallery"] },
+  "our-space": { hero: "intro", sections: ["gallery"] },
   gallery: { hero: "intro", sections: ["gallery"] },
-  about: { hero: "editorial", sections: ["story", "questions"] },
-  packages: { hero: "intro", sections: ["packages", "questions"] },
-  contact: { hero: "intro", sections: ["contact", "appointments"] },
+  about: { hero: "editorial", sections: ["story"] },
+  packages: { hero: "intro", sections: ["packages"] },
+  contact: { hero: "intro", sections: ["contact"] },
   faq: { hero: "intro", sections: ["all-questions"] },
-  // Preserve existing destinations, including those linked from the untouched homepage.
-  beauty: { hero: "editorial", sections: ["beauty-categories", "questions"] },
+  // Preserve legacy destinations for existing bookmarks and inbound links.
+  beauty: { hero: "editorial", sections: ["beauty-categories"] },
   wellness: {
     hero: "editorial",
-    sections: ["wellness-categories", "questions"],
+    sections: ["wellness-categories"],
   },
   salon: { hero: "editorial", sections: ["salon-services", "gallery"] },
   terms: { hero: "intro", sections: [] },

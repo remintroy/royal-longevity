@@ -12,7 +12,10 @@ import { Questions } from "@/components/inner/questions";
 import { ServiceCards } from "@/components/inner/service-cards";
 import { GalleryGrid } from "@/components/inner/gallery-grid";
 import { PackageCards } from "@/components/inner/package-cards";
-import { ContactDetails } from "@/components/inner/contact-details";
+import {
+  ContactDetails,
+  ContactIntro,
+} from "@/components/inner/contact-details";
 import { AppointmentFromQuery } from "@/components/inner/appointment-enquiry";
 import {
   CatalogueIntro,
@@ -52,7 +55,14 @@ export default async function InnerPage({ params }: InnerPageProps) {
   const { lang, page, layout } = resolvePage(language, section);
   return (
     <SiteFrame lang={lang} path={section}>
-      {section === "services" ? (
+      {section === "contact" ? (
+        <ContactIntro
+          lang={lang}
+          title={page.title[lang]}
+          description={page.description[lang]}
+          eyebrow={page.eyebrow[lang]}
+        />
+      ) : section === "services" ? (
         <ServicesDirectoryHero lang={lang} />
       ) : layout.hero === "intro" ? (
         <CatalogueIntro

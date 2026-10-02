@@ -65,3 +65,17 @@ Collection and individual service pages show an eight-card discovery carousel af
 `ExploreMore` renders linked cards on the server using existing imagery or category icons. `ExploreCarousel` provides native horizontal scrolling, snap positions, touch swiping and 48px previous/next buttons. It accounts for RTL scroll direction, disables controls at the ends and respects reduced motion. Cards show a partial next card on mobile and four cards on desktop. The scrollbar is hidden while native scrolling, touch swiping and arrow controls remain available. Images are lazy-loaded; no new dependency or autoplay is introduced. Only the small scroll wrapper is a Client Component.
 
 The Explore more section sits on a full-width soft ivory band with fine top and bottom borders, separating discovery from the preceding FAQ. The decorative layer uses the site frame’s container width (`100cqw`) so the content stays aligned without viewport-scrollbar overflow; logical positioning handles RTL.
+
+## Contact enquiries
+
+The contact page uses a compact introduction and a mobile-first enquiry form beside direct contact and location details. On mobile, a Maps link remains available before the form. Name is optional; topic defaults to a general enquiry; a nonblank message is required. English and Arabic copy lives in `data/inner/contact.ts`.
+
+The form prepares a message through the shared booking URL helper and opens WhatsApp for review and sending. It never claims that an enquiry was sent or an appointment confirmed. An accessible status and fallback link remain available if the new tab is blocked; editing the form clears the previous prepared link. No phone or email is collected because the conversation continues through WhatsApp. Location continues to use shared location data; unverified hours are not invented.
+
+### Simplified mobile contact layout
+
+The contact page now keeps just two main sections: an unboxed enquiry form followed by location details and an embedded Google map. These stack on mobile and become equal columns at 1024px. The header provides direct chat and an in-page “Find us” shortcut. The map is lazy-loaded, has a localized accessible title, reserves 288px height on mobile (384px from 640px), and retains an external Maps link with unobstructed controls and attribution. It uses the shared coordinates and Arabic map language.
+
+The contact hero is text-only, without decorative artwork. Redundant enquiry introductions, contact cards and the separate FAQ prompt have been removed from this page.
+
+The contact introduction uses the same rounded ivory card surface as the shared page heroes, with 20px mobile padding expanding to 48px on desktop. Its compact content retains the mobile-first contact flow.

@@ -24,6 +24,7 @@ import {
   Modal,
   ModalOverlay,
 } from "react-aria-components";
+import { usePopupMotion } from "./use-popup-motion";
 import { TimeWheel } from "./time-wheel";
 import type { Language } from "@/data/site";
 import {
@@ -61,6 +62,7 @@ export function DatePicker({
 }: PickerProps) {
   const id = useId();
   const [isOpen, setIsOpen] = useState(false);
+  const { overlayRef, close } = usePopupMotion(() => setIsOpen(false));
 
   return (
     <I18nProvider locale={enquiryLocales[lang]}>
@@ -76,7 +78,7 @@ export function DatePicker({
           )}
           {label}
         </span>
-        <DialogTrigger isOpen={isOpen} onOpenChange={setIsOpen}>
+        <DialogTrigger isOpen={isOpen} onOpenChange={(open) => { if (open) setIsOpen(true); else close(); }}>
           <Button
             aria-labelledby={`${id}-label ${id}-value`}
             className="flex min-h-14 w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-border bg-ivory/20 px-4 py-3 text-start text-base text-espresso transition-colors duration-200 hover:border-espresso/30 data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-pressed:bg-ivory/60 motion-reduce:transition-none"
@@ -87,8 +89,10 @@ export function DatePicker({
             <CalendarDays className="size-5 shrink-0" aria-hidden="true" />
           </Button>
           <ModalOverlay
+            ref={overlayRef}
+            style={{ opacity: 0 }}
             isDismissable
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/20 p-2"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/20 backdrop-blur-[4px] motion-reduce:backdrop-blur-none p-2"
           >
             <Modal
               className="max-h-[calc(100dvh-1rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"
@@ -101,7 +105,7 @@ export function DatePicker({
                   </Heading>
                   <Button
                     aria-label={copy.close[lang]}
-                    onPress={() => setIsOpen(false)}
+                    onPress={close}
                     className="flex size-11 items-center justify-center rounded-full hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
                   >
                     <X className="size-4" aria-hidden="true" />
@@ -113,7 +117,7 @@ export function DatePicker({
                   minValue={today("Asia/Dubai")}
                   onChange={(date) => {
                     onChange(date.toString());
-                    setIsOpen(false);
+                    close();
                   }}
                 >
                   <header className="mb-3 flex items-center justify-between gap-1">
@@ -165,14 +169,14 @@ export function DatePicker({
                     isDisabled={!value}
                     onPress={() => {
                       onChange("");
-                      setIsOpen(false);
+                      close();
                     }}
                     className="min-h-11 rounded-full px-4 text-sm underline-offset-4 hover:underline data-focus-visible:outline-2 data-focus-visible:outline-gold data-disabled:opacity-40"
                   >
                     {copy.clear[lang]}
                   </Button>
                   <Button
-                    onPress={() => setIsOpen(false)}
+                    onPress={close}
                     className="min-h-11 rounded-full px-4 text-sm hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
                   >
                     {copy.close[lang]}
@@ -206,6 +210,7 @@ export function TimePicker({
 }: PickerProps) {
   const id = useId();
   const [isOpen, setIsOpen] = useState(false);
+  const { overlayRef, close } = usePopupMotion(() => setIsOpen(false));
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
   const [period, setPeriod] = useState("");
@@ -267,7 +272,7 @@ export function TimePicker({
                 savedHour ? (Number(savedHour) >= 12 ? "pm" : "am") : "",
               );
             }
-            setIsOpen(open);
+            if (open) setIsOpen(true); else close();
           }}
         >
           <Button
@@ -280,8 +285,10 @@ export function TimePicker({
             <Clock3 className="size-5 shrink-0" aria-hidden="true" />
           </Button>
           <ModalOverlay
+            ref={overlayRef}
+            style={{ opacity: 0 }}
             isDismissable
-            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/20 p-2"
+            className="fixed inset-0 z-[70] flex items-center justify-center bg-espresso/20 backdrop-blur-[4px] motion-reduce:backdrop-blur-none p-2"
           >
             <Modal
               className="max-h-[calc(100dvh-1rem)] w-[min(22rem,calc(100vw-1rem))] overflow-y-auto overscroll-contain rounded-3xl border border-border bg-white p-4 text-espresso shadow-lg shadow-espresso/10"
@@ -294,7 +301,7 @@ export function TimePicker({
                   </Heading>
                   <Button
                     aria-label={copy.close[lang]}
-                    onPress={() => setIsOpen(false)}
+                    onPress={close}
                     className="flex size-11 items-center justify-center rounded-full hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold"
                   >
                     <X className="size-4" aria-hidden="true" />
@@ -349,7 +356,7 @@ export function TimePicker({
                     isDisabled={!value}
                     onPress={() => {
                       onChange("");
-                      setIsOpen(false);
+                      close();
                     }}
                     className="min-h-11 rounded-full px-4 text-sm hover:bg-ivory data-focus-visible:outline-2 data-focus-visible:outline-gold data-disabled:opacity-40"
                   >
@@ -361,7 +368,7 @@ export function TimePicker({
                       const hour24 =
                         (Number(hour) % 12) + (period === "pm" ? 12 : 0);
                       onChange(`${String(hour24).padStart(2, "0")}:${minute}`);
-                      setIsOpen(false);
+                      close();
                     }}
                     className="min-h-11 rounded-full bg-espresso px-5 text-sm text-white hover:bg-ink data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-disabled:opacity-40"
                   >

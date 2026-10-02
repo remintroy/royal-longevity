@@ -1,3 +1,4 @@
+import { AboutContent } from "@/components/inner/about";
 import { ServicesDirectoryHero } from "@/components/inner/catalogue-heroes";
 import { Suspense } from "react";
 import type { Metadata } from "next";
@@ -66,6 +67,7 @@ export default async function InnerPage({ params }: InnerPageProps) {
         <ServicesDirectoryHero lang={lang} />
       ) : layout.hero === "intro" ? (
         <CatalogueIntro
+          showHomeLink={section !== "about"}
           lang={lang}
           eyebrow={page.eyebrow[lang]}
           title={page.title[lang]}
@@ -76,6 +78,8 @@ export default async function InnerPage({ params }: InnerPageProps) {
       )}
       {layout.sections.map((block) => {
         switch (block) {
+          case "about":
+            return <AboutContent key={block} page={page} lang={lang} />;
           case "story":
             return <Story key={block} page={page} lang={lang} />;
           case "categories":

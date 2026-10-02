@@ -36,11 +36,13 @@ export function CatalogueIntro({
   title = catalogueUi.discover[lang],
   description = catalogueUi.introduction[lang],
   eyebrow,
+  showHomeLink = true,
 }: {
   lang: Language;
   title?: string;
   description?: string;
   eyebrow?: string;
+  showHomeLink?: boolean;
 }) {
   return (
     <PageHero
@@ -48,7 +50,11 @@ export function CatalogueIntro({
       title={title}
       description={description}
       eyebrow={eyebrow}
-      navigation={<TextLink href={`/${lang}`}>{ui.home[lang]}</TextLink>}
+      navigation={
+        showHomeLink ? (
+          <TextLink href={`/${lang}`}>{ui.home[lang]}</TextLink>
+        ) : undefined
+      }
     />
   );
 }

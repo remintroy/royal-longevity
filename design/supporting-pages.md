@@ -79,3 +79,9 @@ The contact page now keeps just two main sections: an unboxed enquiry form follo
 The contact hero is text-only, without decorative artwork. Redundant enquiry introductions, contact cards and the separate FAQ prompt have been removed from this page.
 
 The contact introduction uses the same rounded ivory card surface as the shared page heroes, with 20px mobile padding expanding to 48px on desktop. Its compact content retains the mobile-first contact flow.
+
+## About page
+
+About uses the shared text-led ivory `PageHero` through the intro layout. `AboutContent` follows with the existing brand story, one illustrative detail photograph, the four shared care values, and a quiet closing panel linking to services and contact. Copy is sourced from `data/inner-pages.ts`, `data/inner/ui.ts` and `data/inner/about.ts`; it introduces no company history or credential claims.
+
+The story reads before its image on mobile, values stack into a readable list before expanding to two and four columns, and the closing actions wrap beneath the copy. English and Arabic use the same server-rendered structure and logical layout properties. Existing shared colours, typography, rounded frames and action components are reused. Other editorial routes retain their existing layouts.

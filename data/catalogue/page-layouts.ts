@@ -1,6 +1,7 @@
 /** Inner-page composition. Keep routing choices out of presentation components. */
 export type PageSection =
   | "story"
+  | "about"
   | "categories"
   | "beauty-categories"
   | "wellness-categories"
@@ -31,7 +32,7 @@ export const pageLayouts: Record<string, PageLayout> = {
   },
   "our-space": { hero: "intro", sections: ["gallery"] },
   gallery: { hero: "intro", sections: ["gallery"] },
-  about: { hero: "editorial", sections: ["story"] },
+  about: { hero: "intro", sections: ["about"] },
   packages: { hero: "intro", sections: ["packages"] },
   contact: { hero: "intro", sections: ["contact"] },
   faq: { hero: "intro", sections: ["all-questions"] },

@@ -30,7 +30,7 @@ export function CuratedServices({
       <header className="mx-auto flex max-w-[960px] flex-col items-center px-4 text-center min-[700px]:px-8">
         <p className="mb-5 flex items-center justify-center gap-2.5 text-sm">
           <span
-            className="size-[5px] rounded-full bg-current"
+            className="motion-safe:animate-section-dot-pulse size-[6px] rounded-full bg-current"
             aria-hidden="true"
           />
           {content.eyebrow}

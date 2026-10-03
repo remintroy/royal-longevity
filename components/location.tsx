@@ -19,7 +19,7 @@ export function Location({
         <header className="text-center">
           <p className="mb-5 flex items-center justify-center gap-2.5 text-sm">
             <span
-              className="size-[5px] rounded-full bg-current"
+              className="motion-safe:animate-section-dot-pulse size-[6px] rounded-full bg-current"
               aria-hidden="true"
             />
             {content.eyebrow}

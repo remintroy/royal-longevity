@@ -5,7 +5,13 @@ import { BookingCta } from "@/components/ui/booking-cta";
 import type { FaqContent } from "@/data/faq";
 import { FaqAccordion } from "@/components/ui/faq-accordion";
 
-export function Faq({ content, bookingHref }: { content: FaqContent; bookingHref: string }) {
+export function Faq({
+  content,
+  bookingHref,
+}: {
+  content: FaqContent;
+  bookingHref: string;
+}) {
   return (
     <section
       id="faq"
@@ -15,7 +21,10 @@ export function Faq({ content, bookingHref }: { content: FaqContent; bookingHref
       <div className="mx-auto grid max-w-[1560px] items-start gap-10 min-[900px]:grid-cols-2 min-[900px]:gap-12 min-[1200px]:gap-20">
         <header>
           <p className="mb-5 flex items-center gap-2.5 text-sm">
-            <span className="size-[5px] shrink-0 rounded-full bg-gold" aria-hidden="true" />
+            <span
+              className="motion-safe:animate-section-dot-pulse size-[6px] shrink-0 rounded-full bg-gold"
+              aria-hidden="true"
+            />
             {content.eyebrow}
           </p>
           <RevealHeading
@@ -24,7 +33,14 @@ export function Faq({ content, bookingHref }: { content: FaqContent; bookingHref
           >
             {content.title}
           </RevealHeading>
-          <BookingCta enquiry href={bookingHref} label={content.bookingLabel} target="_blank" rel="noreferrer" className="mt-7 min-[700px]:mt-9" />
+          <BookingCta
+            enquiry
+            href={bookingHref}
+            label={content.bookingLabel}
+            target="_blank"
+            rel="noreferrer"
+            className="mt-7 min-[700px]:mt-9"
+          />
         </header>
         <FaqAccordion>
           {content.items.map((item) => (
@@ -44,10 +60,18 @@ export function Faq({ content, bookingHref }: { content: FaqContent; bookingHref
                 <span className="min-w-0 flex-1 text-base leading-[1.35] min-[700px]:text-[clamp(18px,1.5vw,24px)] rtl:leading-[1.6]">
                   {item.question}
                 </span>
-                <ArrowDown data-faq-arrow className="size-5 shrink-0" strokeWidth={1.5} aria-hidden="true" />
+                <ArrowDown
+                  data-faq-arrow
+                  className="size-5 shrink-0"
+                  strokeWidth={1.5}
+                  aria-hidden="true"
+                />
               </summary>
               <div data-faq-panel>
-                <p data-faq-answer className="px-6 pb-7 pt-5 text-base leading-[1.5] text-espresso/70 min-[700px]:pb-8 min-[700px]:pt-6 min-[700px]:pe-12 min-[700px]:ps-28 min-[700px]:text-[clamp(18px,1.5vw,24px)] rtl:leading-[1.9]">
+                <p
+                  data-faq-answer
+                  className="px-6 pb-7 pt-5 text-base leading-[1.5] text-espresso/70 min-[700px]:pb-8 min-[700px]:pt-6 min-[700px]:pe-12 min-[700px]:ps-28 min-[700px]:text-[clamp(18px,1.5vw,24px)] rtl:leading-[1.9]"
+                >
                   {item.answer}
                 </p>
               </div>

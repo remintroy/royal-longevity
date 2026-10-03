@@ -59,7 +59,7 @@ export function BookingBanner({
         <div className="flex w-full flex-col items-center text-center text-ivory lg:w-[56%] lg:items-start lg:text-start lg:rtl:self-end">
           <p className="mb-5 flex items-center gap-2.5 text-sm">
             <span
-              className="size-[5px] shrink-0 rounded-full bg-current"
+              className="motion-safe:animate-section-dot-pulse size-[6px] shrink-0 rounded-full bg-current"
               aria-hidden="true"
             />
             {content.eyebrow}

@@ -45,7 +45,7 @@ export function Highlights({ content }: { content: HighlightsContent }) {
         <header className="text-center">
           <p className="mb-5 flex items-center justify-center gap-2.5 text-sm">
             <span
-              className="size-[5px] rounded-full bg-gold"
+              className="motion-safe:animate-section-dot-pulse size-[6px] rounded-full bg-gold"
               aria-hidden="true"
             />
             {content.eyebrow}
@@ -93,7 +93,7 @@ export function Highlights({ content }: { content: HighlightsContent }) {
           className="mb-7 mt-14 flex items-center justify-center gap-2.5 text-center text-sm font-normal min-[700px]:mb-8 min-[700px]:mt-24"
         >
           <span
-            className="size-[5px] shrink-0 rounded-full bg-gold"
+            className="motion-safe:animate-section-dot-pulse size-[6px] shrink-0 rounded-full bg-gold"
             aria-hidden="true"
           />
           {content.detailsLabel}

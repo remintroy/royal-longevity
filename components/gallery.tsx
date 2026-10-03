@@ -24,7 +24,7 @@ export function Gallery({
             className="mb-5 flex items-center gap-2.5 text-sm"
           >
             <span
-              className="size-[5px] rounded-full bg-gold"
+              className="motion-safe:animate-section-dot-pulse size-[6px] rounded-full bg-gold"
               aria-hidden="true"
             />
             {content.eyebrow}

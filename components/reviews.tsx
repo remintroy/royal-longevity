@@ -70,7 +70,7 @@ export function Reviews({ content }: { content: ReviewsContent }) {
         <header className="text-center">
           <p className="flex items-center justify-center gap-2.5 text-sm">
             <span
-              className="size-[5px] rounded-full bg-gold"
+              className="motion-safe:animate-section-dot-pulse size-[6px] rounded-full bg-gold"
               aria-hidden="true"
             />
             {content.eyebrow}

@@ -1,7 +1,11 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-border: color-mix(in srgb, var(--color-ivory) 88%, var(--color-espresso) 12%);
+  --color-border: color-mix(
+    in srgb,
+    var(--color-ivory) 88%,
+    var(--color-espresso) 12%
+  );
   --font-sans: var(--font-figtree), Arial, Helvetica, sans-serif;
 }
 
@@ -11,8 +15,22 @@
   --color-espresso: #2d1d12;
   --color-gold: #bb8a36;
 
-  --animate-blur-fade-in: blur-fade-in 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-  --animate-slide-up-fade: slide-up-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-blur-fade-in: blur-fade-in 1.2s cubic-bezier(0.2, 0.8, 0.2, 1)
+    forwards;
+  --animate-slide-up-fade: slide-up-fade 0.8s cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
+  --animate-section-dot-pulse: section-dot-pulse 0.8s ease-out infinite;
+
+  /* Even bright-to-dim rhythm; enabled only through motion-safe. */
+  @keyframes section-dot-pulse {
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.3;
+    }
+  }
 
   @keyframes blur-fade-in {
     from {
@@ -27,7 +45,8 @@
     }
   }
 
-  --animate-video-zoom-out: video-zoom-out 2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  --animate-video-zoom-out: video-zoom-out 2s cubic-bezier(0.16, 1, 0.3, 1)
+    forwards;
   @keyframes video-zoom-out {
     from {
       opacity: 0;
@@ -54,12 +73,16 @@
 }
 
 @layer base {
-  *, ::before, ::after {
+  *,
+  ::before,
+  ::after {
     border-color: var(--color-border);
   }
 }
 
-* { box-sizing: border-box; }
+* {
+  box-sizing: border-box;
+}
 
 html {
   scroll-behavior: smooth;
@@ -71,7 +94,10 @@ body {
   color: var(--color-ink);
 }
 
-button, a { font: inherit; }
+button,
+a {
+  font: inherit;
+}
 
 @media (max-width: 699px) {
   .animate-slide-up-fade {
@@ -88,16 +114,30 @@ button, a { font: inherit; }
     transform: none;
   }
 
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     scroll-behavior: auto !important;
-    transition-duration: .01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
 /* Keep every label reachable without movement when reduced motion is requested. */
 @media (prefers-reduced-motion: reduce) {
-  .marquee-row { overflow: visible; }
-  .marquee [data-marquee-track] { width: 100%; transform: none !important; }
-  .marquee-copy { width: 100%; flex-wrap: wrap; justify-content: center; padding-inline: 12px; }
-  .marquee-copy + .marquee-copy { display: none; }
+  .marquee-row {
+    overflow: visible;
+  }
+  .marquee [data-marquee-track] {
+    width: 100%;
+    transform: none !important;
+  }
+  .marquee-copy {
+    width: 100%;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-inline: 12px;
+  }
+  .marquee-copy + .marquee-copy {
+    display: none;
+  }
 }

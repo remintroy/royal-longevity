@@ -1,6 +1,10 @@
 import { localized } from "./localization";
 
 export const contactUi = {
+  optionalDateTime: localized(
+    "Add a preferred date & time (optional)",
+    "إضافة تاريخ ووقت مفضلين (اختياري)",
+  ),
   quickLinks: localized("Contact shortcuts", "روابط التواصل السريعة"),
   findUs: localized("Find us", "موقعنا"),
   eyebrow: localized("Let’s talk", "لنتحدث"),

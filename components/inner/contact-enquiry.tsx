@@ -5,7 +5,16 @@ import { ArrowUpRight } from "lucide-react";
 import { I18nProvider } from "react-aria-components";
 import type { Language } from "@/data/site";
 import { contactTopics, contactUi } from "@/data/inner/contact";
-import { enquiryLocales } from "@/data/inner/enquiry-controls";
+import { ui } from "@/data/inner/ui";
+import {
+  DatePicker,
+  TimePicker,
+  formatPickerTime,
+} from "@/components/ui/date-time-picker";
+import {
+  enquiryLocales,
+  enquiryControlsUi,
+} from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
 import { getBookingHref } from "@/lib/booking";
 
@@ -13,6 +22,8 @@ export function ContactEnquiry({ lang }: { lang: Language }) {
   const id = useId();
   const messageRef = useRef<HTMLTextAreaElement>(null);
   const [topic, setTopic] = useState("");
+  const [preferredDate, setPreferredDate] = useState("");
+  const [preferredTime, setPreferredTime] = useState("");
   const [error, setError] = useState(false);
   const [preparedHref, setPreparedHref] = useState("");
 
@@ -29,7 +40,14 @@ export function ContactEnquiry({ lang }: { lang: Language }) {
     const name = String(fields.get("name") ?? "").trim();
     const selectedTopic =
       contactTopics.find((item) => item.id === topic) ?? contactTopics[0];
-    const context = [selectedTopic.label[lang], name, message]
+    const context = [
+      selectedTopic.label[lang],
+      name,
+      message,
+      preferredDate && `${ui.date[lang]}: ${preferredDate}`,
+      preferredTime &&
+        `${ui.time[lang]}: ${formatPickerTime(preferredTime, lang)} (${enquiryControlsUi.timeHint[lang]})`,
+    ]
       .filter(Boolean)
       .join("\n\n");
     const href = getBookingHref(lang, context);
@@ -117,6 +135,33 @@ export function ContactEnquiry({ lang }: { lang: Language }) {
             </p>
           )}
         </div>
+        <I18nProvider locale={enquiryLocales[lang]}>
+          <details className="rounded-2xl border border-border">
+            <summary className="cursor-pointer rounded-2xl px-4 py-4 text-sm leading-relaxed text-espresso focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
+              {contactUi.optionalDateTime[lang]}
+            </summary>
+            <div className="grid gap-5 px-4 pb-4">
+              <DatePicker
+                lang={lang}
+                label={ui.date[lang]}
+                value={preferredDate}
+                onChange={(value) => {
+                  setPreferredDate(value);
+                  setPreparedHref("");
+                }}
+              />
+              <TimePicker
+                lang={lang}
+                label={ui.time[lang]}
+                value={preferredTime}
+                onChange={(value) => {
+                  setPreferredTime(value);
+                  setPreparedHref("");
+                }}
+              />
+            </div>
+          </details>
+        </I18nProvider>
         <div className="grid gap-4">
           <p
             id={`${id}-note`}

@@ -1,12 +1,132 @@
 "use client";
 
-import { useEffect, useId, useRef, useState, type ReactNode } from "react";
+import {
+  useEffect,
+  useId,
+  useImperativeHandle,
+  useRef,
+  useState,
+  type ReactNode,
+  type Ref,
+  type RefObject,
+} from "react";
 import { ArrowLeft, ArrowRight, Pause, Play } from "lucide-react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import type { Language } from "@/data/site";
 
 gsap.registerPlugin(useGSAP);
+
+type CarouselLabels = {
+  previous: string;
+  next: string;
+  pause: string;
+  play: string;
+};
+type CarouselControlsHandle = { pause: (value: boolean) => void };
+
+// Keep control updates outside the server-rendered recommendation subtree.
+function CarouselControls({
+  track,
+  pausedRef,
+  lang,
+  labels,
+  id,
+  ref,
+}: {
+  track: RefObject<HTMLUListElement | null>;
+  pausedRef: RefObject<boolean>;
+  lang: Language;
+  labels: CarouselLabels;
+  id: string;
+  ref: Ref<CarouselControlsHandle>;
+}) {
+  const [edges, setEdges] = useState({ start: true, end: false });
+  const [paused, setPaused] = useState(false);
+  function pause(value: boolean) {
+    pausedRef.current = value;
+    setPaused(value);
+  }
+  useImperativeHandle(ref, () => ({ pause }));
+  useEffect(() => {
+    const node = track.current;
+    if (!node) return;
+    const update = () => {
+      const position = Math.abs(node.scrollLeft);
+      const start = position < 2;
+      const end = position >= node.scrollWidth - node.clientWidth - 2;
+      setEdges((previous) =>
+        previous.start === start && previous.end === end
+          ? previous
+          : { start, end },
+      );
+    };
+    const observer = new ResizeObserver(update);
+    observer.observe(node);
+    node.addEventListener("scroll", update, { passive: true });
+    update();
+    return () => {
+      observer.disconnect();
+      node.removeEventListener("scroll", update);
+    };
+  }, [track]);
+
+  function move(forward: boolean) {
+    pause(true);
+    const node = track.current;
+    if (!node) return;
+    const card = node.firstElementChild;
+    const distance =
+      (card?.getBoundingClientRect().width ?? node.clientWidth) +
+      parseFloat(getComputedStyle(node).columnGap || "0");
+    node.scrollBy({
+      left: distance * (forward ? 1 : -1) * (lang === "ar" ? -1 : 1),
+      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
+        ? "instant"
+        : "smooth",
+    });
+  }
+
+  return (
+    <div className="mb-5 flex justify-end gap-2">
+      <button
+        type="button"
+        onClick={() => pause(!paused)}
+        aria-label={paused ? labels.play : labels.pause}
+        aria-controls={id}
+        className="flex min-h-12 items-center gap-2 rounded-full border border-border bg-white px-4 text-sm hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold motion-reduce:hidden"
+      >
+        <Play size={16} aria-hidden="true" className={paused ? "" : "hidden"} />
+        <Pause
+          size={16}
+          aria-hidden="true"
+          className={paused ? "hidden" : ""}
+        />
+        {paused ? labels.play : labels.pause}
+      </button>
+      <button
+        type="button"
+        onClick={() => move(false)}
+        disabled={edges.start}
+        aria-label={labels.previous}
+        aria-controls={id}
+        className="grid size-12 place-items-center rounded-full border border-border bg-white hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:cursor-default disabled:opacity-35"
+      >
+        <ArrowLeft size={18} className="rtl:rotate-180" aria-hidden="true" />
+      </button>
+      <button
+        type="button"
+        onClick={() => move(true)}
+        disabled={edges.end}
+        aria-label={labels.next}
+        aria-controls={id}
+        className="grid size-12 place-items-center rounded-full border border-border bg-white hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:cursor-default disabled:opacity-35"
+      >
+        <ArrowRight size={18} className="rtl:rotate-180" aria-hidden="true" />
+      </button>
+    </div>
+  );
+}
 
 export function ExploreCarousel({
   children,
@@ -15,18 +135,17 @@ export function ExploreCarousel({
 }: {
   children: ReactNode;
   lang: Language;
-  labels: { previous: string; next: string; pause: string; play: string };
+  labels: CarouselLabels;
 }) {
   const track = useRef<HTMLUListElement>(null);
   const id = useId();
-  const [edges, setEdges] = useState({ start: true, end: false });
-  const [paused, setPaused] = useState(false);
   const pausedRef = useRef(false);
   const hovered = useRef(false);
+  const controls = useRef<CarouselControlsHandle>(null);
 
   function pause(value: boolean) {
     pausedRef.current = value;
-    setPaused(value);
+    controls.current?.pause(value);
   }
 
   useGSAP(
@@ -83,83 +202,16 @@ export function ExploreCarousel({
     { scope: track, dependencies: [lang], revertOnUpdate: true },
   );
 
-  useEffect(() => {
-    const node = track.current;
-    if (!node) return;
-    const update = () => {
-      const position = Math.abs(node.scrollLeft);
-      const start = position < 2;
-      const end = position >= node.scrollWidth - node.clientWidth - 2;
-      setEdges((previous) =>
-        previous.start === start && previous.end === end
-          ? previous
-          : { start, end },
-      );
-    };
-    const observer = new ResizeObserver(update);
-    observer.observe(node);
-    node.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => {
-      observer.disconnect();
-      node.removeEventListener("scroll", update);
-    };
-  }, []);
-
-  function move(forward: boolean) {
-    pause(true);
-    const node = track.current;
-    if (!node) return;
-    const card = node.firstElementChild;
-    const distance =
-      (card?.getBoundingClientRect().width ?? node.clientWidth) +
-      parseFloat(getComputedStyle(node).columnGap || "0");
-    node.scrollBy({
-      left: distance * (forward ? 1 : -1) * (lang === "ar" ? -1 : 1),
-      behavior: matchMedia("(prefers-reduced-motion: reduce)").matches
-        ? "instant"
-        : "smooth",
-    });
-  }
-
   return (
     <>
-      <div className="mb-5 flex justify-end gap-2">
-        <button
-          type="button"
-          onClick={() => pause(!paused)}
-          aria-label={paused ? labels.play : labels.pause}
-          aria-controls={id}
-          className="flex min-h-12 items-center gap-2 rounded-full border border-border bg-white px-4 text-sm hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold motion-reduce:hidden"
-        >
-          {paused ? (
-            <Play size={16} aria-hidden="true" />
-          ) : (
-            <Pause size={16} aria-hidden="true" />
-          )}
-          {paused ? labels.play : labels.pause}
-        </button>
-        <button
-          type="button"
-          onClick={() => move(false)}
-          disabled={edges.start}
-          aria-label={labels.previous}
-          aria-controls={id}
-          className="grid size-12 place-items-center rounded-full border border-border bg-white hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:cursor-default disabled:opacity-35"
-        >
-          <ArrowLeft size={18} className="rtl:rotate-180" aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          onClick={() => move(true)}
-          disabled={edges.end}
-          aria-label={labels.next}
-          aria-controls={id}
-          className="grid size-12 place-items-center rounded-full border border-border bg-white hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold disabled:cursor-default disabled:opacity-35"
-        >
-          <ArrowRight size={18} className="rtl:rotate-180" aria-hidden="true" />
-        </button>
-      </div>
+      <CarouselControls
+        ref={controls}
+        track={track}
+        pausedRef={pausedRef}
+        lang={lang}
+        labels={labels}
+        id={id}
+      />
       <div className="relative start-1/2 w-[100cqw] -translate-x-1/2 rtl:translate-x-1/2">
         <ul
           ref={track}

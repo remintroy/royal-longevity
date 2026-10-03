@@ -7,8 +7,9 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(useGSAP, ScrollTrigger);
 
-// Paired with the image layer's 50% vertical overscan in Introduction.
-const PARALLAX_TRAVEL_PERCENT = 24;
+// 2% of the 106%-height layer stays within its 3% vertical overscan.
+// Small travel preserves the wall signage between the content overlays.
+const PARALLAX_TRAVEL_PERCENT = 2;
 
 function animateParallax(root: HTMLElement, image: HTMLElement) {
   gsap.fromTo(
@@ -68,20 +69,24 @@ function animateStatistics(panel: HTMLElement) {
   counters.forEach(({ element, finalText }) => {
     const counter = { value: 0 };
 
-    timeline.to(counter, {
-      value: Number(element.dataset.introCount),
-      duration: 1.2,
-      ease: "power2.out",
-      onStart: () => {
-        element.textContent = "0";
+    timeline.to(
+      counter,
+      {
+        value: Number(element.dataset.introCount),
+        duration: 1.2,
+        ease: "power2.out",
+        onStart: () => {
+          element.textContent = "0";
+        },
+        onUpdate: () => {
+          element.textContent = String(Math.round(counter.value));
+        },
+        onComplete: () => {
+          element.textContent = finalText;
+        },
       },
-      onUpdate: () => {
-        element.textContent = String(Math.round(counter.value));
-      },
-      onComplete: () => {
-        element.textContent = finalText;
-      },
-    }, 0);
+      0,
+    );
   });
 
   // GSAP reverts styles itself; restore text mutations separately on cleanup.
@@ -95,24 +100,27 @@ function animateStatistics(panel: HTMLElement) {
 export function IntroductionMotion({ children }: { children: ReactNode }) {
   const container = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {
-    const root = container.current;
-    if (!root) return;
+  useGSAP(
+    () => {
+      const root = container.current;
+      if (!root) return;
 
-    const image = root.querySelector<HTMLElement>("[data-intro-parallax]");
-    const panel = root.querySelector<HTMLElement>("[data-intro-panel]");
-    if (!image || !panel) return;
+      const image = root.querySelector<HTMLElement>("[data-intro-parallax]");
+      const panel = root.querySelector<HTMLElement>("[data-intro-panel]");
+      if (!image || !panel) return;
 
-    const media = gsap.matchMedia();
+      const media = gsap.matchMedia();
 
-    media.add("(prefers-reduced-motion: no-preference)", () => {
-      animateParallax(root, image);
-      animateHeading(root);
-      return animateStatistics(panel);
-    });
+      media.add("(prefers-reduced-motion: no-preference)", () => {
+        animateParallax(root, image);
+        animateHeading(root);
+        return animateStatistics(panel);
+      });
 
-    return () => media.revert();
-  }, { scope: container });
+      return () => media.revert();
+    },
+    { scope: container },
+  );
 
   return <div ref={container}>{children}</div>;
 }

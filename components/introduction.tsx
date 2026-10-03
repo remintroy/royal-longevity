@@ -1,8 +1,11 @@
 import { RevealHeading } from "@/components/ui/reveal-heading";
-import Image from "next/image";
+import { getImageProps } from "next/image";
 import { HeartHandshake, Smile, UsersRound } from "lucide-react";
 import { IntroductionMotion } from "@/components/ui/introduction-motion";
-import { introductionImage, type IntroductionContent } from "@/data/introduction";
+import {
+  introductionImages,
+  type IntroductionContent,
+} from "@/data/introduction";
 
 const statisticIcons = {
   smile: Smile,
@@ -32,7 +35,10 @@ function StatisticRow({ statistic }: { statistic: IntroductionStatistic }) {
         className="col-start-1 row-start-1 m-0 text-[clamp(2rem,4.5vw,4rem)]
           leading-none tracking-[-.05em] tabular-nums"
       >
-        <span className="sr-only">{statistic.value}{statistic.suffix}</span>
+        <span className="sr-only">
+          {statistic.value}
+          {statistic.suffix}
+        </span>
         <span aria-hidden="true" dir="ltr">
           <span data-intro-count={statistic.value}>{statistic.value}</span>
           {statistic.suffix}
@@ -49,6 +55,20 @@ function StatisticRow({ statistic }: { statistic: IntroductionStatistic }) {
 }
 
 export function Introduction({ content }: { content: IntroductionContent }) {
+  const common = { alt: content.imageAlt, sizes: "100vw" };
+  const { props: mobile } = getImageProps({
+    ...common,
+    ...introductionImages.mobile,
+  });
+  const { props: tablet } = getImageProps({
+    ...common,
+    ...introductionImages.tablet,
+  });
+  const { props: desktop } = getImageProps({
+    ...common,
+    ...introductionImages.desktop,
+  });
+
   return (
     <IntroductionMotion>
       <section
@@ -60,20 +80,46 @@ export function Introduction({ content }: { content: IntroductionContent }) {
           min-[700px]:p-[clamp(32px,4vw,72px)]"
       >
         {/* The overscan covers the full GSAP parallax travel at either end. */}
-        <div data-intro-parallax className="absolute -inset-y-1/2 inset-x-0 -z-20">
-          <Image
-            src={introductionImage}
-            alt={content.imageAlt}
-            fill
-            sizes="100vw"
-            className="object-cover xl:object-contain"
-          />
+        <div
+          data-intro-parallax
+          className="absolute -inset-y-[3%] inset-x-0 -z-20 motion-reduce:inset-y-0"
+        >
+          <picture>
+            <source
+              media="(min-width: 1200px)"
+              srcSet={desktop.srcSet}
+              sizes={desktop.sizes}
+              width={desktop.width}
+              height={desktop.height}
+            />
+            <source
+              media="(min-width: 700px)"
+              srcSet={tablet.srcSet}
+              sizes={tablet.sizes}
+              width={tablet.width}
+              height={tablet.height}
+            />
+            {/* Next.js art direction: one optimized image request per viewport. */}
+            <img
+              {...mobile}
+              alt={content.imageAlt}
+              className="absolute inset-0 h-full w-full object-cover object-[65%_top] min-[700px]:object-top"
+            />
+          </picture>
         </div>
         <div className="absolute inset-0 -z-10 bg-ink/45" aria-hidden="true" />
 
-        <header className="text-ivory">
-          <p data-intro-reveal className="mb-5 flex items-center gap-2.5 text-sm">
-            <span className="size-[5px] rounded-full bg-current" aria-hidden="true" />
+        {/* Keep desktop copy on the furniture side, clear of the wall sign.
+            Arabic retains RTL text alignment inside this photographic safe area. */}
+        <header className="text-ivory min-[1200px]:w-[45%] min-[1200px]:self-start min-[1200px]:rtl:self-end">
+          <p
+            data-intro-reveal
+            className="mb-5 flex items-center gap-2.5 text-sm"
+          >
+            <span
+              className="size-[5px] rounded-full bg-current"
+              aria-hidden="true"
+            />
             {content.eyebrow}
           </p>
           <RevealHeading

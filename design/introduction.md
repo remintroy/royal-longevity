@@ -24,17 +24,34 @@ Content is server-rendered; the client wrapper controls animation only.
   hook. Separate functions handle parallax, eyebrow entry, and a single panel
   timeline shared by the statistics. `gsap.matchMedia` handles reduced motion
   and cleanup, including restoration of the counter text.
-- Parallax travels from -24% to +24% of the image layer's height. The layer
-  extends 50% above and below the section to keep both edges covered.
+- Parallax travels from -2% to +2% of the image layer's height. The layer
+  extends 3% above and below the section to keep both edges covered without
+  heavily cropping the room. Reduced motion removes this overscan and movement.
+- `getImageProps` and a native `picture` select mobile (below 700px), tablet
+  (700–1199px), and desktop (1200px+) compositions. Only the selected source is
+  requested; Next.js supplies responsive optimized sizes.
+- Images align to the top to preserve wall signage. Mobile favours the reception
+  side slightly when cropping. Desktop headings occupy the left furniture side
+  in both languages, with Arabic text retaining RTL alignment, so the signage
+  on the right stays visible. The statistics panel retains its locale alignment.
 
 ## Demo content
 
 Copy and sample figures live in `data/introduction.ts` and require business
 confirmation. They are not verified Royal Longevity statistics.
 
-`public/assets/images/introduction-lounge.webp` is an optimized demo derivative of the supplied
-reference image, not Royal Longevity premises:
-https://framerusercontent.com/images/swkwxYMDBEZNvoddhZYxmOERKt0.jpg
+The current images are generated demo interiors, not photographs of Royal
+Longevity premises. The existing `introduction-lounge.png` was the visual reference.
+The original remains unchanged. Final optimized assets:
+
+- `public/assets/images/introduction-lounge-mobile.webp` — 940 × 1672.
+- `public/assets/images/introduction-lounge-tablet.webp` — 1122 × 1402.
+- `public/assets/images/introduction-lounge-desktop.webp` — 1672 × 941.
+
+Generated with the built-in image generation tool. The supplied Beauty vertical
+PNG from `branding/ROYAL LONGEVITY LOGO BOOK/ROYAL LONGEVITY VERTICAL LOGO/ROYAL LONGEVITY BEAUTY LOGO/`
+was provided as the branding reference for the final image edits. See
+`introduction-image-prompts.md` for the final edit prompts.
 
 Replace it with approved Royal Longevity photography before publication.
 

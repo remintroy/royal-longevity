@@ -9,6 +9,8 @@ export const exploreMoreUi = {
   service: localized("Service", "خدمة"),
   previous: localized("Previous recommendations", "الاقتراحات السابقة"),
   next: localized("Next recommendations", "الاقتراحات التالية"),
+  pause: localized("Pause scrolling", "إيقاف التمرير"),
+  play: localized("Resume scrolling", "استئناف التمرير"),
 };
 
 export function getExploreMore(category: CategoryId) {

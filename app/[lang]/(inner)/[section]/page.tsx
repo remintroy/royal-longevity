@@ -67,7 +67,6 @@ export default async function InnerPage({ params }: InnerPageProps) {
         <ServicesDirectoryHero lang={lang} />
       ) : layout.hero === "intro" ? (
         <CatalogueIntro
-          showHomeLink={section !== "about"}
           lang={lang}
           eyebrow={page.eyebrow[lang]}
           title={page.title[lang]}

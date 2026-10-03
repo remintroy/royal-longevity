@@ -8,7 +8,6 @@ type PageHeroProps = {
   title: string;
   description: string;
   eyebrow?: ReactNode;
-  navigation?: ReactNode;
   actions?: ReactNode;
   media?: ReactNode;
   backgroundArt?: ReactNode;
@@ -19,7 +18,6 @@ export function PageHero({
   title,
   description,
   eyebrow,
-  navigation,
   actions,
   media,
   backgroundArt,
@@ -41,9 +39,6 @@ export function PageHero({
           !media && "max-w-4xl min-[900px]:py-14",
         )}
       >
-        {navigation && (
-          <div className="mb-8 text-sm text-espresso/75">{navigation}</div>
-        )}
         {eyebrow && (
           <div
             className="mb-6 animate-blur-fade-in text-sm opacity-0"

@@ -59,7 +59,6 @@ export function Hero({ page, lang }: { page: InnerPage; lang: Language }) {
         title={page.title[lang]}
         description={page.description[lang]}
         eyebrow={page.eyebrow[lang]}
-        navigation={<TextLink href={`/${lang}`}>{ui.home[lang]}</TextLink>}
         media={<Photo image={page.image} lang={lang} hero />}
         actions={
           <>

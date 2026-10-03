@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useCallback, useId, useState } from "react";
 import { parseDate, today } from "@internationalized/date";
 import {
   CalendarDays,
@@ -29,10 +29,11 @@ import { TimeWheel } from "./time-wheel";
 import type { Language } from "@/data/site";
 import {
   enquiryControlsUi as copy,
-  enquiryHours,
+  getEnquiryHours,
   enquiryLocales,
   enquiryMinutes,
   enquiryPeriods,
+  isEnquiryTime,
 } from "@/data/inner/enquiry-controls";
 
 export type PickerProps = {
@@ -78,7 +79,13 @@ export function DatePicker({
           )}
           {label}
         </span>
-        <DialogTrigger isOpen={isOpen} onOpenChange={(open) => { if (open) setIsOpen(true); else close(); }}>
+        <DialogTrigger
+          isOpen={isOpen}
+          onOpenChange={(open) => {
+            if (open) setIsOpen(true);
+            else close();
+          }}
+        >
           <Button
             aria-labelledby={`${id}-label ${id}-value`}
             className="flex min-h-14 w-full min-w-0 items-center justify-between gap-3 rounded-2xl border border-border bg-ivory/20 px-4 py-3 text-start text-base text-espresso transition-colors duration-200 hover:border-espresso/30 data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-pressed:bg-ivory/60 motion-reduce:transition-none"
@@ -214,6 +221,13 @@ export function TimePicker({
   const [hour, setHour] = useState("");
   const [minute, setMinute] = useState("");
   const [period, setPeriod] = useState("");
+  const changePeriod = useCallback((nextPeriod: string) => {
+    setPeriod(nextPeriod);
+    const availableHours = getEnquiryHours(nextPeriod);
+    setHour((currentHour) =>
+      availableHours.includes(currentHour) ? currentHour : "",
+    );
+  }, []);
   const numbers = new Intl.NumberFormat(enquiryLocales[lang], {
     minimumIntegerDigits: 2,
   });
@@ -224,7 +238,7 @@ export function TimePicker({
       label: copy.hour[lang],
       value: hour,
       setValue: setHour,
-      options: enquiryHours,
+      options: getEnquiryHours(period),
     },
     {
       id: "minute",
@@ -237,11 +251,14 @@ export function TimePicker({
       id: "period",
       label: copy.period[lang],
       value: period,
-      setValue: setPeriod,
+      setValue: changePeriod,
       options: enquiryPeriods,
     },
   ];
-  const isComplete = Boolean(hour && minute && period);
+  const hour24 = (Number(hour) % 12) + (period === "pm" ? 12 : 0);
+  const draftTime = `${String(hour24).padStart(2, "0")}:${minute}`;
+  const isComplete =
+    Boolean(hour && minute && period) && isEnquiryTime(draftTime);
 
   return (
     <I18nProvider locale={enquiryLocales[lang]}>
@@ -261,7 +278,9 @@ export function TimePicker({
           isOpen={isOpen}
           onOpenChange={(open) => {
             if (open) {
-              const [savedHour = "", savedMinute = ""] = value.split(":");
+              const [savedHour = "", savedMinute = ""] = (
+                isEnquiryTime(value) ? value : ""
+              ).split(":");
               setHour(
                 savedHour
                   ? String(Number(savedHour) % 12 || 12).padStart(2, "0")
@@ -272,7 +291,8 @@ export function TimePicker({
                 savedHour ? (Number(savedHour) >= 12 ? "pm" : "am") : "",
               );
             }
-            if (open) setIsOpen(true); else close();
+            if (open) setIsOpen(true);
+            else close();
           }}
         >
           <Button
@@ -325,6 +345,7 @@ export function TimePicker({
                   className="mb-4 text-center text-xs leading-relaxed text-espresso/65"
                 >
                   {copy.wheelHelp[lang]}
+                  <span className="mt-1 block">{copy.timeSlotsHint[lang]}</span>
                 </p>
                 <div className="grid grid-cols-3 gap-2" dir="ltr">
                   {columns.map((column) => (
@@ -337,6 +358,9 @@ export function TimePicker({
                         {column.label}
                       </p>
                       <TimeWheel
+                        key={
+                          column.id === "hour" ? `hour-${period}` : column.id
+                        }
                         options={column.options}
                         value={column.value}
                         onChange={column.setValue}
@@ -365,9 +389,8 @@ export function TimePicker({
                   <Button
                     isDisabled={!isComplete}
                     onPress={() => {
-                      const hour24 =
-                        (Number(hour) % 12) + (period === "pm" ? 12 : 0);
-                      onChange(`${String(hour24).padStart(2, "0")}:${minute}`);
+                      if (!isComplete) return;
+                      onChange(draftTime);
                       close();
                     }}
                     className="min-h-11 rounded-full bg-espresso px-5 text-sm text-white hover:bg-ink data-focus-visible:outline-2 data-focus-visible:outline-offset-2 data-focus-visible:outline-gold data-disabled:opacity-40"

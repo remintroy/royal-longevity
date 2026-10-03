@@ -15,6 +15,10 @@ export const enquiryControlsUi = {
   pm: localized("PM", "مساءً"),
   wheelHelp: localized("Scroll to select time", "مرّري لاختيار الوقت"),
   timeHint: localized("Dubai time (GMT+4)", "توقيت دبي (GMT+4)"),
+  timeSlotsHint: localized(
+    "Available choices: 9:00 AM–8:45 PM, every 15 minutes.",
+    "الأوقات المتاحة للاختيار: من ٩:٠٠ صباحاً إلى ٨:٤٥ مساءً، بفواصل ١٥ دقيقة.",
+  ),
 };
 
 export const enquiryLocales = {
@@ -22,12 +26,23 @@ export const enquiryLocales = {
   ar: "ar-AE-u-ca-gregory",
 };
 
-export const enquiryHours = Array.from({ length: 12 }, (_, hour) =>
-  String(hour + 1).padStart(2, "0"),
-);
+const enquiryHoursByPeriod = {
+  am: ["09", "10", "11"],
+  pm: ["12", "01", "02", "03", "04", "05", "06", "07", "08"],
+};
 
-export const enquiryMinutes = Array.from({ length: 60 }, (_, minute) =>
-  String(minute).padStart(2, "0"),
-);
+const enquiryHours = [...enquiryHoursByPeriod.am, ...enquiryHoursByPeriod.pm];
+
+export function getEnquiryHours(period: string) {
+  return period === "am" || period === "pm"
+    ? enquiryHoursByPeriod[period]
+    : enquiryHours;
+}
+
+export const enquiryMinutes = ["00", "15", "30", "45"];
 
 export const enquiryPeriods = ["am", "pm"];
+
+export function isEnquiryTime(value: string) {
+  return /^(09|1[0-9]|20):(00|15|30|45)$/.test(value);
+}

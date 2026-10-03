@@ -57,7 +57,10 @@ export function PackageCards({ lang }: { lang: Language }) {
                 </ul>
                 <BookingCta
                   className="mt-auto self-start"
-                  href={getBookingHref(lang, item.title[lang])}
+                  href={getBookingHref(lang, {
+                    kind: "package",
+                    package: item.title[lang],
+                  })}
                   label={ui.price[lang]}
                   target="_blank"
                   rel="noreferrer"

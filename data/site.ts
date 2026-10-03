@@ -1,4 +1,6 @@
-export type Language = 'en' | 'ar';
+import { getBookingHref } from "@/lib/booking";
+
+export type Language = "en" | "ar";
 
 export type Highlight = {
   value: string;
@@ -21,17 +23,34 @@ export type HeroContent = {
 };
 
 export const marqueeContent: Record<Language, string[]> = {
-  en: ["Skin Care", "Spa", "Wellness", "Beauty", "Treatment", "Salon", "Relaxation"],
-  ar: ["العناية بالبشرة", "سبا", "العافية", "الجمال", "العلاجات", "صالون", "الاسترخاء"]
+  en: [
+    "Skin Care",
+    "Spa",
+    "Wellness",
+    "Beauty",
+    "Treatment",
+    "Salon",
+    "Relaxation",
+  ],
+  ar: [
+    "العناية بالبشرة",
+    "سبا",
+    "العافية",
+    "الجمال",
+    "العلاجات",
+    "صالون",
+    "الاسترخاء",
+  ],
 };
 
 export const heroContent: Record<Language, HeroContent> = {
   en: {
     eyebrow: "Personal Care & Beauty · Ajman",
     title: "Care that lets your natural radiance linger.",
-    description: "A considered beauty ritual, shaped around you — from restorative treatments to the details that make you feel entirely yourself.",
+    description:
+      "A considered beauty ritual, shaped around you — from restorative treatments to the details that make you feel entirely yourself.",
     bookingLabel: "Book an appointment",
-    bookingHref: "https://wa.me/?text=Hello%20Royal%20Longevity%2C%20I%20would%20like%20to%20book%20an%20appointment.",
+    bookingHref: getBookingHref("en"),
     trustSignal: "A considered beauty experience",
     location: "Personal Care & Beauty · Ajman",
     badgeLine1: "Guest",
@@ -42,14 +61,16 @@ export const heroContent: Record<Language, HeroContent> = {
       { value: "4.98", label: "Rated 4.98 out of 5", stars: true },
       { value: "137", label: "Reviews" },
     ],
-    imageAlt: "Warm, editorial beauty treatment setting with ivory linens and botanical details",
+    imageAlt:
+      "Warm, editorial beauty treatment setting with ivory linens and botanical details",
   },
   ar: {
     eyebrow: "العناية الشخصية والجمال · عجمان",
     title: "عناية تُبرز إشراقتك الطبيعية.",
-    description: "طقوس جمال متقنة مصممة خصيصاً لك — من العلاجات المجددة للنشاط إلى أدق التفاصيل التي تجعلك تشعرين بجمالك الطبيعي.",
+    description:
+      "طقوس جمال متقنة مصممة خصيصاً لك — من العلاجات المجددة للنشاط إلى أدق التفاصيل التي تجعلك تشعرين بجمالك الطبيعي.",
     bookingLabel: "احجزي موعداً",
-    bookingHref: "https://wa.me/?text=مرحباً%20Royal%20Longevity،%20أود%20حجز%20موعد.",
+    bookingHref: getBookingHref("ar"),
     trustSignal: "تجربة جمال متقنة",
     location: "العناية الشخصية والجمال · عجمان",
     badgeLine1: "اختيار",
@@ -61,7 +82,7 @@ export const heroContent: Record<Language, HeroContent> = {
       { value: "137", label: "التقييمات" },
     ],
     imageAlt: "جلسة علاج تجميلي دافئة مع بياضات عاجية وتفاصيل نباتية",
-  }
+  },
 };
 
 export const getHeroContent = (lang: Language) => heroContent[lang];

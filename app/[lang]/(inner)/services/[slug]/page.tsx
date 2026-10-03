@@ -86,10 +86,7 @@ export default async function ServicePage({ params }: ServicePageProps) {
             <BookingCta
               enquiry
               serviceSlug={service.slug}
-              href={getBookingHref(
-                lang,
-                `${category.title[lang]} · ${service.title[lang]}`,
-              )}
+              href={getBookingHref(lang, { service: service.title[lang] })}
               label={catalogueUi.bookNow[lang]}
               target="_blank"
               rel="noreferrer"

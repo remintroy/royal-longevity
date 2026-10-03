@@ -1,3 +1,4 @@
+import { getBookingHref } from "@/lib/booking";
 import { Location } from "@/components/location";
 import { getLocationContent } from "@/data/location";
 import type { Language } from "@/data/site";
@@ -70,7 +71,7 @@ export function Footer({
                   {content.contactLabel}
                 </p>
                 <a
-                  href={bookingHref}
+                  href={getBookingHref(lang, { kind: "contact" })}
                   target="_blank"
                   rel="noreferrer"
                   className={linkClassName}

@@ -85,7 +85,7 @@ export function ContactIntro({
           aria-label={contactUi.quickLinks[lang]}
           className="mt-5 flex flex-wrap items-center gap-x-6 gap-y-2"
         >
-          <TextLink href={getBookingHref(lang)}>
+          <TextLink href={getBookingHref(lang, { kind: "contact" })}>
             {contactUi.chat[lang]}
           </TextLink>
           <a

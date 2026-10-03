@@ -57,10 +57,10 @@ export function Memberships({ lang }: { lang: Language }) {
             </p>
             <BookingCta
               className="mt-auto max-w-full self-start"
-              href={getBookingHref(
-                lang,
-                `${catalogueUi.membership[lang]} · ${plan.title[lang]}`,
-              )}
+              href={getBookingHref(lang, {
+                kind: "membership",
+                membership: plan.title[lang],
+              })}
               label={catalogueUi.membershipEnquiry[lang]}
               target="_blank"
               rel="noreferrer"

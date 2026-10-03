@@ -6,15 +6,8 @@ import { I18nProvider } from "react-aria-components";
 import type { Language } from "@/data/site";
 import { contactTopics, contactUi } from "@/data/inner/contact";
 import { ui } from "@/data/inner/ui";
-import {
-  DatePicker,
-  TimePicker,
-  formatPickerTime,
-} from "@/components/ui/date-time-picker";
-import {
-  enquiryLocales,
-  enquiryControlsUi,
-} from "@/data/inner/enquiry-controls";
+import { DatePicker, TimePicker } from "@/components/ui/date-time-picker";
+import { enquiryLocales } from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
 import { getBookingHref } from "@/lib/booking";
 
@@ -40,17 +33,15 @@ export function ContactEnquiry({ lang }: { lang: Language }) {
     const name = String(fields.get("name") ?? "").trim();
     const selectedTopic =
       contactTopics.find((item) => item.id === topic) ?? contactTopics[0];
-    const context = [
-      selectedTopic.label[lang],
+    const href = getBookingHref(lang, {
+      kind: "contact",
+      topic:
+        selectedTopic.id === "general" ? undefined : selectedTopic.label[lang],
       name,
       message,
-      preferredDate && `${ui.date[lang]}: ${preferredDate}`,
-      preferredTime &&
-        `${ui.time[lang]}: ${formatPickerTime(preferredTime, lang)} (${enquiryControlsUi.timeHint[lang]})`,
-    ]
-      .filter(Boolean)
-      .join("\n\n");
-    const href = getBookingHref(lang, context);
+      preferredDate,
+      preferredTime,
+    });
     setPreparedHref(href);
     window.open(href, "_blank", "noopener,noreferrer");
   }

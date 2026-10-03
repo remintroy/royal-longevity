@@ -7,16 +7,9 @@ import { MessageCircle } from "lucide-react";
 import type { Language } from "@/data/site";
 import { categories, services } from "@/data/catalogue";
 import { enquiryUi } from "@/data/inner/enquiry";
-import {
-  enquiryLocales,
-  enquiryControlsUi,
-} from "@/data/inner/enquiry-controls";
+import { enquiryLocales } from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
-import {
-  DatePicker,
-  TimePicker,
-  formatPickerTime,
-} from "@/components/ui/date-time-picker";
+import { DatePicker, TimePicker } from "@/components/ui/date-time-picker";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -44,9 +37,6 @@ export function AppointmentEnquiry({
   const selectedService = services.find(
     (item) => item.slug === selectedServiceSlug,
   );
-  const selectedCategory = categories.find(
-    (item) => item.id === selectedService?.category,
-  );
   const serviceGroups = categories.map((category) => ({
     id: category.id,
     label: category.title[lang],
@@ -54,20 +44,20 @@ export function AppointmentEnquiry({
       .filter((service) => service.category === category.id)
       .map((service) => ({ id: service.slug, label: service.title[lang] })),
   }));
-  const bookingContext = [
-    selectedCategory?.title[lang],
-    selectedService?.title[lang] ?? ui.any[lang],
-    preferredDate && `${ui.date[lang]}: ${preferredDate}`,
-    preferredTime &&
-      `${ui.time[lang]}: ${formatPickerTime(preferredTime, lang)} (${enquiryControlsUi.timeHint[lang]})`,
-    message.trim() && `${enquiryUi.message[lang]}: ${message.trim()}`,
-  ]
-    .filter(Boolean)
-    .join("\n");
+  const bookingHref = getBookingHref(lang, {
+    service: selectedService?.title[lang],
+    needsGuidance: !selectedService,
+    preferredDate,
+    preferredTime,
+    message,
+  });
   if (inDialog) {
     return (
       <div className="flex min-h-0 flex-col">
-        <div className="min-h-0 overflow-y-auto overscroll-contain px-5 pb-5 sm:px-6" data-lenis-prevent>
+        <div
+          className="min-h-0 overflow-y-auto overscroll-contain px-5 pb-5 sm:px-6"
+          data-lenis-prevent
+        >
           <p className="mb-5 text-sm leading-relaxed text-espresso/75">
             {enquiryUi.bookingIntro[lang]}
           </p>
@@ -84,8 +74,18 @@ export function AppointmentEnquiry({
                 {enquiryUi.optionalDetails[lang]}
               </summary>
               <div className="grid gap-5 px-4 pb-4">
-                <DatePicker lang={lang} label={ui.date[lang]} value={preferredDate} onChange={setPreferredDate} />
-                <TimePicker lang={lang} label={ui.time[lang]} value={preferredTime} onChange={setPreferredTime} />
+                <DatePicker
+                  lang={lang}
+                  label={ui.date[lang]}
+                  value={preferredDate}
+                  onChange={setPreferredDate}
+                />
+                <TimePicker
+                  lang={lang}
+                  label={ui.time[lang]}
+                  value={preferredTime}
+                  onChange={setPreferredTime}
+                />
                 <label className="grid gap-2 text-sm">
                   <span>{enquiryUi.message[lang]}</span>
                   <textarea
@@ -105,13 +105,16 @@ export function AppointmentEnquiry({
           <a
             className="flex min-h-14 w-full items-center justify-center rounded-full bg-espresso px-6 py-4 text-center text-sm font-semibold leading-snug text-ivory hover:bg-espresso/90 active:bg-espresso/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
             aria-describedby={noteId}
-            href={getBookingHref(lang, bookingContext)}
+            href={bookingHref}
             target="_blank"
             rel="noopener noreferrer"
           >
             {enquiryUi.continue[lang]}
           </a>
-          <p id={noteId} className="mt-3 text-center text-xs leading-relaxed text-espresso/75">
+          <p
+            id={noteId}
+            className="mt-3 text-center text-xs leading-relaxed text-espresso/75"
+          >
             {enquiryUi.bookingNote[lang]}
           </p>
         </div>
@@ -190,7 +193,7 @@ export function AppointmentEnquiry({
             <BookingCta
               className="w-full max-w-full text-xs min-[380px]:text-sm sm:w-fit"
               aria-describedby={noteId}
-              href={getBookingHref(lang, bookingContext)}
+              href={bookingHref}
               label={enquiryUi.continue[lang]}
               target="_blank"
               rel="noreferrer"

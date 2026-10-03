@@ -78,7 +78,7 @@ export function ServiceCards({
                 <BookingCta
                   enquiry
                   serviceSlug={service.slug}
-                  href={getBookingHref(lang, service.title[lang])}
+                  href={getBookingHref(lang, { service: service.title[lang] })}
                   label={catalogueUi.bookNow[lang]}
                   target="_blank"
                   rel="noopener noreferrer"

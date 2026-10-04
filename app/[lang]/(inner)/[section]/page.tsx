@@ -112,8 +112,6 @@ export default async function InnerPage({ params }: InnerPageProps) {
             );
           case "memberships":
             return <Memberships key={block} lang={lang} />;
-          case "membership-journey":
-            return <Journey key={block} lang={lang} membership />;
           case "appointment-journey":
             return <Journey key={block} lang={lang} />;
           case "pool-access":

@@ -72,16 +72,8 @@ export function Memberships({ lang }: { lang: Language }) {
   );
 }
 
-export function Journey({
-  lang,
-  membership = false,
-}: {
-  lang: Language;
-  membership?: boolean;
-}) {
-  const steps = membership
-    ? catalogueUi.membershipSteps
-    : catalogueUi.appointmentSteps;
+export function Journey({ lang }: { lang: Language }) {
+  const steps = catalogueUi.appointmentSteps;
   return (
     <section className="my-12 rounded-3xl bg-ivory/60 p-6 min-[900px]:my-20 min-[900px]:p-10">
       <RevealHeading className="text-2xl font-normal min-[900px]:text-3xl">

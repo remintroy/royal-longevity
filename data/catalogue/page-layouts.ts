@@ -11,7 +11,6 @@ export type PageSection =
   | "contact"
   | "appointments"
   | "memberships"
-  | "membership-journey"
   | "appointment-journey"
   | "pool-access"
   | "questions"
@@ -24,7 +23,7 @@ export const pageLayouts: Record<string, PageLayout> = {
   services: { hero: "intro", sections: ["categories", "pool-access"] },
   memberships: {
     hero: "intro",
-    sections: ["membership-journey", "memberships"],
+    sections: ["memberships"],
   },
   appointments: {
     hero: "intro",

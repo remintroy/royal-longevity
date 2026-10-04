@@ -103,12 +103,6 @@ export const catalogueUi = {
     "استفسري عن جلسة مسبح منفصلة مع التاريخ والوقت المفضلين.",
   ),
   next: localized("Your next step", "خطوتك التالية"),
-  membershipSteps: [
-    localized("Compare plans", "قارني الخطط"),
-    localized("Choose your interests", "اختاري اهتماماتك"),
-    localized("Speak with our team", "تواصلي مع فريقنا"),
-    localized("Confirm joining details", "أكّدي تفاصيل الاشتراك"),
-  ],
   appointmentSteps: [
     localized("Choose a service", "اختاري خدمة"),
     localized("Share a preferred date & time", "شاركي التاريخ والوقت المفضلين"),

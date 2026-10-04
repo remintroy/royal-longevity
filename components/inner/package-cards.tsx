@@ -27,7 +27,7 @@ export function PackageCards({ lang }: { lang: Language }) {
                 <Image
                   data-content-image
                   className="object-cover"
-                  src={`/assets/images/gallery/${item.image}.webp`}
+                  src={item.image}
                   alt=""
                   fill
                   sizes="(max-width: 699px) 92vw, (max-width: 1099px) 46vw, (max-width: 1434px) 31vw, 444px"

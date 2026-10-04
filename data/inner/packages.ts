@@ -17,7 +17,7 @@ export const packages: CarePackage[] = [
       "A fresh finish and a little time to yourself.",
       "إطلالة متجددة وبعض الوقت لنفسك.",
     ),
-    image: "hair",
+    image: "/assets/images/packages/everyday.webp",
     services: ["hair", "pedicure"],
   },
   {
@@ -27,7 +27,7 @@ export const packages: CarePackage[] = [
       "Thoughtful care for a beautifully refreshed feeling.",
       "عناية مدروسة لشعور جميل ومتجدد.",
     ),
-    image: "skincare",
+    image: "/assets/images/packages/radiance.webp",
     services: ["skincare", "pedicure"],
   },
   {
@@ -37,7 +37,7 @@ export const packages: CarePackage[] = [
       "Make space for a slower, softer afternoon.",
       "امنحي نفسك وقتاً أكثر هدوءاً ولطفاً.",
     ),
-    image: "massage",
+    image: "/assets/images/packages/reset.webp",
     services: ["massage", "body-care"],
   },
 ];

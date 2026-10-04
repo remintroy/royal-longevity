@@ -88,17 +88,17 @@ function CarouselControls({
   }
 
   return (
-    <div className="mb-5 flex justify-end gap-2">
+    <div className="mt-6 mb-5 flex items-center justify-end gap-2 min-[900px]:mt-8">
       <button
         type="button"
         onClick={() => pause(!paused)}
         aria-label={paused ? labels.play : labels.pause}
         aria-controls={id}
-        className="flex min-h-12 items-center gap-2 rounded-full border border-border bg-white px-4 text-sm hover:bg-ivory focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold motion-reduce:hidden"
+        className="flex min-h-11 items-center gap-2 rounded-full px-4 text-xs text-espresso/70 transition-colors hover:bg-espresso/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-espresso motion-reduce:hidden"
       >
-        <Play size={16} aria-hidden="true" className={paused ? "" : "hidden"} />
+        <Play size={12} aria-hidden="true" className={paused ? "" : "hidden"} />
         <Pause
-          size={16}
+          size={12}
           aria-hidden="true"
           className={paused ? "hidden" : ""}
         />

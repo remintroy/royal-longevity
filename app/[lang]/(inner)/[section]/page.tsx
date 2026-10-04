@@ -12,6 +12,8 @@ import { Hero, Story } from "@/components/inner/editorial";
 import { Questions } from "@/components/inner/questions";
 import { ServiceCards } from "@/components/inner/service-cards";
 import { GalleryGrid } from "@/components/inner/gallery-grid";
+import { SpaceGallery } from "@/components/inner/space-gallery";
+import { getGalleryContent } from "@/data/gallery";
 import { PackageCards } from "@/components/inner/package-cards";
 import {
   ContactDetails,
@@ -92,7 +94,15 @@ export default async function InnerPage({ params }: InnerPageProps) {
               <ServiceCards key={block} lang={lang} category="salon-hair" />
             );
           case "gallery":
-            return <GalleryGrid key={block} lang={lang} />;
+            return section === "our-space" ? (
+              <SpaceGallery
+                key={block}
+                lang={lang}
+                images={getGalleryContent(lang).images}
+              />
+            ) : (
+              <GalleryGrid key={block} lang={lang} />
+            );
           case "packages":
             return <PackageCards key={block} lang={lang} />;
           case "contact":

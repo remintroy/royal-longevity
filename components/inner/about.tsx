@@ -33,7 +33,7 @@ export function AboutContent({
           <p className="mt-5 max-w-xl text-base leading-relaxed text-espresso/75">
             {page.story[lang]}
           </p>
-          <TextLink className="mt-5" href={`/${lang}/our-space`}>
+          <TextLink className="mt-5" href={`/${lang}/gallery`}>
             {aboutUi.spaces[lang]}
           </TextLink>
         </div>

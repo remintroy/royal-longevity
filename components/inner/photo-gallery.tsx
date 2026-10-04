@@ -4,20 +4,86 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { Dialog, Heading, Modal, ModalOverlay } from "react-aria-components";
-import type { GalleryImage } from "@/data/gallery";
+import type { GalleryPhoto } from "@/data/inner/gallery-photos";
 import type { Language } from "@/data/site";
-import { spaceGalleryUi as copy } from "@/data/inner/space-gallery";
-import { ui } from "@/data/inner/ui";
+import { photoGalleryUi as copy } from "@/data/inner/photo-gallery";
+import { cn } from "@/lib/utils";
 
-export function SpaceGallery({
+function ViewerPhoto({
+  photo,
+  lang,
+  previewSrc,
+}: {
+  photo: GalleryPhoto;
+  lang: Language;
+  previewSrc?: string;
+}) {
+  const [status, setStatus] = useState<"loading" | "loaded" | "error">(
+    "loading",
+  );
+
+  return (
+    <div
+      className="relative"
+      style={{
+        aspectRatio: photo.width / photo.height,
+        width: `min(100cqw, ${(photo.width / photo.height) * 100}cqh)`,
+      }}
+    >
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          backgroundImage: `url("${previewSrc ?? photo.blurDataURL}")`,
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundSize: "100% 100%",
+        }}
+      />
+      <Image
+        src={photo.src}
+        alt={photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="100vw"
+        loading="eager"
+        onLoad={() => setStatus("loaded")}
+        onError={() => setStatus("error")}
+        className={cn(
+          "absolute inset-0 h-full w-full object-contain transition-opacity duration-200 motion-reduce:transition-none",
+          status === "loaded" ? "opacity-100" : "opacity-0",
+        )}
+      />
+      {status !== "loaded" && (
+        <div className="pointer-events-none absolute inset-0 grid place-items-center">
+          <p
+            role="status"
+            className="flex items-center gap-3 rounded-full bg-ink/85 px-5 py-3 text-sm text-ivory"
+          >
+            {status === "loading" && (
+              <span
+                aria-hidden="true"
+                className="size-4 animate-spin rounded-full border-2 border-ivory/30 border-t-ivory motion-reduce:animate-none"
+              />
+            )}
+            {status === "loading" ? copy.loading[lang] : copy.loadError[lang]}
+          </p>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export function PhotoGallery({
   images,
   lang,
 }: {
-  images: GalleryImage[];
+  images: GalleryPhoto[];
   lang: Language;
 }) {
   const [selected, setSelected] = useState<number | null>(null);
   const openedFrom = useRef<HTMLButtonElement | null>(null);
+  const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const current = selected === null ? null : images[selected];
   const numbers = new Intl.NumberFormat(lang === "ar" ? "ar-AE" : "en-GB");
@@ -35,17 +101,17 @@ export function SpaceGallery({
   return (
     <section
       className="my-10 min-[900px]:my-16"
-      aria-labelledby="space-gallery-title"
+      aria-labelledby="photo-gallery-title"
     >
       <header className="mb-5 flex items-baseline justify-between gap-4 border-b border-border pb-4">
-        <h2 id="space-gallery-title" className="text-xl min-[700px]:text-2xl">
+        <h2 id="photo-gallery-title" className="text-xl min-[700px]:text-2xl">
           {copy.title[lang]}
         </h2>
         <p className="text-sm text-espresso/65">
           {numbers.format(images.length)} {copy.photos[lang]}
         </p>
       </header>
-      <div className="grid grid-cols-2 gap-2 min-[700px]:grid-cols-12 min-[700px]:gap-3">
+      <div className="flex flex-wrap items-start gap-2 after:grow-[10] after:content-[''] min-[700px]:gap-3">
         {images.map((item, index) => (
           <button
             key={item.id}
@@ -56,18 +122,26 @@ export function SpaceGallery({
               openedFrom.current = event.currentTarget;
               setSelected(index);
             }}
-            className={`group relative isolate aspect-[4/3] overflow-hidden rounded-[20px] bg-ivory focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold min-[700px]:aspect-auto min-[700px]:h-[clamp(220px,23vw,340px)] ${index === 0 || index === 5 ? "col-span-2 min-[700px]:col-span-5" : index === 1 || index === 3 ? "min-[700px]:col-span-3" : "min-[700px]:col-span-4"}`}
+            style={{
+              aspectRatio: item.width / item.height,
+              flexGrow: item.width / item.height,
+              flexBasis: `calc(${item.width / item.height} * clamp(100px, 18vw, 230px))`,
+            }}
+            className="group relative isolate min-w-0 overflow-hidden rounded-[5px] bg-ivory focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
           >
             <Image
               src={item.src}
               alt={item.alt}
-              fill
-              sizes={
-                index === 0 || index === 5
-                  ? "(min-width: 1440px) 565px, (min-width: 700px) 40vw, 90vw"
-                  : "(min-width: 1440px) 450px, (min-width: 700px) 33vw, 45vw"
-              }
-              className="object-cover transition-transform duration-300 ease-out group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              width={item.width}
+              height={item.height}
+              placeholder="blur"
+              blurDataURL={item.blurDataURL}
+              sizes="(min-width: 1440px) 600px, (min-width: 700px) 45vw, 100vw"
+              onLoad={(event) => {
+                const src = event.currentTarget.currentSrc;
+                setThumbnails((loaded) => ({ ...loaded, [item.id]: src }));
+              }}
+              className="absolute inset-0 h-full w-full object-contain transition-transform duration-300 ease-out group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
             />
             <span className="absolute inset-x-3 bottom-3 rounded-full bg-espresso/85 px-3 py-2 text-start text-xs text-ivory opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
               {item.title}
@@ -75,9 +149,6 @@ export function SpaceGallery({
           </button>
         ))}
       </div>
-      <p className="mt-5 text-xs leading-relaxed text-espresso/65">
-        {ui.imageNote[lang]}
-      </p>
       <ModalOverlay
         isOpen={current !== null}
         onOpenChange={(open) => {
@@ -122,7 +193,7 @@ export function SpaceGallery({
                     </button>
                   </header>
                   <div
-                    className="relative min-h-0 flex-1 touch-pan-y"
+                    className="relative grid min-h-0 flex-1 touch-pan-y place-items-center [container-type:size]"
                     onTouchStart={(event) => {
                       const touch = event.touches[0];
                       touchStart.current =
@@ -146,13 +217,11 @@ export function SpaceGallery({
                         move((dx < 0 ? 1 : -1) * (lang === "ar" ? -1 : 1));
                     }}
                   >
-                    <Image
+                    <ViewerPhoto
                       key={current.id}
-                      src={current.src}
-                      alt={current.alt}
-                      fill
-                      sizes="100vw"
-                      className="object-contain"
+                      photo={current}
+                      lang={lang}
+                      previewSrc={thumbnails[current.id]}
                     />
                   </div>
                   <footer className="flex shrink-0 items-center justify-between gap-4 px-4 pt-4 pb-[max(20px,env(safe-area-inset-bottom))] min-[700px]:px-8">

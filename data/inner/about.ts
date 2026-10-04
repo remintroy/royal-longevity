@@ -5,7 +5,7 @@ export const aboutUi = {
   valuesEyebrow: localized("The details that matter", "التفاصيل التي تهمّكِ"),
   valuesTitle: localized("Care, shaped around you.", "عناية تتمحور حولكِ."),
   explore: localized("Explore our services", "اكتشفي خدماتنا"),
-  spaces: localized("Discover our spaces", "اكتشفي مساحاتنا"),
+  spaces: localized("View gallery", "شاهدي معرض الصور"),
   nextTitle: localized(
     "Find your own moment of care.",
     "اختاري لحظتكِ الخاصة للعناية.",

@@ -69,7 +69,7 @@ export function Hero({ page, lang }: { page: InnerPage; lang: Language }) {
               target="_blank"
               rel="noreferrer"
             />
-            <TextLink href={`/${lang}/our-space`}>{ui.gallery[lang]}</TextLink>
+            <TextLink href={`/${lang}/gallery`}>{ui.gallery[lang]}</TextLink>
           </>
         }
       />

@@ -6,17 +6,26 @@ export const mainNavigation = [
   {
     slug: "services",
     label: localized("Services", "الخدمات"),
-    description: localized("Find your personal ritual", "اكتشفي طقوس العناية بكِ"),
+    description: localized(
+      "Find your personal ritual",
+      "اكتشفي طقوس العناية بكِ",
+    ),
   },
   {
     slug: "packages",
     label: localized("Packages", "الباقات"),
-    description: localized("Care, beautifully combined", "عناية في باقات متكاملة"),
+    description: localized(
+      "Care, beautifully combined",
+      "عناية في باقات متكاملة",
+    ),
   },
   {
     slug: "memberships",
     label: localized("Memberships", "العضويات"),
-    description: localized("Make care part of your routine", "اجعلي العناية جزءاً من روتينك"),
+    description: localized(
+      "Make care part of your routine",
+      "اجعلي العناية جزءاً من روتينك",
+    ),
   },
   {
     slug: "about",
@@ -24,8 +33,8 @@ export const mainNavigation = [
     description: localized("Discover our approach", "اكتشفي فلسفتنا"),
   },
   {
-    slug: "our-space",
-    label: localized("Our space", "مساحتنا"),
+    slug: "gallery",
+    label: localized("Gallery", "معرض الصور"),
     description: localized("Take a look inside", "ألقي نظرة على مساحتنا"),
   },
   {
@@ -53,7 +62,10 @@ export function getMenuContent(lang: Language) {
     })),
     secondaryLinks: [
       { href: `/${lang}`, label: localized("Home", "الرئيسية")[lang] },
-      { href: `/${lang}/faq`, label: localized("Your questions", "أسئلتك")[lang] },
+      {
+        href: `/${lang}/faq`,
+        label: localized("Your questions", "أسئلتك")[lang],
+      },
     ],
   };
 }

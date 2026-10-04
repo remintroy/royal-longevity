@@ -7,7 +7,7 @@ export const ui = {
   explore: localized("Explore treatment", "اكتشفي الجلسة"),
   all: localized("All services", "جميع الخدمات"),
   salon: localized("View our salon", "اكتشفي صالوننا"),
-  gallery: localized("Explore our space", "اكتشفي مساحتنا"),
+  gallery: localized("View gallery", "شاهدي معرض الصور"),
   care: localized("Care, in every detail", "عناية في كل التفاصيل"),
   services: localized(
     "Find your own beauty ritual.",

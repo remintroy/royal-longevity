@@ -8,7 +8,7 @@ Each route exists under both `/en` and `/ar`:
 
 - `/services`, `/beauty`, `/wellness`
 - `/services/pedicure`, `/services/hair`, `/services/skincare`, `/services/massage`, `/services/body-care`
-- `/salon`, `/our-space`, `/about`, `/packages`, `/contact`, `/faq`
+- `/salon`, `/gallery`, `/about`, `/packages`, `/contact`, `/faq`
 
 The landing page and its shared components are unchanged. Access the new pages directly; their header and footer connect the supporting routes. Connecting the homepage menu can be handled when editing the landing page is authorized.
 
@@ -42,7 +42,7 @@ The supplied website flow tree now defines the inner-site structure. The origina
 
 `data/catalogue/README.md` is the editing guide. Nine categories contain 37 separately addressable services. Category and service pages render from the typed catalogue; `page-layouts.ts` controls the section sequence on supporting pages. The old `data/inner/services.ts` catalogue has been replaced by category-specific files under `data/catalogue/services/`.
 
-Inner navigation follows Home, About, Services, Memberships, Appointments, Our Spaces, Gallery and Contact. Packages & Offers, FAQ, Terms, Privacy, Careers and Blog remain reachable through inner navigation/footer links. Existing beauty, wellness, salon and five original service URLs remain valid.
+Inner navigation follows Home, About, Services, Memberships, Appointments, Gallery and Contact. Packages & Offers, FAQ, Terms, Privacy, Careers and Blog remain reachable through inner navigation/footer links. Existing beauty, wellness, salon and five original service URLs remain valid.
 
 Memberships compare illustrative plans and send contextual WhatsApp enquiries. Appointment options are grouped by category and exclude membership-only services. The pool supports both paths. The diagram's sign-up/payment/confirmation stages remain operational discussions with the team; no backend or payment system is introduced. Terms, Privacy, Careers and Blog await supplied content and are marked noindex.
 

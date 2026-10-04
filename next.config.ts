@@ -1,7 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  async redirects() {
+    return ["en", "ar"].map((lang) => ({
+      source: `/${lang}/our-space`,
+      destination: `/${lang}/gallery`,
+      permanent: true,
+    }));
+  },
 };
 
 export default nextConfig;

@@ -29,7 +29,6 @@ export const pageLayouts: Record<string, PageLayout> = {
     hero: "intro",
     sections: ["appointment-journey", "appointments"],
   },
-  "our-space": { hero: "intro", sections: ["gallery"] },
   gallery: { hero: "intro", sections: ["gallery"] },
   about: { hero: "intro", sections: ["about"] },
   packages: { hero: "intro", sections: ["packages"] },

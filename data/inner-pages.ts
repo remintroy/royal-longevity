@@ -98,23 +98,6 @@ export const pages: Record<string, InnerPage> = {
       "يجمع رويال لونجيفيتي الجمال والعافية بنهج شخصي هادئ. من الترحيب إلى اللمسة الأخيرة، رؤيتنا بسيطة: منحك المساحة التي تستحقينها.",
     ),
   },
-  "our-space": {
-    title: localized("A place to feel at ease.", "مكان تشعرين فيه بالراحة."),
-    eyebrow: localized(
-      "The Royal Longevity experience",
-      "تجربة رويال لونجيفيتي",
-    ),
-    description: localized(
-      "Warm details, quiet corners and room to breathe. Discover the inspiration behind our beauty and wellness spaces.",
-      "تفاصيل دافئة وزوايا هادئة ومساحة للتنفس. اكتشفي الإلهام وراء مساحات الجمال والعافية لدينا.",
-    ),
-    image: "salon",
-    storyTitle: localized("Designed around your comfort.", "مصممة حول راحتك."),
-    story: localized(
-      "From a welcoming lounge to the smallest finishing touch, our spaces reflect a belief that feeling good begins with feeling at ease.",
-      "من ردهة الترحيب إلى أدق اللمسات، تعكس مساحاتنا إيماننا بأن الشعور الجميل يبدأ بالراحة.",
-    ),
-  },
   packages: {
     title: localized(
       "More care. One beautiful ritual.",
@@ -180,11 +163,6 @@ pages.gallery = {
   image: "salon",
   storyTitle: ui.care,
   story: catalogueUi.galleryBody,
-};
-pages["our-space"] = {
-  ...pages["our-space"],
-  title: catalogueUi.spaces,
-  description: catalogueUi.spacesBody,
 };
 for (const [slug, page] of Object.entries(supportingPages)) {
   pages[slug] = {

@@ -163,6 +163,6 @@ The reference includes Lenis smooth-scroll styles. Smooth scrolling may be consi
 
 ## Implemented page destinations
 
-The hero disclosure menu links to About, Services, Our space, Beauty, Wellness and Packages in a two-column mobile / three-column desktop grid. Contact and FAQ links sit above a photographic booking panel. Copy is localized in `data/hero-menu.ts`. Escape returns focus to the toggle; outside clicks, navigation and focus leaving the disclosure close it. Closed content is inert, and the panel scrolls within shorter viewports.
+The hero disclosure menu links to About, Services, Gallery, Beauty, Wellness and Packages in a two-column mobile / three-column desktop grid. Contact and FAQ links sit above a photographic booking panel. Copy is localized in `data/hero-menu.ts`. Escape returns focus to the toggle; outside clicks, navigation and focus leaving the disclosure close it. Closed content is inert, and the panel scrolls within shorter viewports.
 
 The menu surface is white with fine internal grid dividers and no filled hover background. GSAP fades the panel in over 300ms and out over 200ms. Directional chevrons remain hidden until hover or keyboard focus, then fade in with a 3px outward movement over 200ms. Reduced motion makes these state changes immediate.

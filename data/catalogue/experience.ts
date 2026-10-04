@@ -130,7 +130,7 @@ export const catalogueUi = {
   ),
   gallery: localized("Gallery", "معرض الصور"),
   galleryBody: localized(
-    "A visual introduction to our care. These are inspiration images; premises photography and video will be added when available.",
-    "لمحة مصورة عن عنايتنا. هذه صور إلهامية؛ ستُضاف صور المرافق ومقاطع الفيديو عند توفرها.",
+    "Step inside Royal Longevity. Explore our beauty, fitness and wellness spaces through the gallery.",
+    "اكتشفي عالم رويال لونجيفيتي. تجوّلي في مساحات الجمال واللياقة والعافية من خلال معرض الصور.",
   ),
 };

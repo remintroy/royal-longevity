@@ -3,25 +3,36 @@ import { localized, type LocalizedText } from "@/data/inner/localization";
 export type SupportingPage = {
   title: LocalizedText;
   description: LocalizedText;
-  status: "awaiting-content";
+  status: "awaiting-content" | "published";
 };
 // These routes are in the approved tree. Do not present unapproved legal copy or invented vacancies/articles.
 export const supportingPages: Record<string, SupportingPage> = {
   terms: {
     title: localized("Terms & Conditions", "الشروط والأحكام"),
     description: localized(
-      "Our full terms will be published here. Please contact our team for the terms that apply to your service or membership before confirming.",
-      "ستُنشر شروطنا الكاملة هنا. يُرجى التواصل مع فريقنا لمعرفة الشروط المطبّقة على خدمتك أو عضويتك قبل التأكيد.",
+      "Website usage, bookings, payments, memberships, packages, cancellations, promotions, intellectual property, liability and governing law.",
+      "استخدام الموقع والحجوزات والمدفوعات والعضويات والباقات والإلغاء والعروض والملكية الفكرية والمسؤولية والقانون المعمول به.",
     ),
-    status: "awaiting-content",
+    status: "published",
   },
   privacy: {
     title: localized("Privacy Policy", "سياسة الخصوصية"),
     description: localized(
-      "Our privacy policy is being prepared. Please contact our team with questions about your personal information before sharing it.",
-      "يجري إعداد سياسة الخصوصية. يُرجى التواصل مع فريقنا للاستفسار عن معلوماتك الشخصية قبل مشاركتها.",
+      "How Royal Longevity collects, uses, stores and protects personal information.",
+      "كيف تجمع رويال لونجيفيتي المعلومات الشخصية وتستخدمها وتخزنها وتحميها.",
     ),
-    status: "awaiting-content",
+    status: "published",
+  },
+  disclaimer: {
+    title: localized(
+      "Website & Health Disclaimer",
+      "إخلاء المسؤولية عن الموقع والمعلومات الصحية",
+    ),
+    description: localized(
+      "Medical, aesthetic, wellness, fitness, treatment suitability, individual results and website-information limitations.",
+      "المعلومات الطبية والتجميلية والعافية واللياقة ومدى ملاءمة العلاجات والنتائج الفردية وحدود معلومات الموقع.",
+    ),
+    status: "published",
   },
   careers: {
     title: localized("Careers", "الوظائف"),

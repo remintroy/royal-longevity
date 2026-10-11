@@ -43,6 +43,7 @@ export const pageLayouts: Record<string, PageLayout> = {
   salon: { hero: "editorial", sections: ["salon-services", "gallery"] },
   terms: { hero: "intro", sections: [] },
   privacy: { hero: "intro", sections: [] },
+  disclaimer: { hero: "intro", sections: [] },
   careers: { hero: "intro", sections: [] },
   blog: { hero: "intro", sections: [] },
 };

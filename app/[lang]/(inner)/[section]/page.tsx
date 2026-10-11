@@ -1,3 +1,5 @@
+import { LegalContent } from "@/components/inner/legal-content";
+import { legalDocuments, type LegalSlug } from "@/data/legal";
 import { AboutContent } from "@/components/inner/about";
 import { ServicesDirectoryHero } from "@/components/inner/catalogue-heroes";
 import { Suspense } from "react";
@@ -48,7 +50,8 @@ export async function generateMetadata({
     title: `${page.title[lang]} | Royal Longevity`,
     description: page.description[lang],
     alternates: { languages: { en: `/en/${section}`, ar: `/ar/${section}` } },
-    ...(Object.hasOwn(supportingPages, section)
+    ...(Object.hasOwn(supportingPages, section) &&
+    supportingPages[section].status === "awaiting-content"
       ? { robots: { index: false, follow: true } }
       : {}),
   };
@@ -76,6 +79,9 @@ export default async function InnerPage({ params }: InnerPageProps) {
         />
       ) : (
         <Hero page={page} lang={lang} />
+      )}
+      {Object.hasOwn(legalDocuments, section) && (
+        <LegalContent lang={lang} slug={section as LegalSlug} />
       )}
       {layout.sections.map((block) => {
         switch (block) {

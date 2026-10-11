@@ -48,6 +48,10 @@ export const supportingNavigation = [
   { slug: "faq", label: localized("FAQ", "الأسئلة الشائعة") },
   { slug: "terms", label: localized("Terms & Conditions", "الشروط والأحكام") },
   { slug: "privacy", label: localized("Privacy Policy", "سياسة الخصوصية") },
+  {
+    slug: "disclaimer",
+    label: localized("Website & Health Disclaimer", "إخلاء المسؤولية"),
+  },
 ];
 
 export function getMenuContent(lang: Language) {

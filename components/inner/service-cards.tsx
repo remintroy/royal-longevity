@@ -51,7 +51,11 @@ export function ServiceCards({
             data-service-card
             className="flex h-full w-full min-w-0 flex-col overflow-hidden rounded-3xl border border-border bg-white text-espresso"
           >
-            <div className="aspect-4/3 overflow-hidden bg-ivory">
+            <Link
+              href={`/${lang}/services/${service.slug}`}
+              aria-label={`${catalogueUi.details[lang]}: ${service.title[lang]}`}
+              className="block aspect-4/3 overflow-hidden bg-ivory focus-visible:outline-2 focus-visible:outline-gold focus-visible:-outline-offset-4"
+            >
               <Image
                 data-service-image
                 src={`/assets/images/gallery/${service.image ?? "salon"}.webp`}
@@ -61,7 +65,7 @@ export function ServiceCards({
                 sizes="(max-width: 599px) calc(100vw - 40px), (max-width: 1434px) calc((100vw - 84px) / 2), 675px"
                 className="h-full w-full object-cover"
               />
-            </div>
+            </Link>
             <div className="flex flex-1 flex-col p-6">
               <div>
                 <AccessLabel access={service.access} lang={lang} />

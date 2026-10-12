@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { LegalContents } from "./legal-contents";
 import { legalDocuments, type LegalBlock, type LegalSlug } from "@/data/legal";
 import { legalUi } from "@/data/legal-ui";
 import { supportingPages } from "@/data/catalogue/supporting";
@@ -76,27 +77,11 @@ export function LegalContent({ lang, slug }: LegalContentProps) {
         </p>
       )}
       <div className="mt-8 grid items-start gap-10 min-[1000px]:grid-cols-[minmax(220px,300px)_minmax(0,1fr)] min-[1000px]:gap-16">
-        <nav
-          id="legal-contents"
-          aria-labelledby="legal-contents-title"
-          className="scroll-mt-8 rounded-3xl border border-border p-5 min-[700px]:p-6"
-        >
-          <h2 id="legal-contents-title" className="mb-4 text-lg font-medium">
-            {legalUi.contents[lang]}
-          </h2>
-          <ol lang="en" dir="ltr" className="space-y-1">
-            {document.sections.map((section) => (
-              <li key={section.id}>
-                <a
-                  href={`#${section.id}`}
-                  className="flex min-h-11 items-center rounded-lg px-2 py-2 text-sm leading-6 underline-offset-4 hover:underline"
-                >
-                  {section.title}
-                </a>
-              </li>
-            ))}
-          </ol>
-        </nav>
+        <LegalContents
+          key={slug}
+          title={legalUi.contents[lang]}
+          sections={document.sections.map(({ id, title }) => ({ id, title }))}
+        />
         <article
           lang="en"
           dir="ltr"
@@ -118,7 +103,7 @@ export function LegalContent({ lang, slug }: LegalContentProps) {
               key={section.id}
               id={section.id}
               aria-labelledby={`${section.id}-title`}
-              className="scroll-mt-8 border-b border-border py-8 min-[700px]:py-10"
+              className="scroll-mt-40 min-[1000px]:scroll-mt-8 border-b border-border py-8 min-[700px]:py-10"
             >
               <h2
                 id={`${section.id}-title`}

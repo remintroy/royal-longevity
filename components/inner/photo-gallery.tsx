@@ -1,6 +1,8 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 import Image from "next/image";
 import { ArrowLeft, ArrowRight, X } from "lucide-react";
 import { Dialog, Heading, Modal, ModalOverlay } from "react-aria-components";
@@ -8,6 +10,9 @@ import type { GalleryPhoto } from "@/data/inner/gallery-photos";
 import type { Language } from "@/data/site";
 import { photoGalleryUi as copy } from "@/data/inner/photo-gallery";
 import { cn } from "@/lib/utils";
+import { justifiedGallery } from "@/lib/justified-gallery";
+
+gsap.registerPlugin(useGSAP);
 
 function ViewerPhoto({
   photo,
@@ -82,11 +87,74 @@ export function PhotoGallery({
   lang: Language;
 }) {
   const [selected, setSelected] = useState<number | null>(null);
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  const [gridWidth, setGridWidth] = useState(0);
   const openedFrom = useRef<HTMLButtonElement | null>(null);
   const [thumbnails, setThumbnails] = useState<Record<string, string>>({});
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const current = selected === null ? null : images[selected];
   const numbers = new Intl.NumberFormat(lang === "ar" ? "ar-AE" : "en-GB");
+  const gap = gridWidth < 700 ? 8 : 12;
+  const targetHeight = gridWidth < 700 ? 220 : 330;
+  const tiles = justifiedGallery(images, gridWidth, targetHeight, gap);
+
+  useGSAP(
+    () => {
+      const grid = gridRef.current;
+      if (!grid) return;
+      const media = gsap.matchMedia();
+      media.add(
+        "(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)",
+        () => {
+          const cleanup = Array.from(
+            grid.querySelectorAll<HTMLButtonElement>("button"),
+            (button) => {
+              const image = button.querySelector("img");
+              if (!image) return () => {};
+
+              // quickTo requires individual axes, not the compound scale alias.
+              const zoomX = gsap.quickTo(image, "scaleX", {
+                duration: 0.65,
+                ease: "power2.out",
+              });
+              const zoomY = gsap.quickTo(image, "scaleY", {
+                duration: 0.65,
+                ease: "power2.out",
+              });
+              const zoom = (scale: number) => {
+                zoomX(scale);
+                zoomY(scale);
+              };
+              const enter = () => zoom(1.025);
+              const leave = () => zoom(1);
+              button.addEventListener("pointerenter", enter);
+              button.addEventListener("pointerleave", leave);
+              button.addEventListener("pointercancel", leave);
+
+              return () => {
+                button.removeEventListener("pointerenter", enter);
+                button.removeEventListener("pointerleave", leave);
+                button.removeEventListener("pointercancel", leave);
+              };
+            },
+          );
+          return () => cleanup.forEach((removeListeners) => removeListeners());
+        },
+      );
+      return () => media.revert();
+    },
+    { scope: gridRef, dependencies: [images], revertOnUpdate: true },
+  );
+
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    const observer = new ResizeObserver(([entry]) => {
+      setGridWidth(entry.contentRect.width);
+    });
+    observer.observe(grid);
+    return () => observer.disconnect();
+  }, []);
 
   function close() {
     setSelected(null);
@@ -111,7 +179,12 @@ export function PhotoGallery({
           {numbers.format(images.length)} {copy.photos[lang]}
         </p>
       </header>
-      <div className="flex flex-wrap items-start gap-2 after:grow-[10] after:content-[''] min-[700px]:gap-3">
+      <div
+        ref={gridRef}
+        dir={lang === "ar" ? "rtl" : "ltr"}
+        className="flex flex-wrap items-start gap-2 min-[700px]:gap-3"
+        style={gridWidth > 0 ? { gap } : undefined}
+      >
         {images.map((item, index) => (
           <button
             key={item.id}
@@ -122,12 +195,20 @@ export function PhotoGallery({
               openedFrom.current = event.currentTarget;
               setSelected(index);
             }}
-            style={{
-              aspectRatio: item.width / item.height,
-              flexGrow: item.width / item.height,
-              flexBasis: `calc(${item.width / item.height} * clamp(100px, 18vw, 230px))`,
-            }}
-            className="group relative isolate min-w-0 overflow-hidden rounded-[5px] bg-ivory focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold"
+            style={
+              tiles[index]
+                ? {
+                    // Tiny rounding allowance prevents flex wrapping a fitted row early.
+                    flex: `0 0 ${Math.max(0, tiles[index].width - 0.01)}px`,
+                    height: tiles[index].height,
+                  }
+                : {
+                    aspectRatio: item.width / item.height,
+                    flexGrow: item.width / item.height,
+                    flexBasis: `calc(${item.width / item.height} * clamp(190px, 27vw, 330px))`,
+                  }
+            }
+            className="relative isolate min-w-0 max-w-full overflow-hidden rounded-[10px] bg-ivory focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-gold min-[700px]:rounded-[20px]"
           >
             <Image
               src={item.src}
@@ -136,16 +217,17 @@ export function PhotoGallery({
               height={item.height}
               placeholder="blur"
               blurDataURL={item.blurDataURL}
-              sizes="(min-width: 1440px) 600px, (min-width: 700px) 45vw, 100vw"
+              sizes={
+                tiles[index]
+                  ? `${Math.ceil(tiles[index].width)}px`
+                  : "(min-width: 700px) 50vw, 100vw"
+              }
               onLoad={(event) => {
                 const src = event.currentTarget.currentSrc;
                 setThumbnails((loaded) => ({ ...loaded, [item.id]: src }));
               }}
-              className="absolute inset-0 h-full w-full object-contain transition-transform duration-300 ease-out group-hover:scale-[1.025] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+              className="absolute inset-0 h-full w-full object-contain"
             />
-            <span className="absolute inset-x-3 bottom-3 rounded-full bg-espresso/85 px-3 py-2 text-start text-xs text-ivory opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100 motion-reduce:transition-none">
-              {item.title}
-            </span>
           </button>
         ))}
       </div>

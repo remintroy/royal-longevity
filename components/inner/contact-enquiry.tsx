@@ -6,7 +6,8 @@ import { I18nProvider } from "react-aria-components";
 import type { Language } from "@/data/site";
 import { contactTopics, contactUi } from "@/data/inner/contact";
 import { ui } from "@/data/inner/ui";
-import { DatePicker, TimePicker } from "@/components/ui/date-time-picker";
+import { DatePicker } from "@/components/ui/date-time-picker";
+import { AppointmentTimeSelector } from "@/components/ui/appointment-time-selector";
 import { enquiryLocales } from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
 import { getBookingHref } from "@/lib/booking";
@@ -141,7 +142,7 @@ export function ContactEnquiry({ lang }: { lang: Language }) {
                   setPreparedHref("");
                 }}
               />
-              <TimePicker
+              <AppointmentTimeSelector
                 lang={lang}
                 label={ui.time[lang]}
                 value={preferredTime}

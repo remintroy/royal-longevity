@@ -46,3 +46,11 @@ export const enquiryPeriods = ["am", "pm"];
 export function isEnquiryTime(value: string) {
   return /^(09|1[0-9]|20):(00|15|30|45)$/.test(value);
 }
+
+// Preferred appointment times, in chronological order from 09:00 to 20:45.
+export const appointmentTimeSlots = Array.from({ length: 48 }, (_, index) => {
+  const minutes = 9 * 60 + index * 15;
+  const hour = String(Math.floor(minutes / 60)).padStart(2, "0");
+  const minute = String(minutes % 60).padStart(2, "0");
+  return `${hour}:${minute}`;
+});

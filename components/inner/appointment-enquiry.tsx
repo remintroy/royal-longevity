@@ -9,7 +9,8 @@ import { categories, services } from "@/data/catalogue";
 import { enquiryUi } from "@/data/inner/enquiry";
 import { enquiryLocales } from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
-import { DatePicker, TimePicker } from "@/components/ui/date-time-picker";
+import { DatePicker } from "@/components/ui/date-time-picker";
+import { AppointmentTimeSelector } from "@/components/ui/appointment-time-selector";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
@@ -80,7 +81,7 @@ export function AppointmentEnquiry({
                   value={preferredDate}
                   onChange={setPreferredDate}
                 />
-                <TimePicker
+                <AppointmentTimeSelector
                   lang={lang}
                   label={ui.time[lang]}
                   value={preferredTime}
@@ -160,7 +161,7 @@ export function AppointmentEnquiry({
                 value={preferredDate}
                 onChange={setPreferredDate}
               />
-              <TimePicker
+              <AppointmentTimeSelector
                 lang={lang}
                 label={ui.time[lang]}
                 value={preferredTime}

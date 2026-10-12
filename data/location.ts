@@ -9,6 +9,7 @@ export type LocationContent = {
   mapHref: string;
   mapEmbedHref: string;
   mapsLabel: string;
+  whatsappLabel: string;
 };
 
 // Coordinates resolved from the supplied Google Maps location link.
@@ -33,6 +34,7 @@ const content: Record<
     mapTitle: "Royal Longevity location map",
     mapNote: "Follow the map pin for our exact location.",
     mapsLabel: "Open in Maps",
+    whatsappLabel: "WhatsApp",
   },
   ar: {
     eyebrow: "الموقع",
@@ -45,6 +47,7 @@ const content: Record<
     mapTitle: "خريطة موقع رويال لونجيفيتي",
     mapNote: "اتبعي دبوس الخريطة للوصول إلى موقعنا الدقيق.",
     mapsLabel: "افتحي الخريطة",
+    whatsappLabel: "واتساب",
   },
 };
 

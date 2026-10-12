@@ -38,7 +38,7 @@ export function SiteFrame({
           <Link
             href={`/${lang}`}
             className="inline-flex h-12 shrink-0 items-center rounded-full px-[17px] py-2 max-[380px]:px-0"
-            aria-label={`Royal Longevity · ${ui.home[lang]}`}
+            aria-label={ui.brandHome[lang]}
           >
             <BrandLogo lang={lang} />
           </Link>

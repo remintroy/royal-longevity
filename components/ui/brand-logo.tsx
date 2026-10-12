@@ -1,4 +1,5 @@
 import { Language } from "@/data/site";
+import { ui } from "@/data/inner/ui";
 
 interface BrandLogoProps {
   lang: Language;
@@ -12,7 +13,7 @@ export function BrandLogo({ lang, className = "" }: BrandLogoProps) {
     >
       <img
         src="/branding/icon-gold.png"
-        alt="Royal Longevity Icon"
+        alt=""
         className="h-[28px] w-auto min-[700px]:h-[32px]"
       />
       <img
@@ -21,7 +22,7 @@ export function BrandLogo({ lang, className = "" }: BrandLogoProps) {
             ? "/branding/text-arabic-black-cropped.png"
             : "/branding/text-english-black-cropped.png"
         }
-        alt="Royal Longevity"
+        alt={ui.brand[lang]}
         className={
           lang === "ar"
             ? "h-8 w-auto shrink-0 min-[700px]:h-9"

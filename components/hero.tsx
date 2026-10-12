@@ -10,6 +10,7 @@ import { LaurelRight } from "@/components/icons/laurel-right";
 import { AnimatedTitle } from "@/components/ui/animated-title";
 import type { HeroContent, Language } from "@/data/site";
 import { cn } from "@/lib/utils";
+import { ui } from "@/data/inner/ui";
 
 type HeroProps = {
   content: HeroContent;
@@ -37,14 +38,16 @@ export function Hero({ content, lang }: HeroProps) {
             <a
               className="inline-flex h-12 shrink-0 items-center rounded-full px-[17px] py-2 max-[380px]:px-0"
               href="#top"
-              aria-label="Royal Longevity home"
+              aria-label={ui.brandHome[lang]}
             >
               <BrandLogo lang={lang} />
             </a>
             <div className="flex gap-2">
               <IconButton
                 href={`/${otherLang}`}
-                aria-label={`Change language to ${otherLang}`}
+                hrefLang={otherLang}
+                lang={otherLang}
+                aria-label={otherLang === "ar" ? "العربية" : "English"}
               >
                 {otherLangLabel}
               </IconButton>
@@ -99,7 +102,7 @@ export function Hero({ content, lang }: HeroProps) {
           >
             <section
               className="flex flex-col items-center justify-between gap-6 rounded-[24px] border border-border px-5 py-6 @[520px]:flex-row @[520px]:gap-4 @[520px]:px-7"
-              aria-label="Royal Longevity experience"
+              aria-label={ui.brandExperience[lang]}
             >
               <div className="flex shrink-0 items-center justify-center gap-2">
                 <LaurelLeft

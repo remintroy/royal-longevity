@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { LegalContents } from "./legal-contents";
 import { legalDocuments, type LegalBlock, type LegalSlug } from "@/data/legal";
+import { arabicLegalDocuments } from "@/data/legal-ar";
 import { legalUi } from "@/data/legal-ui";
 import { supportingPages } from "@/data/catalogue/supporting";
 import type { Language } from "@/data/site";
@@ -49,7 +50,8 @@ function LegalBlocks({
 type LegalContentProps = { lang: Language; slug: LegalSlug };
 
 export function LegalContent({ lang, slug }: LegalContentProps) {
-  const document = legalDocuments[slug];
+  const document =
+    lang === "ar" ? arabicLegalDocuments[slug] : legalDocuments[slug];
   const legalSlugs = Object.keys(legalDocuments) as LegalSlug[];
   return (
     <div className="py-8 min-[900px]:py-12">
@@ -71,21 +73,17 @@ export function LegalContent({ lang, slug }: LegalContentProps) {
           </Link>
         ))}
       </nav>
-      {lang === "ar" && (
-        <p className="mt-6 max-w-3xl text-sm leading-7">
-          {legalUi.sourceLanguage[lang]}
-        </p>
-      )}
       <div className="mt-8 grid items-start gap-10 min-[1000px]:grid-cols-[minmax(220px,300px)_minmax(0,1fr)] min-[1000px]:gap-16">
         <LegalContents
-          key={slug}
+          key={`${slug}-${lang}`}
+          lang={lang}
           title={legalUi.contents[lang]}
           sections={document.sections.map(({ id, title }) => ({ id, title }))}
         />
         <article
-          lang="en"
-          dir="ltr"
-          aria-label={supportingPages[slug].title.en}
+          lang={lang}
+          dir={lang === "ar" ? "rtl" : "ltr"}
+          aria-label={supportingPages[slug].title[lang]}
           className="min-w-0 max-w-3xl text-base leading-8 text-espresso/85 [overflow-wrap:anywhere]"
         >
           {document.dates.length > 0 && (

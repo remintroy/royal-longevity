@@ -3,13 +3,15 @@
 import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
+import type { Language } from "@/data/site";
 
 type LegalContentsProps = {
+  lang: Language;
   title: string;
   sections: { id: string; title: string }[];
 };
 
-export function LegalContents({ title, sections }: LegalContentsProps) {
+export function LegalContents({ lang, title, sections }: LegalContentsProps) {
   const [activeId, setActiveId] = useState<string>();
   const [isOpen, setIsOpen] = useState(false);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -139,8 +141,8 @@ export function LegalContents({ title, sections }: LegalContentsProps) {
           </span>
           {activeSection && (
             <span
-              lang="en"
-              dir="ltr"
+              lang={lang}
+              dir={lang === "ar" ? "rtl" : "ltr"}
               className="mt-1 block truncate text-sm font-medium text-espresso"
             >
               {activeSection.title}
@@ -160,8 +162,8 @@ export function LegalContents({ title, sections }: LegalContentsProps) {
       <ol
         id="legal-contents-list"
         ref={listRef}
-        lang="en"
-        dir="ltr"
+        lang={lang}
+        dir={lang === "ar" ? "rtl" : "ltr"}
         data-lenis-prevent
         className={cn(
           "space-y-1 overflow-y-auto overscroll-contain p-2 max-[999px]:absolute max-[999px]:inset-x-0 max-[999px]:top-[calc(100%+8px)] max-[999px]:max-h-[min(60dvh,24rem)] max-[999px]:rounded-3xl max-[999px]:border max-[999px]:border-border max-[999px]:bg-white max-[999px]:shadow-lg max-[999px]:shadow-espresso/10 min-[1000px]:max-h-[calc(100dvh-10rem)] min-[1000px]:p-1",

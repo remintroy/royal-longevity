@@ -1,5 +1,11 @@
 import { localized, type LocalizedText } from "./localization";
 export const ui = {
+  brand: localized("Royal Longevity", "رويال لونجيفيتي"),
+  brandHome: localized("Royal Longevity home", "رويال لونجيفيتي · الرئيسية"),
+  brandExperience: localized(
+    "Royal Longevity experience",
+    "تجربة رويال لونجيفيتي",
+  ),
   home: localized("Home", "الرئيسية"),
   menu: localized("Menu", "القائمة"),
   skip: localized("Skip to content", "انتقلي إلى المحتوى"),

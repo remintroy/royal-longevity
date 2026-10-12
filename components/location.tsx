@@ -48,7 +48,7 @@ export function Location({
                     className="inline-block rounded-sm transition-colors duration-200 hover:text-white focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ivory"
                   >
                     {detail.value}
-                    <span className="sr-only"> — WhatsApp</span>
+                    <span className="sr-only"> — {content.whatsappLabel}</span>
                   </a>
                 ) : (
                   detail.value

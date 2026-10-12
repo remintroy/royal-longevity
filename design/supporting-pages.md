@@ -30,7 +30,7 @@ Replace demo treatment descriptions, package contents, imagery and the demo Ajma
 
 The small client component accepts a service and optional preferred date/time. It passes these preferences through the shared booking URL helper to WhatsApp. It does not expose available slots or confirm a booking. The team confirms appointments in conversation.
 
-Set the existing `NEXT_PUBLIC_WHATSAPP_NUMBER` environment variable to the verified international business number (digits only). Without it, the existing generic WhatsApp sharing link is retained; it does not address the business directly.
+The shared `WHATSAPP_NUMBER` constant in `data/contact.ts` sets the recipient for every WhatsApp booking and enquiry link. Use international format with digits only. The configured business number is +971 55 880 1588.
 
 ## Implementation
 

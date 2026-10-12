@@ -1,5 +1,6 @@
 import type { Language } from "@/data/site";
 import { bookingMessage as copy } from "@/data/booking";
+import { WHATSAPP_NUMBER } from "@/data/contact";
 import {
   enquiryControlsUi,
   enquiryLocales,
@@ -61,9 +62,7 @@ export function getBookingMessage(
 }
 
 export function getBookingHref(lang: Language, enquiry: BookingEnquiry = {}) {
-  const url = new URL("https://wa.me/");
-  const number = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.trim();
-  if (number && /^\d{7,15}$/.test(number)) url.pathname = `/${number}`;
+  const url = new URL(`https://wa.me/${WHATSAPP_NUMBER}`);
   url.searchParams.set("text", getBookingMessage(lang, enquiry));
   return url.toString();
 }

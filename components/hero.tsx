@@ -167,12 +167,12 @@ export function Hero({ content, lang }: HeroProps) {
           aria-label={content.imageAlt}
         >
           <video
-            src="/hero-video.mp4"
+            src="/Royal_Longevity_HERO_20261018210220.mp4"
             autoPlay={true}
             loop={true}
             muted={true}
             playsInline={true}
-            className="absolute top-1/2 left-0 w-full h-auto -translate-y-1/2 opacity-0 animate-video-zoom-out"
+            className="absolute inset-0 h-full w-full object-cover opacity-0 animate-video-zoom-out"
             aria-label={content.imageAlt}
           />
         </section>

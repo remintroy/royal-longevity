@@ -1,24 +1,18 @@
-import { Hero } from "@/components/hero";
-import { Gallery } from "@/components/gallery";
-import { getGalleryContent } from "@/data/gallery";
-import { Experience } from "@/components/experience";
-import { getExperienceContent } from "@/data/experience";
 import { notFound } from "next/navigation";
-import { getHeroContent } from "@/data/site";
+import { Hero } from "@/components/hero";
 import { Introduction } from "@/components/introduction";
-import { getIntroductionContent } from "@/data/introduction";
+import { Experience } from "@/components/experience";
+import { Gallery } from "@/components/gallery";
 import { Highlights } from "@/components/highlights";
-import { getHighlightsContent } from "@/data/highlights";
 import { BookingBanner } from "@/components/booking-banner";
-import { getBookingBannerContent } from "@/data/booking-banner";
-import { Reviews } from "@/components/reviews";
-import { getReviewsContent } from "@/data/reviews";
 import { Faq } from "@/components/faq";
-import { getFaqContent } from "@/data/faq";
 import { CuratedServices } from "@/components/curated-services";
-import { getCuratedServicesContent } from "@/data/curated-services";
 import { Footer } from "@/components/footer";
-import { getFooterContent } from "@/data/footer";
+import { getLandingSection } from "@/lib/cms/landing";
+import { hydrateCatalogue } from "@/lib/cms/catalogue";
+
+// The Reviews section is disabled for now. Its component and data remain in
+// components/reviews.tsx and data/reviews.ts so it can be re-enabled later.
 
 export default async function Home({
   params,
@@ -27,39 +21,58 @@ export default async function Home({
 }) {
   const { lang } = await params;
   if (lang !== "en" && lang !== "ar") notFound();
-  const heroContent = getHeroContent(lang);
+  // Marquee and bento read the catalogue, which may include CMS-created services.
+  await hydrateCatalogue();
+
+  const [
+    heroContent,
+    introductionContent,
+    experienceContent,
+    galleryContent,
+    highlightsContent,
+    bookingBannerContent,
+    faqContent,
+    curatedServicesContent,
+    footerContent,
+  ] = await Promise.all([
+    getLandingSection("hero", lang),
+    getLandingSection("introduction", lang),
+    getLandingSection("experience", lang),
+    getLandingSection("gallery", lang),
+    getLandingSection("highlights", lang),
+    getLandingSection("bookingBanner", lang),
+    getLandingSection("faq", lang),
+    getLandingSection("curatedServices", lang),
+    getLandingSection("footer", lang),
+  ]);
 
   return (
     <>
       <main className="min-h-[100svh] overflow-hidden">
         <Hero content={heroContent} lang={lang} />
-        <Introduction content={getIntroductionContent(lang)} />
+        <Introduction content={introductionContent} />
         <Experience
-          content={getExperienceContent(lang)}
+          content={experienceContent}
           bookingHref={heroContent.bookingHref}
         />
         <Gallery
-          content={getGalleryContent(lang)}
+          content={galleryContent}
           bookingHref={heroContent.bookingHref}
         />
-        <Highlights content={getHighlightsContent(lang)} />
+        <Highlights content={highlightsContent} />
         <BookingBanner
-          content={getBookingBannerContent(lang)}
+          content={bookingBannerContent}
           bookingHref={heroContent.bookingHref}
         />
-        <Reviews content={getReviewsContent(lang)} />
-        <Faq
-          content={getFaqContent(lang)}
-          bookingHref={heroContent.bookingHref}
-        />
+        <Faq content={faqContent} bookingHref={heroContent.bookingHref} />
         <CuratedServices
-          content={getCuratedServicesContent(lang)}
+          content={curatedServicesContent}
           bookingHref={heroContent.bookingHref}
         />
       </main>
       <Footer
         lang={lang}
-        content={getFooterContent(lang)}
+        content={footerContent}
         bookingHref={heroContent.bookingHref}
       />
     </>

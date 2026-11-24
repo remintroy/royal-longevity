@@ -1,6 +1,6 @@
 import type { LocalizedText } from "@/data/inner/localization";
 
-export type CategoryId =
+export type StaticCategoryId =
   | "gym-fitness"
   | "yoga"
   | "pilates"
@@ -10,6 +10,8 @@ export type CategoryId =
   | "makeup"
   | "salon-hair"
   | "nails-pedicure";
+/** Built-in categories keep fixed art; CMS-created categories use any unique slug. */
+export type CategoryId = string;
 export type AccessModel = "membership" | "appointment" | "both";
 export type Category = {
   id: CategoryId;

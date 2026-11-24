@@ -22,9 +22,12 @@ import {
 import { BookingCta } from "@/components/ui/booking-cta";
 import { TextLink } from "@/components/inner/text-link";
 import { getBookingHref } from "@/lib/booking";
+import { hydrateCatalogue } from "@/lib/cms/catalogue";
+import { getServiceGroups } from "@/data/catalogue/enquiry-groups";
 
 type ServicePageProps = { params: Promise<{ lang: string; slug: string }> };
-function resolveService(lang: string, slug: string) {
+async function resolveService(lang: string, slug: string) {
+  await hydrateCatalogue();
   if (lang !== "en" && lang !== "ar") notFound();
   const service = getService(slug);
   if (!service) notFound();
@@ -32,7 +35,8 @@ function resolveService(lang: string, slug: string) {
   if (!category) notFound();
   return { lang, service, category } as const;
 }
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  await hydrateCatalogue();
   return ["en", "ar"].flatMap((lang) =>
     services.map(({ slug }) => ({ lang, slug })),
   );
@@ -41,7 +45,7 @@ export async function generateMetadata({
   params,
 }: ServicePageProps): Promise<Metadata> {
   const { lang: language, slug } = await params;
-  const { lang, service } = resolveService(language, slug);
+  const { lang, service } = await resolveService(language, slug);
   return {
     title: `${service.title[lang]} | Royal Longevity`,
     description: service.description[lang],
@@ -52,7 +56,7 @@ export async function generateMetadata({
 }
 export default async function ServicePage({ params }: ServicePageProps) {
   const { lang: language, slug } = await params;
-  const { lang, service, category } = resolveService(language, slug);
+  const { lang, service, category } = await resolveService(language, slug);
   return (
     <SiteFrame flushFooter lang={lang} path={`services/${slug}`}>
       <CatalogueBreadcrumbs
@@ -105,7 +109,11 @@ export default async function ServicePage({ params }: ServicePageProps) {
         </p>
       </section>
       {service.access === "both" && <PoolAccess lang={lang} />}
-      <AppointmentEnquiry lang={lang} initialService={slug} />
+      <AppointmentEnquiry
+        lang={lang}
+        initialService={slug}
+        serviceGroups={getServiceGroups(lang)}
+      />
       <ServiceArtInterlude category={category.id} signature />
       <ServiceCards lang={lang} category={category.id} decorated />
       <ServiceArtInterlude category={category.id} passage="closing" />

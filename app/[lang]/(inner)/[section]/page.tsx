@@ -28,9 +28,12 @@ import {
   PoolAccess,
 } from "@/components/inner/catalogue";
 import { Memberships, Journey } from "@/components/inner/memberships";
+import { hydrateCatalogue } from "@/lib/cms/catalogue";
+import { getServiceGroups } from "@/data/catalogue/enquiry-groups";
 
 type InnerPageProps = { params: Promise<{ lang: string; section: string }> };
-function resolvePage(lang: string, section: string) {
+async function resolvePage(lang: string, section: string) {
+  await hydrateCatalogue();
   if (lang !== "en" && lang !== "ar") notFound();
   if (!Object.hasOwn(pages, section) || !Object.hasOwn(pageLayouts, section))
     notFound();
@@ -45,7 +48,7 @@ export async function generateMetadata({
   params,
 }: InnerPageProps): Promise<Metadata> {
   const { lang: language, section } = await params;
-  const { lang, page } = resolvePage(language, section);
+  const { lang, page } = await resolvePage(language, section);
   return {
     title: `${page.title[lang]} | Royal Longevity`,
     description: page.description[lang],
@@ -58,7 +61,7 @@ export async function generateMetadata({
 }
 export default async function InnerPage({ params }: InnerPageProps) {
   const { lang: language, section } = await params;
-  const { lang, page, layout } = resolvePage(language, section);
+  const { lang, page, layout } = await resolvePage(language, section);
   return (
     <SiteFrame lang={lang} path={section}>
       {section === "contact" ? (
@@ -123,7 +126,10 @@ export default async function InnerPage({ params }: InnerPageProps) {
                   </p>
                 }
               >
-                <AppointmentFromQuery lang={lang} />
+                <AppointmentFromQuery
+                  lang={lang}
+                  serviceGroups={getServiceGroups(lang)}
+                />
               </Suspense>
             );
           case "memberships":

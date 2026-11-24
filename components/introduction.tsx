@@ -17,6 +17,10 @@ type IntroductionStatistic = IntroductionContent["statistics"][number];
 
 function StatisticRow({ statistic }: { statistic: IntroductionStatistic }) {
   const Icon = statisticIcons[statistic.icon];
+  // Only whole positive numbers count up; any other text is shown as written.
+  const countTarget = /^[1-9]\d*$/.test(statistic.value)
+    ? statistic.value
+    : undefined;
 
   return (
     <div
@@ -40,7 +44,7 @@ function StatisticRow({ statistic }: { statistic: IntroductionStatistic }) {
           {statistic.suffix}
         </span>
         <span aria-hidden="true" dir="ltr">
-          <span data-intro-count={statistic.value}>{statistic.value}</span>
+          <span data-intro-count={countTarget}>{statistic.value}</span>
           {statistic.suffix}
         </span>
       </dd>

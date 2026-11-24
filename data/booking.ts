@@ -37,5 +37,13 @@ export const bookingMessage = {
     "Please share the details and pricing. Thank you.",
     "يرجى تزويدي بالتفاصيل والأسعار. شكراً لكم.",
   ),
+  children: localized(
+    "I will be coming with children.",
+    "سأحضر برفقة أطفال.",
+  ),
+  childrenNotice: localized(
+    "Visiting with children? Please let us know before you book so we can prepare for your visit.",
+    "هل ستحضرين برفقة أطفال؟ يرجى إخبارنا قبل الحجز لنستعد لزيارتك.",
+  ),
   thanks: localized("Thank you.", "شكراً لكم."),
 };

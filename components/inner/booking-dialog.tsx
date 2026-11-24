@@ -7,9 +7,11 @@ import type { Language } from "@/data/site";
 import { enquiryUi } from "@/data/inner/enquiry";
 import { usePopupMotion } from "@/components/ui/use-popup-motion";
 import { AppointmentEnquiry } from "./appointment-enquiry";
+import type { ServiceGroup } from "@/data/catalogue/enquiry-groups";
 
-export default function BookingDialog({ lang, initialService, onClose }: {
+export default function BookingDialog({ lang, initialService, serviceGroups, onClose }: {
   lang: Language;
+  serviceGroups: ServiceGroup[];
   initialService?: string;
   onClose: () => void;
 }) {
@@ -33,7 +35,7 @@ export default function BookingDialog({ lang, initialService, onClose }: {
               <X size={20} aria-hidden="true" />
             </Button>
           </div>
-          <AppointmentEnquiry lang={lang} initialService={initialService} inDialog />
+          <AppointmentEnquiry lang={lang} initialService={initialService} serviceGroups={serviceGroups} inDialog />
         </Dialog>
       </Modal>
     </ModalOverlay>

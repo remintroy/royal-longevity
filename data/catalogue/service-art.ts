@@ -1,4 +1,4 @@
-import type { CategoryId } from "./types";
+import type { CategoryId, StaticCategoryId } from "./types";
 
 // Decorative geometry, not business claims or supplied brand/logo artwork.
 // All drawings share the swimming study's 760 × 300 canvas and fine gold lines.
@@ -92,7 +92,7 @@ const motifs = {
 
 type ArtMotif = keyof typeof motifs;
 
-const categoryMotifs: Record<Exclude<CategoryId, "swimming-pool">, ArtMotif> = {
+const categoryMotifs: Record<Exclude<StaticCategoryId, "swimming-pool">, ArtMotif> = {
   "gym-fitness": "strength",
   yoga: "breath",
   pilates: "balance",
@@ -111,10 +111,15 @@ const serviceMotifs: Partial<Record<string, ArtMotif>> = {
 };
 
 export function getServiceArt(
-  category: Exclude<CategoryId, "swimming-pool">,
+  category: CategoryId,
   slug: string,
 ) {
-  const motif = serviceMotifs[slug] ?? categoryMotifs[category];
+  // Categories created in the CMS have no bespoke drawing and use the calm stones motif.
+  const categoryMotif =
+    category in categoryMotifs
+      ? categoryMotifs[category as keyof typeof categoryMotifs]
+      : "stones";
+  const motif = serviceMotifs[slug] ?? categoryMotif;
   return { motif, paths: motifs[motif] };
 }
 

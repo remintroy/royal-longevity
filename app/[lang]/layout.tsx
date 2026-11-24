@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import "../globals.css";
 import { notFound } from "next/navigation";
 import { BookingProvider } from "@/components/providers/booking-provider";
+import { hydrateCatalogue } from "@/lib/cms/catalogue";
+import { getServiceGroups } from "@/data/catalogue/enquiry-groups";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 
 const figtree = localFont({
@@ -40,6 +42,7 @@ export default async function RootLayout({
 }) {
   const { lang } = await params;
   if (lang !== "en" && lang !== "ar") notFound();
+  await hydrateCatalogue();
   return (
     <html
       lang={lang}
@@ -48,7 +51,7 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans">
         <SmoothScrollProvider>
-          <BookingProvider lang={lang}>{children}</BookingProvider>
+          <BookingProvider lang={lang} serviceGroups={getServiceGroups(lang)}>{children}</BookingProvider>
         </SmoothScrollProvider>
       </body>
     </html>

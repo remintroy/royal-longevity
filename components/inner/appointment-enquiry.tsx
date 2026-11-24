@@ -5,7 +5,7 @@ import { I18nProvider } from "react-aria-components";
 import { useSearchParams } from "next/navigation";
 import { MessageCircle } from "lucide-react";
 import type { Language } from "@/data/site";
-import { categories, services } from "@/data/catalogue";
+import type { ServiceGroup } from "@/data/catalogue/enquiry-groups";
 import { enquiryUi } from "@/data/inner/enquiry";
 import { enquiryLocales } from "@/data/inner/enquiry-controls";
 import { EnquirySelect } from "@/components/ui/enquiry-select";
@@ -13,6 +13,7 @@ import { DatePicker } from "@/components/ui/date-time-picker";
 import { AppointmentTimeSelector } from "@/components/ui/appointment-time-selector";
 import { ui } from "@/data/inner/ui";
 import { getBookingHref } from "@/lib/booking";
+import { bookingMessage } from "@/data/booking";
 import { BookingCta } from "@/components/ui/booking-cta";
 import { SectionHeading } from "./section-heading";
 
@@ -20,34 +21,32 @@ type AppointmentEnquiryProps = {
   lang: Language;
   initialService?: string;
   inDialog?: boolean;
+  /** Language-resolved service options, supplied by the server so CMS services appear. */
+  serviceGroups: ServiceGroup[];
 };
 
 export function AppointmentEnquiry({
   lang,
   initialService = "",
   inDialog = false,
+  serviceGroups,
 }: AppointmentEnquiryProps) {
   const formId = useId();
   const titleId = `${formId}-title`;
   const noteId = `${formId}-note`;
   const [selectedServiceSlug, setSelectedServiceSlug] =
     useState(initialService);
+  const [hasChildren, setHasChildren] = useState(false);
   const [message, setMessage] = useState("");
   const [preferredDate, setPreferredDate] = useState("");
   const [preferredTime, setPreferredTime] = useState("");
-  const selectedService = services.find(
-    (item) => item.slug === selectedServiceSlug,
-  );
-  const serviceGroups = categories.map((category) => ({
-    id: category.id,
-    label: category.title[lang],
-    options: services
-      .filter((service) => service.category === category.id)
-      .map((service) => ({ id: service.slug, label: service.title[lang] })),
-  }));
+  const selectedService = serviceGroups
+    .flatMap((group) => group.options)
+    .find((option) => option.id === selectedServiceSlug);
   const bookingHref = getBookingHref(lang, {
-    service: selectedService?.title[lang],
+    service: selectedService?.label,
     needsGuidance: !selectedService,
+    hasChildren,
     preferredDate,
     preferredTime,
     message,
@@ -70,6 +69,20 @@ export function AppointmentEnquiry({
               defaultOption={{ id: "any-service", label: ui.any[lang] }}
               groups={serviceGroups}
             />
+            <label className="mt-4 flex items-start gap-3 text-sm leading-relaxed text-espresso">
+              <input
+                type="checkbox"
+                checked={hasChildren}
+                onChange={(event) => setHasChildren(event.target.checked)}
+                className="mt-0.5 size-5 shrink-0 accent-espresso focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              />
+              <span>
+                {bookingMessage.children[lang]}
+                <span className="block text-xs text-espresso/70">
+                  {bookingMessage.childrenNotice[lang]}
+                </span>
+              </span>
+            </label>
             <details className="mt-4 rounded-2xl border border-border">
               <summary className="cursor-pointer rounded-2xl px-4 py-4 text-sm leading-relaxed text-espresso focus-visible:outline-2 focus-visible:outline-gold focus-visible:outline-offset-2">
                 {enquiryUi.optionalDetails[lang]}
@@ -151,6 +164,20 @@ export function AppointmentEnquiry({
               defaultOption={{ id: "any-service", label: ui.any[lang] }}
               groups={serviceGroups}
             />
+            <label className="mt-4 flex items-start gap-3 text-sm leading-relaxed text-espresso">
+              <input
+                type="checkbox"
+                checked={hasChildren}
+                onChange={(event) => setHasChildren(event.target.checked)}
+                className="mt-0.5 size-5 shrink-0 accent-espresso focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold"
+              />
+              <span>
+                {bookingMessage.children[lang]}
+                <span className="block text-xs text-espresso/70">
+                  {bookingMessage.childrenNotice[lang]}
+                </span>
+              </span>
+            </label>
             <p className="mt-6 text-sm leading-relaxed text-espresso/75">
               {enquiryUi.preferences[lang]}
             </p>
@@ -206,16 +233,24 @@ export function AppointmentEnquiry({
   );
 }
 
-export function AppointmentFromQuery({ lang }: { lang: Language }) {
+export function AppointmentFromQuery({
+  lang,
+  serviceGroups,
+}: {
+  lang: Language;
+  serviceGroups: ServiceGroup[];
+}) {
   const searchParams = useSearchParams();
-  const service = services.find(
-    (item) => item.slug === searchParams.get("service"),
-  );
+  const requestedService = searchParams.get("service");
+  const service = serviceGroups
+    .flatMap((group) => group.options)
+    .find((option) => option.id === requestedService);
   return (
     <AppointmentEnquiry
-      key={service?.slug ?? "all"}
+      key={service?.id ?? "all"}
       lang={lang}
-      initialService={service?.slug}
+      initialService={service?.id}
+      serviceGroups={serviceGroups}
     />
   );
 }

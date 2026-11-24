@@ -5,14 +5,15 @@ export type IntroductionContent = {
   title: string;
   imageAlt: string;
   statistics: {
-    value: number;
+    value: string;
     suffix: string;
     label: string;
     icon: "smile" | "guests" | "care";
   }[];
 };
 
-// Demo copy, figures and generated interiors; not photographs of the premises.
+// Figures are text so they can be edited in the CMS; they start at 0 until real figures exist.
+// Imagery is generated interiors, not photographs of the premises.
 export const introductionImages = {
   mobile: {
     src: "/assets/images/introduction-lounge-mobile.webp",
@@ -39,20 +40,20 @@ const content: Record<Language, IntroductionContent> = {
       "A quiet lounge with soft seating, warm wood and considered details",
     statistics: [
       {
-        value: 200,
-        suffix: "+",
+        value: "0",
+        suffix: "",
         label: "Guests welcomed\nwith care",
         icon: "smile",
       },
       {
-        value: 26,
-        suffix: "%",
+        value: "0",
+        suffix: "",
         label: "Guests returning\nto their rituals",
         icon: "guests",
       },
       {
-        value: 1,
-        suffix: ":1",
+        value: "0",
+        suffix: "",
         label: "Personal attention,\nshaped around you",
         icon: "care",
       },
@@ -64,20 +65,20 @@ const content: Record<Language, IntroductionContent> = {
     imageAlt: "ردهة هادئة بمقاعد مريحة وخشب دافئ وتفاصيل متقنة",
     statistics: [
       {
-        value: 200,
-        suffix: "+",
+        value: "0",
+        suffix: "",
         label: "ضيوف استقبلناهم\nبكل عناية",
         icon: "smile",
       },
       {
-        value: 26,
-        suffix: "%",
+        value: "0",
+        suffix: "",
         label: "ضيوف يعودون\nلطقوسهم المفضلة",
         icon: "guests",
       },
       {
-        value: 1,
-        suffix: ":1",
+        value: "0",
+        suffix: "",
         label: "اهتمام شخصي\nمصمم من أجلك",
         icon: "care",
       },

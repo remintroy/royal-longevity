@@ -46,8 +46,8 @@ const majorServices: { slug: string; icon: HighlightIcon }[] = [
 
 export function getHighlightsContent(lang: Language): HighlightsContent {
   return {
-    eyebrow: localized("The essentials", "جوهر تجربتنا")[lang],
-    title: localized("Thoughtfully yours", "كل التفاصيل من أجلك")[lang],
+    eyebrow: localized("What we offer", "ما نقدمه")[lang],
+    title: localized("Our services", "خدماتنا")[lang],
     categories: majorCategories.flatMap(({ id, icon }) => {
       const category = categories.find((item) => item.id === id);
       return category

@@ -1,3 +1,4 @@
+import { categories } from "./catalogue";
 import type { Language } from "./site";
 
 export type ExperienceContent = {
@@ -11,6 +12,7 @@ export type ExperienceContent = {
 };
 
 // Demo brand copy, pending business approval.
+// The marquee lists the service categories (filled in by getExperienceContent).
 const content: Record<Language, ExperienceContent> = {
   en: {
     title: "The Royal Longevity experience",
@@ -19,7 +21,7 @@ const content: Record<Language, ExperienceContent> = {
     contactLabel: "Chat with our team on WhatsApp",
     pauseLabel: "Pause movement",
     playLabel: "Resume movement",
-    highlights: ["Thoughtful skin care", "Restorative rituals", "Personal attention", "Beauty in every detail", "Considered treatments", "Your signature style", "Room to unwind"],
+    highlights: [],
   },
   ar: {
     title: "تجربة رويال لونجيفيتي",
@@ -28,8 +30,11 @@ const content: Record<Language, ExperienceContent> = {
     contactLabel: "تواصلي مع فريقنا عبر واتساب",
     pauseLabel: "إيقاف الحركة",
     playLabel: "استئناف الحركة",
-    highlights: ["عناية متقنة بالبشرة", "طقوس تجدد نشاطك", "اهتمام شخصي", "جمال في كل التفاصيل", "علاجات مختارة بعناية", "أسلوبك الخاص", "مساحة للاسترخاء"],
+    highlights: [],
   },
 };
 
-export const getExperienceContent = (lang: Language) => content[lang];
+export const getExperienceContent = (lang: Language): ExperienceContent => ({
+  ...content[lang],
+  highlights: categories.map((category) => category.title[lang]),
+});

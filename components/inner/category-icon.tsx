@@ -28,6 +28,7 @@ export function CategoryIcon({
   category: CategoryId;
   className?: string;
 }) {
-  const Icon = icons[category];
+  // CMS-created categories fall back to a neutral icon.
+  const Icon = icons[category as keyof typeof icons] ?? Sparkles;
   return <Icon className={className} strokeWidth={1.2} aria-hidden="true" />;
 }

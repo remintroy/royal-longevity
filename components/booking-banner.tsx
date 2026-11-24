@@ -78,6 +78,9 @@ export function BookingBanner({
             rel="noreferrer"
             className="mt-7 bg-ivory text-espresso hover:bg-white focus-visible:outline-ivory [&>span:first-child]:bg-espresso [&>span:first-child]:text-ivory lg:mt-9"
           />
+          <p className="mt-5 max-w-sm text-sm leading-relaxed text-ivory/85">
+            {content.childrenNotice}
+          </p>
         </div>
       </div>
     </section>

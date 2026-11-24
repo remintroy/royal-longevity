@@ -18,6 +18,7 @@ export type BookingEnquiry = {
   preferredTime?: string;
   message?: string;
   needsGuidance?: boolean;
+  hasChildren?: boolean;
 };
 
 export function getBookingMessage(
@@ -49,6 +50,7 @@ export function getBookingMessage(
       `${numbers.format(hour % 12 || 12)}:${numbers.format(minute)} ${period} — ${enquiryControlsUi.timeHint[lang]}`,
     );
   }
+  if (enquiry.hasChildren) lines.push(copy.children[lang]);
   add(copy.message[lang], enquiry.message);
   const closing =
     kind === "appointment"

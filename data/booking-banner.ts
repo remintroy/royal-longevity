@@ -4,6 +4,7 @@ export type BookingBannerContent = {
   eyebrow: string;
   title: string;
   bookingLabel: string;
+  childrenNotice: string;
   image: { src: string; mobileSrc: string; alt: string };
 };
 
@@ -14,6 +15,8 @@ const content: Record<Language, BookingBannerContent> = {
     eyebrow: "A moment for you",
     title: "Make time for beauty.\nMake space for yourself.",
     bookingLabel: "Book an appointment",
+    childrenNotice:
+      "Visiting with children? Please let us know before you book.",
     image: {
       src: "/assets/images/booking-banner-desktop.webp",
       mobileSrc: "/assets/images/booking-banner-mobile.webp",
@@ -24,6 +27,7 @@ const content: Record<Language, BookingBannerContent> = {
     eyebrow: "لحظة من أجلك",
     title: "امنحي جمالك وقتاً.\nوخصصي لنفسك لحظة.",
     bookingLabel: "احجزي موعدك",
+    childrenNotice: "هل ستحضرين برفقة أطفال؟ يرجى إخبارنا قبل الحجز.",
     image: {
       src: "/assets/images/booking-banner-desktop.webp",
       mobileSrc: "/assets/images/booking-banner-mobile.webp",

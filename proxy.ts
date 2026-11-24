@@ -19,6 +19,6 @@ export function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     // Public asset directories and file requests must never receive a locale prefix.
-    '/((?!_next|assets(?:/|$)|branding(?:/|$)|api(?:/|$)|.*\\.[^/]+$).*)',
+    '/((?!_next|assets(?:/|$)|branding(?:/|$)|api(?:/|$)|admin(?:/|$)|.*\\.[^/]+$).*)',
   ],
 }

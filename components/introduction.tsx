@@ -142,8 +142,11 @@ export function Introduction({ content }: { content: IntroductionContent }) {
             text-espresso min-[700px]:w-[min(65%,780px)] min-[700px]:self-end
             min-[700px]:px-[30px] min-[700px]:py-0 min-[1200px]:w-[49%]"
         >
-          {content.statistics.map((statistic) => (
-            <StatisticRow key={statistic.icon} statistic={statistic} />
+          {content.statistics.map((statistic, index) => (
+            <StatisticRow
+              key={`${index}-${statistic.icon}`}
+              statistic={statistic}
+            />
           ))}
         </dl>
       </section>

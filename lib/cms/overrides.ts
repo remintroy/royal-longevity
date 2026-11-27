@@ -5,7 +5,11 @@ import type { Language } from "@/data/site";
 
 export const CMS_CONTENT_TAG = "cms-content";
 
-/** Map of `section.lang.path` to the edited text. Only differences from the code defaults are stored. */
+/**
+ * Map of `section.lang.path` to edited text, written by the earlier line-by-line
+ * editor. Still read so those edits survive; a section migrates to a structured
+ * document the next time it is saved.
+ */
 export type Overrides = Record<string, string>;
 
 // Keys that hold links, files, identifiers or icon names rather than editable copy.

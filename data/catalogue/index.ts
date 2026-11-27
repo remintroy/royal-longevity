@@ -31,7 +31,7 @@ const builtInServices: Service[] = [
   ...nails_pedicure,
 ];
 
-/** Identifiers owned by the code-defined catalogue; CMS items may not reuse them. */
+/** Identifiers owned by the code-defined catalogue. */
 export const builtInCategoryIds = new Set(
   builtInCategories.map((category) => category.id),
 );
@@ -39,36 +39,62 @@ export const builtInServiceSlugs = new Set(
   builtInServices.map((service) => service.slug),
 );
 
-// These arrays start as the built-in catalogue. setDynamicCatalogue() appends
-// categories and services created in the CMS; they are updated in place so that
-// every importer sees the merged catalogue during a server render.
+export { builtInCategories, builtInServices };
+
+// These arrays start as the built-in catalogue. setDynamicCatalogue() merges in
+// the CMS catalogue; they are updated in place so that every importer sees the
+// merged catalogue during a server render.
 export const categories: Category[] = [...builtInCategories];
 export const serviceCatalogue: Service[] = [...builtInServices];
 export const services: Service[] = serviceCatalogue.filter(
   (service) => service.published,
 );
 
-export function setDynamicCatalogue(extra: {
+/**
+ * Merges CMS records into the catalogue. A record whose id matches a built-in
+ * category or service replaces that entry in place (keeping its position and
+ * homepage selection); any other record is appended as a new entry.
+ */
+export function setDynamicCatalogue(cms: {
   categories: Category[];
   services: Service[];
 }) {
-  const builtInIds = new Set(builtInCategories.map((category) => category.id));
-  const builtInSlugs = new Set(builtInServices.map((service) => service.slug));
+  const categoryEdits = new Map(
+    cms.categories.map((category) => [category.id, category]),
+  );
+  const serviceEdits = new Map(
+    cms.services.map((service) => [service.slug, service]),
+  );
+
   categories.splice(
     0,
     categories.length,
-    ...builtInCategories,
-    ...extra.categories.filter((category) => !builtInIds.has(category.id)),
+    ...builtInCategories.map(
+      (category) => categoryEdits.get(category.id) ?? category,
+    ),
+    ...cms.categories.filter(
+      (category) => !builtInCategoryIds.has(category.id),
+    ),
   );
+
+  const mergedServices = [
+    ...builtInServices.map((service) => {
+      const edit = serviceEdits.get(service.slug);
+      return edit
+        ? {
+            ...edit,
+            homepageOrder: service.homepageOrder,
+            gallery: edit.gallery ?? service.gallery,
+          }
+        : service;
+    }),
+    ...cms.services.filter((service) => !builtInServiceSlugs.has(service.slug)),
+  ];
+  const categoryIds = new Set(categories.map((category) => category.id));
   serviceCatalogue.splice(
     0,
     serviceCatalogue.length,
-    ...builtInServices,
-    ...extra.services.filter(
-      (service) =>
-        !builtInSlugs.has(service.slug) &&
-        categories.some((category) => category.id === service.category),
-    ),
+    ...mergedServices.filter((service) => categoryIds.has(service.category)),
   );
   services.splice(
     0,

@@ -126,7 +126,7 @@ export function Hero({ content, lang }: HeroProps) {
                       "grid gap-1 px-2 text-center @[520px]:px-4",
                       index > 0 && "border-s border-border",
                     )}
-                    key={highlight.label}
+                    key={`${index}-${highlight.label}`}
                   >
                     <strong
                       className="text-[25px] font-normal leading-tight text-espresso"

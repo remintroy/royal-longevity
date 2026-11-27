@@ -20,6 +20,10 @@ Each service has a stable `slug`, a `category` ID, English/Arabic `title` and `d
 
 Use `localized("English", "العربية")` for every visitor-facing content field. Russian can be added by extending the shared localization and language types in a later stage.
 
+## Edits made in the content admin
+
+Categories and services can also be edited at `/admin`. A CMS record whose id matches a built-in category or slug overlays that entry in place (its position and `homepageOrder` stay as defined here); "Restore original" in the admin removes the overlay. Records with new ids are appended after the built-in entries. Built-in entries cannot be deleted in the admin — they can only be hidden — so slugs referenced by packages and links stay valid.
+
 ## Select services for the homepage
 
 In the service's category file, set:

@@ -1,6 +1,7 @@
 import "server-only";
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const COOKIE_NAME = "rl_admin";
 const SESSION_SECONDS = 60 * 60 * 24 * 7;
@@ -38,12 +39,24 @@ export async function endSession() {
   (await cookies()).delete({ name: COOKIE_NAME, path: "/admin" });
 }
 
+export function isAuthConfigured() {
+  return Boolean(process.env.ADMIN_PASSWORD);
+}
+
 export async function isAdmin() {
-  if (!process.env.ADMIN_PASSWORD) return false;
+  if (!isAuthConfigured()) return false;
   const token = (await cookies()).get(COOKIE_NAME)?.value;
   if (!token) return false;
   const [payload, signature] = token.split(".");
-  if (!payload || !signature || !safeEqual(signature, sign(payload)))
+  if (!payload || !signature || !safeEqual(signature, sign(payload))) {
     return false;
+  }
   return Number(payload) > Date.now();
+}
+
+export const LOGIN_PATH = "/admin/login";
+
+/** Sends signed-out visitors to the login page. Call at the top of every admin page and action. */
+export async function requireAdmin() {
+  if (!(await isAdmin())) redirect(LOGIN_PATH);
 }

@@ -42,8 +42,8 @@ export function Footer({
             <nav aria-label={content.menuLabel}>
               <p className="mb-3 text-sm text-ivory/65">{content.menuLabel}</p>
               <ul>
-                {content.menu.map((link) => (
-                  <li key={link.href}>
+                {content.menu.map((link, index) => (
+                  <li key={`${index}-${link.href}`}>
                     <a href={link.href} className={linkClassName}>
                       {link.label}
                     </a>
@@ -57,8 +57,8 @@ export function Footer({
                   {content.exploreLabel}
                 </p>
                 <ul>
-                  {content.explore.map((link) => (
-                    <li key={link.href}>
+                  {content.explore.map((link, index) => (
+                    <li key={`${index}-${link.href}`}>
                       <a href={link.href} className={linkClassName}>
                         {link.label}
                       </a>
